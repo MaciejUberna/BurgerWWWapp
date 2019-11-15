@@ -1,0 +1,12 @@
+1 - what should go into its own component and whats not
+What should be component and what should be container
+
+2 - application state and the data that is planned to use with the app
+
+3 - which components of the app should be stateless: "Dumb"- even class components
+which are functions and don't use hooks, which are class components, or functional components with use stae hook
+
+Which components use state:
+- functional components using use state hook
+or
+- class components using state property
