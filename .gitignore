@@ -1,7 +1,5 @@
 # Don't track content of these folders
-/starter/node_modules/
-/starter/someOtherfoler/
-/starter/css/
+/burger-app/node_modules/
 
 
 # Compiled source #
