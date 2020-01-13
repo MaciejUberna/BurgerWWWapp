@@ -23,7 +23,7 @@ class BurgerIngredient extends  Component {
             case ('meat'):
                 ingredient = <div className = {classes.Meat}></div>
                 break;
-            case ('chease'):
+            case ('cheese'):
                 ingredient = <div className = {classes.Cheese}></div>
                 break;
             case ('salad'):
@@ -33,7 +33,7 @@ class BurgerIngredient extends  Component {
                 ingredient = <div className = {classes.Bacon}></div>
                 break;
             default:
-                    console.error("[E] unknown ingredient ",props.type," provided!");
+                    console.error("[E]BurgerIngredient.render().switch().default[E] :: unknown ingredient ",this.props.type," provided!");
         }
     
         return ingredient;
