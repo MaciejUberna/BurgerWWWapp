@@ -31,63 +31,69 @@ class BurgerBuilder extends Component {
     }
 
     addIngredientHandler = (type) => {
-        const oldCount = this.state.ingredients[type];
-        const updatedCount = oldCount + 1;
-        const updatedIngredients = {
-            ...this.state.ingredients
-        };
-        updatedIngredients[type] = updatedCount;
-        const priceAddition = INGREDIENT_PRICES[type];
-        const oldPrice = this.state.totalPrice;
-        const newPrice = oldPrice + priceAddition;
-        this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
-        this.updatePurchaseState(updatedIngredients);
+        // const oldCount = this.state.ingredients[type];
+        // const updatedCount = oldCount + 1;
+        // const updatedIngredients = {
+        //     ...this.state.ingredients
+        // };
+        // updatedIngredients[type] = updatedCount;
+        // const priceAddition = INGREDIENT_PRICES[type];
+        // const oldPrice = this.state.totalPrice;
+        // const newPrice = oldPrice + priceAddition;
+        // this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+        // this.updatePurchaseState(updatedIngredients);
 
-        // this.setState(prevState => ({
-        //     totalPrice: prevState.totalPrice + INGREDIENT_PRICES[type],
-        //     ingredients: {
-        //         ...prevState.ingredients,
-        //         [type]: prevState.ingredients[type] + 1
-        //     }
-        // }), this.updatePurchaseState );
+        this.setState(prevState => ({
+            totalPrice: prevState.totalPrice + INGREDIENT_PRICES[type],
+            ingredients: {
+                ...prevState.ingredients,
+                [type]: prevState.ingredients[type] + 1
+            }
+        }), this.updatePurchaseState );
     }
 
     removeIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
         if (oldCount > 0) {
-            const updatedCount = oldCount - 1;
-            const updatedIngredients = {
-                ...this.state.ingredients
-            };
-            updatedIngredients[type] = updatedCount;
-            const oldPrice = this.state.totalPrice;
-            const priceSubstraction = INGREDIENT_PRICES[type];
-            const newPrice = oldPrice - priceSubstraction;
-            this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
-            this.updatePurchaseState(updatedIngredients);
+            // const updatedCount = oldCount - 1;
+            // const updatedIngredients = {
+            //     ...this.state.ingredients
+            // };
+            // updatedIngredients[type] = updatedCount;
+            // const oldPrice = this.state.totalPrice;
+            // const priceSubstraction = INGREDIENT_PRICES[type];
+            // const newPrice = oldPrice - priceSubstraction;
+            // this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+            // this.updatePurchaseState(updatedIngredients);
 
-            // this.setState(prevState => ({
-            //     totalPrice: prevState.totalPrice - INGREDIENT_PRICES[type],
-            //     ingredients: {
-            //         ...prevState.ingredients,
-            //         [type]: prevState.ingredients[type] - 1
-            //     }
-            // }), this.updatePurchaseState );
+            this.setState(prevState => ({
+                totalPrice: prevState.totalPrice - INGREDIENT_PRICES[type],
+                ingredients: {
+                    ...prevState.ingredients,
+                    [type]: prevState.ingredients[type] - 1
+                }
+            }), this.updatePurchaseState );
         }
     }
 
     updatePurchaseState = (updatedIngredients) => {
         //Creates an array with string entris "meat", "bacon" and so on...
-        const sum = Object.keys(updatedIngredients)
-            //Map ingredients
-            .map(ingredientKey => {
-                return updatedIngredients[ingredientKey]
-            })
-            //sum ap all elements
+        // const sum = Object.keys(updatedIngredients)
+        //     //Map ingredients
+        //     .map(ingredientKey => {
+        //         return updatedIngredients[ingredientKey]
+        //     })
+        //     //sum ap all elements
+        //     .reduce((sum,element) => {
+        //         return sum + element;
+        //     }, 0);
+        //     this.setState({purchasable: sum > 0});
+
+        const sum = Object.values(this.state.ingredients)
             .reduce((sum,element) => {
                 return sum + element;
             }, 0);
-            this.setState({purchasable: sum > 0});
+        this.setState({purchasable: sum > 0});
     }
     
     render () {
