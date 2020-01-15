@@ -13,7 +13,7 @@ const controls = [
 const buildControls = (props) => {
     return (
         <div className={classes.BuildControls}>
-            <p>Aktualna cena: <strong>{props.price}</strong> zł.</p>
+            <p>Aktualna cena: <strong>{props.price.toFixed(2)}</strong> zł.</p>
             {controls.map(ctrl => (
                 <BuildControl 
                 added={() => props.ingredientAdded(ctrl.type)}
