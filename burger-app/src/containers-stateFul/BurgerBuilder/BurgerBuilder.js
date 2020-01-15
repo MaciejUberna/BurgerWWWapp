@@ -41,7 +41,7 @@ class BurgerBuilder extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
-        this.updatePurchaseState();
+        this.updatePurchaseState(updatedIngredients);
 
         // this.setState(prevState => ({
         //     totalPrice: prevState.totalPrice + INGREDIENT_PRICES[type],
@@ -64,7 +64,7 @@ class BurgerBuilder extends Component {
             const priceSubstraction = INGREDIENT_PRICES[type];
             const newPrice = oldPrice - priceSubstraction;
             this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
-            this.updatePurchaseState();
+            this.updatePurchaseState(updatedIngredients);
 
             // this.setState(prevState => ({
             //     totalPrice: prevState.totalPrice - INGREDIENT_PRICES[type],
@@ -76,9 +76,9 @@ class BurgerBuilder extends Component {
         }
     }
 
-    updatePurchaseState () {
+    updatePurchaseState = (updatedIngredients) => {
         const ingredients = {
-            ...this.state.ingredients
+            ...updatedIngredients
         }
         //Creates an array with string entris "meat", "bacon" and so on...
         const sum = Object.keys(ingredients)
