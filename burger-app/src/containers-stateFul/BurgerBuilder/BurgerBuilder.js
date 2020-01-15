@@ -25,6 +25,10 @@ class BurgerBuilder extends Component {
         totalPrice: 5
     }
 
+    componentDidUpdate () {
+        console.log(this.state);
+    }
+
     addIngredientHandler = (type) => {
         // const oldCount = this.state.ingredients[type];
         // const updatedCount = oldCount + 1;
@@ -68,13 +72,21 @@ class BurgerBuilder extends Component {
     }
     
     render () {
-        
+        const disabledInfo = {
+            ...this.state.ingredients
+        }
+        console.log('-1- disableInfo: ',disabledInfo);
+        for(let key in disabledInfo) {
+            disabledInfo[key] = disabledInfo[key] <= 0;
+        }
+        console.log('-2- disableInfo: ',disabledInfo);
         return (
             <Auxiliary>
                 <Burger ingredients = {this.state.ingredients}/>
                 <BuildControls
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
+                    disabled = {disabledInfo}
                 />
             </Auxiliary>
         );
