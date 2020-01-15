@@ -4,6 +4,7 @@ import Burger from '../../coponents-stateLess/Burger/Burger';
 import BuildControls from '../../coponents-stateLess/Burger/BuildControls/BuildControls';
 
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
+import OrderSummary from '../../coponents-stateLess/Burger/OrderSummary/OrderSummary';
 
 const INGREDIENT_PRICES = {
     salad: 1,
@@ -109,7 +110,9 @@ class BurgerBuilder extends Component {
         console.log('-2- disableInfo: ',disabledInfo);
         return (
             <Auxiliary>
-                <Modal />
+                <Modal>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients = {this.state.ingredients}/>
                 <BuildControls
                     ingredientAdded={this.addIngredientHandler}
