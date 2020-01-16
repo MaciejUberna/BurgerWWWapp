@@ -1,6 +1,7 @@
 import React from 'react';
  
 import Auxiliary from '../../../hoc/Auxiliary';
+import Button from '../../UI/Button/Button';
 
 const INGREDIENTS_TO_POLISH = {
     meat: 'mięsko',
@@ -32,8 +33,8 @@ const orderSummary = (props) => {
             </ul>
             {/* <p>Continue checkout?</p> */}
             <p>Przejść Dalej?</p>
-            <button>ANULUJ</button>
-            <button>DALEJ</button>
+            <Button btnType="Danger" clicked={props.purchaseCancelled}>ANULUJ</Button>
+            <Button btnType="Success" clicked={props.purchaseContinued}>DALEJ</Button>
         </Auxiliary>
     );
 }

@@ -31,7 +31,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidUpdate () {
-        console.log(this.state);
+        //console.log(this.state);
     }
 
     addIngredientHandler = (type) => {
@@ -104,23 +104,31 @@ class BurgerBuilder extends Component {
         this.setState({purchaseButtonClicked: true});
     }
 
-    purchaseButtonClickedCanseledHandler = () => {
+    purchaseButtonClickedCanceledHandler = () => {
         this.setState({purchaseButtonClicked: false});
+    }
+
+    purchaseContinueHandler = () => {
+        alert('Wybrałeś kontynuację!');
     }
     
     render () {
         const disabledInfo = {
             ...this.state.ingredients
         }
-        console.log('-1- disableInfo: ',disabledInfo);
+        //console.log('-1- disableInfo: ',disabledInfo);
         for(let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
-        console.log('-2- disableInfo: ',disabledInfo);
+        //console.log('-2- disableInfo: ',disabledInfo);
         return (
             <Auxiliary>
-                <Modal show={this.state.purchaseButtonClicked} modalClosed={this.purchaseButtonClickedCanseledHandler}>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                <Modal show={this.state.purchaseButtonClicked} modalClosed={this.purchaseButtonClickedCanceledHandler}>
+                    <OrderSummary 
+                    ingredients={this.state.ingredients}
+                    purchaseCancelled={this.purchaseButtonClickedCanceledHandler}
+                    purchaseContinued={this.purchaseContinueHandler}
+                    />
                 </Modal>
                 <Burger ingredients = {this.state.ingredients}/>
                 <BuildControls
