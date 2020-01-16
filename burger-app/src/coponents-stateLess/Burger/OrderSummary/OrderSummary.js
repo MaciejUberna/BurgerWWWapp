@@ -32,6 +32,8 @@ const orderSummary = (props) => {
             </ul>
             {/* <p>Continue checkout?</p> */}
             <p>Przejść Dalej?</p>
+            <button>ANULUJ</button>
+            <button>DALEJ</button>
         </Auxiliary>
     );
 }
