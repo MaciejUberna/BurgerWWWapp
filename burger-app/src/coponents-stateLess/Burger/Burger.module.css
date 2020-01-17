@@ -1,7 +1,7 @@
 .Burger {
     position: relative;
     margin: auto;
-    width: 15vw;
+    width: 20vw;
     height: 250px;
     overflow: scroll;
     text-align: center;
@@ -9,7 +9,55 @@
     font-size: 1.2rem;
 }
 
-@media (min-width: 500px) and (min-height: 400px) {
+@media (min-width: 200px){
+    .Burger {
+        width: 85vw;
+    }
+}
+
+@media (min-width: 500px){
+    .Burger {
+        width: 55vw;
+    }
+}
+
+@media (min-width: 800px){
+    .Burger {
+        width: 45vw;
+    }
+}
+
+@media (min-width: 1000px){
+    .Burger {
+        width: 35vw;
+    }
+}
+
+@media (min-width: 1200px){
+    .Burger {
+        width: 30vw;
+    }
+}
+
+@media (min-width: 1600px){
+    .Burger {
+        width: 20vw;
+    }
+}
+
+@media (min-width: 1800px){
+    .Burger {
+        width: 35vh;
+    }
+}
+
+@media (min-width: 3000px){
+    .Burger {
+        width: 20vw;
+    }
+}
+
+/* @media (min-width: 500px) and (min-height: 400px) {
     .Burger {
         width: 350px;
         height: 300px;
@@ -21,11 +69,11 @@
         width: 450px;
         height: 400px;
     }
-}
+} */
 
-@media (min-width: 1000px) and (min-height: 700px) {
+/* @media (min-width: 1000px) and (min-height: 700px) {
         .Burger {
             width: 700px;
             height: 600px;
         }
-}
+} */
