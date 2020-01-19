@@ -1,0 +1,5 @@
+App should be good not only by the looks but olso by structure and plan.
+2 important things we can improve:
+.1 prop types
+.2 pure components (should component update)
+lifecycle hooks in general
