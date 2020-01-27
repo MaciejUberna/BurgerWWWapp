@@ -12,7 +12,10 @@ The purpose of this app is to store orders of bugers.
 
 ## Deployment
 
-This is a simple web project, deployment can be on any web server or even local file system.
+Install node.js .
+Download the project from github. In "burger-app" folder type in terminal: "npm install",
+then type "npm run start". The project should start in default webbrowser.
+
 
 ## How to contribute
 
