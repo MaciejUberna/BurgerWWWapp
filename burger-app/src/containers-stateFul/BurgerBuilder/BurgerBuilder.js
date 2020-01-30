@@ -6,12 +6,14 @@ import BuildControls from '../../coponents-stateLess/Burger/BuildControls/BuildC
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
 import OrderSummary from '../../coponents-stateLess/Burger/OrderSummary/OrderSummary';
 
+import axios from '../../axios-orders';
+
 const INGREDIENT_PRICES = {
     salad: 1,
     cheese: 2,
     meat: 4,
     bacon: 2.7
-}
+};
 
 class BurgerBuilder extends Component {
     // constructor (props) {
@@ -78,7 +80,7 @@ class BurgerBuilder extends Component {
                 }
             }), this.updatePurchaseState );
         }
-    }
+    };
 
     updatePurchaseState = (updatedIngredients) => {
         //Creates an array with string entris "meat", "bacon" and so on...
@@ -98,19 +100,43 @@ class BurgerBuilder extends Component {
                 return sum + element;
             }, 0);
         this.setState({purchasable: sum > 0});
-    }
+    };
 
     purchaseHandler = () => {
         this.setState({purchaseButtonClicked: true});
-    }
+    };
 
     purchaseButtonClickedCanceledHandler = () => {
         this.setState({purchaseButtonClicked: false});
-    }
+    };
 
     purchaseContinueHandler = () => {
-        alert('Wybrałeś kontynuację!');
-    }
+        // alert('Wybrałeś kontynuację!');
+
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice,
+            customer: {
+                name: 'Maciej',
+                address: {
+                    street: 'InfineteLoopStreet 1',
+                    zipCode: '99-999',
+                    country: 'Poland'
+                },
+                email: 'test1@test.com'
+            },
+            deliveryMethod: 'fastests'
+        };
+
+        //for firebase its .json node
+        axios.post('/orders.json',order)
+            .then(response => {
+                console.log('Response to order: ',response)
+            })
+            .catch(error => {
+                console.log('Response to order error: ',error)
+            });
+    };
     
     render () {
         const disabledInfo = {
