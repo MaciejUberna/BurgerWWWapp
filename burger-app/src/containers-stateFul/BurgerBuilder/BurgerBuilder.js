@@ -3,6 +3,7 @@ import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Burger from '../../coponents-stateLess/Burger/Burger';
 import BuildControls from '../../coponents-stateLess/Burger/BuildControls/BuildControls';
 import Spinner from '../../coponents-stateLess/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
 import OrderSummary from '../../coponents-stateLess/Burger/OrderSummary/OrderSummary';
@@ -182,4 +183,4 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder);
