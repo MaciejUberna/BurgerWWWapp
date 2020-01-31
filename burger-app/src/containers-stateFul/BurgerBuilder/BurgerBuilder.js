@@ -28,15 +28,19 @@ class BurgerBuilder extends Component {
         totalPrice: 5,
         purchasable: false,
         purchaseButtonClicked: false,
-        loading: false
+        loading: false,
+        error: false
     }
 
     componentDidMount () {
-        axios.get('https://maciej-my-burger.firebaseio.com/ingredients.json')
+        axios.get('https://maciej-my-burger.firebaseio.com/ingredients')
             .then(response => {
                 console.log('Ingredients feached from database: ',response)
                 this.setState({ingredients: response.data});
             })
+            .catch(error => {
+                this.setState({error: true});
+            });
     }
 
     componentDidUpdate () {
@@ -157,7 +161,7 @@ class BurgerBuilder extends Component {
         };
 
         let orderSummary = null;
-        let burger = <Spinner/>;
+        let burger = this.state.error ? <p>Nie udało się załadować składników burgera.</p> : <Spinner/>;
 
         if(this.state.ingredients) {
             burger = (
