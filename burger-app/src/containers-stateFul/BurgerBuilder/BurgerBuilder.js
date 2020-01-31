@@ -132,7 +132,7 @@ class BurgerBuilder extends Component {
         };
 
         //for firebase its .json node
-        axios.post('/orders.json',order)
+        axios.post('/orders',order)
             .then(response => {
                 this.setState({loading: false, purchaseButtonClicked: false});
                 console.log('Response to order: ',response)

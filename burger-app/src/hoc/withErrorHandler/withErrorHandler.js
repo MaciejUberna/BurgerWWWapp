@@ -28,7 +28,7 @@ const withComponentHandler = (WrappedComponent, axios) => {
             return (
                 <Axiliary>
                     <Modal show={this.state.error ? true : false}
-                    clicked={this.errorConfirmedHandler}
+                    modalClosed={this.errorConfirmedHandler}
                     >
                         {this.state.error ? this.state.error.message : null}
                     </Modal>
