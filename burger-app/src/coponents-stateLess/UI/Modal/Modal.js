@@ -35,7 +35,6 @@ class Modal extends Component {
 }
 
 Modal.propTypes = {
-    children: PropTypes.object.isRequired,
     show: PropTypes.bool.isRequired,
     clicked: PropTypes.func
 };
