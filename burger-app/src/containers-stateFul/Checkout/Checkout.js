@@ -7,14 +7,26 @@ import ContactData from './ContactData/ContactData';
 class Checkout extends Component {
 
     state = {
-        ingredients: {}
+        ingredients: {},
+        price: 0
     }
 
     //Maciek's way
     componentDidMount() {
         if(this.props.location.search) {
             const values = queryString.parse(this.props.location.search, {parseNumbers: true});
-            this.setState({ingredients: values});
+            const ingredients = {};
+            let totalPrice = 0;
+            for (let item in values) {
+                if(item === 'price')
+                    totalPrice = values[item];
+                else
+                    ingredients[item] = values[item];
+            }
+            this.setState({
+                ingredients: ingredients,
+                price: totalPrice
+            });
         } else {
             console.log('Checkout.js didMount: no search history present.')
         }
@@ -48,7 +60,14 @@ class Checkout extends Component {
                 />
                 <Route 
                     path={this.props.match.path + '/contact-data'} 
-                    component={ContactData} 
+                    render={(props) => 
+                        (
+                        <ContactData 
+                            ingredients={this.state.ingredients} 
+                            price={this.state.price}
+                            {...props}
+                            />
+                        )} 
                 />
             </div>
         );
