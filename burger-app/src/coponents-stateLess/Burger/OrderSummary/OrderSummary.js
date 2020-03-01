@@ -14,7 +14,7 @@ class OrderSummary  extends Component {
 
     //This could be a functional component, doesn't nave to be a class
     componentDidUpdate() {
-        console.log('[OrderSummary] did update');
+        //console.log('[OrderSummary] did update');
     }
 
     render() {

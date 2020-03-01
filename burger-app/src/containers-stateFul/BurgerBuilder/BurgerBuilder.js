@@ -150,8 +150,17 @@ class BurgerBuilder extends Component {
         //         this.setState({loading: false, purchaseButtonClicked: false});
         //         console.log('Response to order error: ',error)
         //     });
-
-        this.props.history.push('/checkout');
+        let checkoutAddress = '/checkout';
+        let queryFlag = true;
+        for(let key in this.state.ingredients){
+            if(queryFlag) {
+                checkoutAddress = checkoutAddress.concat('?',key,'=',this.state.ingredients[key]);
+                queryFlag = false;
+            } else {
+                checkoutAddress = checkoutAddress.concat('&',key,'=',this.state.ingredients[key]);
+            }
+        }
+        this.props.history.push(checkoutAddress);
     };
     
     render () {
