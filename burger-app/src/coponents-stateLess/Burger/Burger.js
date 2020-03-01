@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classes from './Burger.module.css'
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
+
+// import { withRouter } from 'react-router-dom'; //- Injects router history
  
 const burger = (props) => {
+    console.log('Burger props: ',props);
     let transformedIngredients = Object.keys(props.ingredients)
     .map(ingredientKey => {
         return [...Array(props.ingredients[ingredientKey])].map((_,i) => {
@@ -34,3 +37,5 @@ burger.propTypes = {
 };
  
 export default burger;
+
+// export default withRouter(burger); //- Injects router history

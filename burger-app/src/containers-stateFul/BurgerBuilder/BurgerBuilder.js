@@ -33,6 +33,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount () {
+        console.log('ComponentDidMount props: ',this.props);
         axios.get('https://maciej-my-burger.firebaseio.com/ingredients.json')
             .then(response => {
                 console.log('Ingredients feached from database: ',response)
@@ -123,32 +124,34 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
         // alert('Wybrałeś kontynuację!');
-        this.setState({loading: true});
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Maciej',
-                address: {
-                    street: 'InfineteLoopStreet 1',
-                    zipCode: '99-999',
-                    country: 'Poland'
-                },
-                email: 'test1@test.com'
-            },
-            deliveryMethod: 'fastests'
-        };
+        // this.setState({loading: true});
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Maciej',
+        //         address: {
+        //             street: 'InfineteLoopStreet 1',
+        //             zipCode: '99-999',
+        //             country: 'Poland'
+        //         },
+        //         email: 'test1@test.com'
+        //     },
+        //     deliveryMethod: 'fastests'
+        // };
 
-        //for firebase its .json node
-        axios.post('/orders.json',order)
-            .then(response => {
-                this.setState({loading: false, purchaseButtonClicked: false});
-                console.log('Response to order: ',response)
-            })
-            .catch(error => {
-                this.setState({loading: false, purchaseButtonClicked: false});
-                console.log('Response to order error: ',error)
-            });
+        // //for firebase its .json node
+        // axios.post('/orders.json',order)
+        //     .then(response => {
+        //         this.setState({loading: false, purchaseButtonClicked: false});
+        //         console.log('Response to order: ',response)
+        //     })
+        //     .catch(error => {
+        //         this.setState({loading: false, purchaseButtonClicked: false});
+        //         console.log('Response to order error: ',error)
+        //     });
+
+        this.props.history.push('/checkout');
     };
     
     render () {
