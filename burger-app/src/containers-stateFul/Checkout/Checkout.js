@@ -8,6 +8,7 @@ class Checkout extends Component {
         ingredients: {}
     }
 
+    //Maciek's way
     componentDidMount() {
         if(this.props.location.search) {
             const values = queryString.parse(this.props.location.search, {parseNumbers: true});
@@ -16,6 +17,16 @@ class Checkout extends Component {
             console.log('Checkout.js didMount: no search history present.')
         }
     }
+
+    //Max way
+    // componentDidMount() {
+    //     const query = new URLSearchParams(this.props.location.search);
+    //     const ingredients = {};
+    //     for(let param of query.entries()) {
+    //         ingredients[param[0]] = +param[1];
+    //     }
+    //     this.setState({ingredients: ingredients});
+    // }
 
     checkoutCancelledHandler = () => {
         this.props.history.goBack();
