@@ -44,7 +44,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidUpdate () {
-        //console.log(this.state);
+        //console.log('Did update: ',this.state);
     }
 
     addIngredientHandler = (type) => {
