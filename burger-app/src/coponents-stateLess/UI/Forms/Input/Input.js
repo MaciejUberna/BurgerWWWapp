@@ -1,19 +1,33 @@
 import React from 'react';
 import classes from './Input.module.css';
 
-const input = ( props) => {
+const input = ( props ) => {
 
     let inputElement = null;
 
-    switch ( props.inputtype ) {
+    switch ( props.elementType ) {
         case ('input'):
-            inputElement = <input className={classes.InputElement} {...props}/>;
+            inputElement = <input 
+                className={classes.InputElement} 
+                {...props.elementConfig}
+                value={props.value}
+                />;
         break;
         case ('textarea'):
-            inputElement = <textarea className={classes.InputElement} {...props}/>;
+            inputElement = <textarea 
+                lassName={classes.InputElement} 
+                {...props.elementConfig}
+                value={props.value}
+                />;
         break;
         default:
-            console.err('[E]Error form validation: Input.js, switch statement.')
+            case ('input'):
+                inputElement = <input 
+                    className={classes.InputElement} 
+                    {...props.elementConfig}
+                    value={props.value}
+                    />;
+            break; 
     }
 
     return (

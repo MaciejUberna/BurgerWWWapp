@@ -7,12 +7,65 @@ import Input from '../../../coponents-stateLess/UI/Forms/Input/Input';
 
 class ContactData extends Component {
     state = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: '',
-            city: ''
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'imie'
+                },
+                value: ''
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'ulica'
+                },
+                value: ''
+            },
+            postalCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'kod-pocztowy'
+                },
+                value: ''
+            },
+            city: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'miejscowość'
+                },
+                value: ''
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'kraj'
+                },
+                value: ''
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'e-mail'
+                },
+                value: ''
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    option: [
+                        {value: 'fastests', displayValue: 'Najszybsza'},
+                        {value: 'cheapest', displayValue: 'Najtańsza'}
+                    ]
+                },
+                value: ''
+            },
         },
         loading: false
     }
@@ -25,16 +78,6 @@ class ContactData extends Component {
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            customer: {
-                name: 'Maciej',
-                address: {
-                    street: 'InfineteLoopStreet 1',
-                    postalCode: '99-999',
-                    city: 'Warsaw'
-                },
-                email: 'test1@test.com'
-            },
-            deliveryMethod: 'fastests'
         };
 
         //for firebase its .json node
@@ -53,11 +96,7 @@ class ContactData extends Component {
     render () {
         let form = (
             <form>
-                <Input inputtype='input' type='text' name='name' placeholder='Twoje Imie' />
-                <Input inputtype='input' type='email' name='email' placeholder='Twój email' />
-                <Input inputtype='input' type='text' name='street' placeholder='Twoja ulica' />
-                <Input inputtype='input' type='text' name='postalCode' placeholder='kod-pocztowy' />
-                <Input inputtype='input' type='text' name='city' placeholder='miasto' />
+                <Input elementType='...' elementConfig='...' value='...'/>
                 <Button btnType='Success' clicked={this.orderHandler}>Zamówienie</Button>
             </form>
         );
