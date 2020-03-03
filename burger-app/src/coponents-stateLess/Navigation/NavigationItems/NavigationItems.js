@@ -7,8 +7,8 @@ const navigationItems = (props) => {
     return (
         <ul className={classes.NavigationItems}>
             {/* For bulien variables we just have to write variable name without value so it's true */}
-            <NavigationItem link="/" active>Burger Builder</NavigationItem>
-            <NavigationItem link="/" >Checkout</NavigationItem>
+            <NavigationItem link="/" exact>Kreator Burgera</NavigationItem>
+            <NavigationItem link="/orders" >Zamówienia</NavigationItem>
         </ul>
     );
 }
