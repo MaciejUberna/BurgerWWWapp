@@ -20,8 +20,14 @@ const input = ( props ) => {
                 value={props.value}
                 />;
         break;
+        case ('select'):
+            inputElement = <select 
+                lassName={classes.InputElement} 
+                {...props.elementConfig}
+                value={props.value}
+                />;
+        break;
         default:
-            case ('input'):
                 inputElement = <input 
                     className={classes.InputElement} 
                     {...props.elementConfig}
