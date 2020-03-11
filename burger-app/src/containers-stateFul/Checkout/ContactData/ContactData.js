@@ -14,6 +14,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'imie'
                 },
+                children: '',
                 value: ''
             },
             street: {
@@ -22,6 +23,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'ulica'
                 },
+                children: '',
                 value: ''
             },
             postalCode: {
@@ -30,6 +32,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'kod-pocztowy'
                 },
+                children: '',
                 value: ''
             },
             city: {
@@ -38,6 +41,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'miejscowość'
                 },
+                children: '',
                 value: ''
             },
             country: {
@@ -46,6 +50,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'kraj'
                 },
+                children: '',
                 value: ''
             },
             email: {
@@ -54,6 +59,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'e-mail'
                 },
+                children: '',
                 value: ''
             },
             deliveryMethod: {
@@ -64,8 +70,19 @@ class ContactData extends Component {
                         {value: 'cheapest', displayValue: 'Najtańsza'}
                     ]
                 },
+                children: '',
                 value: ''
             },
+            buyTerms: {
+                elementType: 'checkbox',
+                elementConfig: {
+                    type: 'checkbox',
+                    name: 'terms',
+                    id: 'terms'
+                },
+                children: 'Przystajesz na REGULAMIN świadczenia usługi.',
+                value: ''
+            }
         },
         loading: false
     }
@@ -110,6 +127,7 @@ class ContactData extends Component {
                             elementType={formElement.config.elementType}
                             elementConfig={formElement.config.elementConfig}
                             value={formElement.config.value}
+                            children={formElement.config.children}
                         />
                     );
                 })}
