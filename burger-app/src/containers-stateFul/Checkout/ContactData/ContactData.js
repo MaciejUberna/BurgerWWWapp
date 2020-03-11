@@ -78,23 +78,31 @@ class ContactData extends Component {
                 elementConfig: {
                     type: 'checkbox',
                     name: 'terms',
-                    id: 'terms'
+                    value: 'checked',
+                    id: 'terms',
                 },
                 children: 'Przystajesz na REGULAMIN świadczenia usługi.',
-                value: ''
+                value: false
             }
         },
         loading: false
     }
 
+    //I dont want to send request automatically because that would reload my page
+    //That is why I preventDefault.
     orderHandler = (event) => {
         event.preventDefault();
         //console.log('ingredients in ContactData: ',this.props.ingredients);
 
         this.setState({loading: true});
+        const formData = {};
+        for(let formElementIndentifier in this.state.orderForm) {
+            formData[formElementIndentifier] = this.state.orderForm[formElementIndentifier].value;
+        }
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
+            orderData: formData
         };
 
         //for firebase its .json node
@@ -111,13 +119,17 @@ class ContactData extends Component {
     }
 
     imputChangedHandler = (event, inputIdentifier) => {
+        //console.log('ContactData.js, imputChangedHandler, event.tatget.value: ',event.target.checked);
         const updatedOrderForm = {
             ...this.state.orderForm
         };
         const updatedFormElement = {
             ...updatedOrderForm[inputIdentifier]
         };
-        updatedFormElement.value = event.target.value;
+        if(updatedFormElement.elementType==='checkbox')
+            updatedFormElement.value = event.target.checked;
+        else
+            updatedFormElement.value = event.target.value;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         this.setState({orderForm: updatedOrderForm});
     }
@@ -131,7 +143,7 @@ class ContactData extends Component {
             })
         }
         let form = (
-            <form>
+            <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => {
                     return (
                         <Input
@@ -144,7 +156,7 @@ class ContactData extends Component {
                         />
                     );
                 })}
-                <Button btnType='Success' clicked={this.orderHandler}>Zamówienie</Button>
+                <Button btnType='Success' >Zamówienie</Button>
             </form>
         );
         if(this.state.loading) {
