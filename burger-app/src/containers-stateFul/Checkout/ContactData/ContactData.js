@@ -83,6 +83,20 @@ class ContactData extends Component {
                 },
                 children: 'Przystajesz na REGULAMIN świadczenia usługi.',
                 value: false
+            },
+            sex: {
+                elementType: 'radio',
+                elementConfig: {
+                    type: 'radio',
+                    name: 'yourType',
+                    options: [
+                        {value: 'male', text: 'Męszczyzna'},
+                        {value: 'female', text: 'Kobieta'},
+                        {value: 'biSex', text: 'Hermoafrodyta'}
+                    ]
+                },
+                children: 'Podaj swoją płeć:',
+                value: ''
             }
         },
         loading: false
@@ -119,7 +133,7 @@ class ContactData extends Component {
     }
 
     imputChangedHandler = (event, inputIdentifier) => {
-        //console.log('ContactData.js, imputChangedHandler, event.tatget.value: ',event.target.checked);
+        //console.log('ContactData.js, imputChangedHandler, event.tatget.value: ',event.target.value);
         const updatedOrderForm = {
             ...this.state.orderForm
         };

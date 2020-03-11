@@ -37,7 +37,7 @@ const input = ( props ) => {
             );
         break;
         case ('checkbox'):
-            inputElement = 
+            inputElement = (
                 <label className={classes.CheckboxLabel} >
                     <input 
                     {...props.elementConfig}
@@ -45,7 +45,25 @@ const input = ( props ) => {
                     onChange={props.changed}
                     />
                     <span className={classes.Checkmark}></span> {props.children}
-                </label>;
+                </label>
+            );
+        break;
+        case ('radio'):
+            inputElement = (
+                <label className={classes.InputElement}>
+                    {props.children}
+                    <br/>
+                    {props.elementConfig.options.map(option => {
+                        return (
+                            <label htmlFor={option.value} key={option.value}>
+                            <br/>
+                            {option.text}
+                            <input {...props.elementConfig} value={option.value} onChange={props.changed}/>
+                            </label>
+                        )
+                    })}
+                </label>
+            );
         break;
         default:
                 inputElement = <input 
@@ -54,7 +72,7 @@ const input = ( props ) => {
                     value={props.value}
                     onChange={props.changed}
                     />;
-            break; 
+        break; 
     }
 
     return (
