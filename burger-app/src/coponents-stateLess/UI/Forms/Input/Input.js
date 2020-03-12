@@ -3,28 +3,37 @@ import classes from './Input.module.css';
 
 const input = ( props ) => {
 
+    let validationMessage = null;
     let inputElement = null;
     const inputClasses = [classes.InputElement];
+    const checkboxClasses = [classes.CheckboxLabel];
 
     if(props.invalid && props.shouldValidate && props.touched) {
         inputClasses.push(classes.Invalid);
+        checkboxClasses.push(classes.Invalid);
+        if(props.validationHelp)
+            validationMessage = (
+                <p className={classes.ValidationHelp}>{props.validationHelp}</p>
+            );
     }
 
     switch ( props.elementType ) {
         case ('input'):
-            inputElement = <input 
+            inputElement = ( <input 
                 className={inputClasses.join(' ')} 
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed}
-                />;
+                />
+            );
         break;
         case ('textarea'):
-            inputElement = <textarea 
+            inputElement = ( <textarea 
                 className={inputClasses.join(' ')} 
                 value={props.value}
                 onChange={props.changed}        
-                />;
+                />
+            );
         break;
         case ('select'):
             inputElement = (
@@ -43,7 +52,7 @@ const input = ( props ) => {
         break;
         case ('checkbox'):
             inputElement = (
-                <label className={inputClasses.join(' ')} >
+                <label className={checkboxClasses.join(' ')} >
                     <input 
                     {...props.elementConfig}
                     value={props.value}
@@ -62,6 +71,9 @@ const input = ( props ) => {
                         return (
                             <table key={option.value}>
                                 <tbody>
+                                    <tr>
+
+                                    </tr>
                                     <tr>
                                         <td>
                                             <input 
@@ -83,12 +95,13 @@ const input = ( props ) => {
             );
         break;
         default:
-                inputElement = <input 
+                inputElement = ( <input 
                     className={inputClasses.join(' ')} 
                     {...props.elementConfig}
                     value={props.value}
                     onChange={props.changed}
-                    />;
+                    />
+                );
         break; 
     }
 
@@ -96,6 +109,7 @@ const input = ( props ) => {
         <div className={classes.Input}>
             <label className={classes.Label}>{props.label}</label>
             {inputElement}
+            {validationMessage}
         </div>
     );
 }

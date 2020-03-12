@@ -17,10 +17,12 @@ class ContactData extends Component {
                 children: '',
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    regexp: '[A-ZŁ]{1}[a-złńćźżśąęó]{1,}\s{1,}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}'
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                validationHelp: 'Twoje imie i nazwisko powinno zaczynać się z wielkiej litery i składać się conajmniej z jednego znaku.'
             },
             street: {
                 elementType: 'input',
@@ -34,7 +36,8 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                validationHelp: 'Nazwa ulicy powinna zaczynać się z wielkiej litery a po nazwie powinien znajdować się numer domu i mieszkania przedzielony znakiem "/".'
             },
             postalCode: {
                 elementType: 'input',
@@ -50,7 +53,8 @@ class ContactData extends Component {
                     maxLength: 5
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                validationHelp: 'Kod pocztowy powinien składać się z niczym nie rozdzielonych 5-u cyfr.'
             },
             city: {
                 elementType: 'input',
@@ -64,7 +68,8 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                validationHelp: 'Nazwa miejscowości powinna zaczynać się z wielkiej litery.'
             },
             country: {
                 elementType: 'input',
@@ -78,7 +83,8 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                validationHelp: 'Nazwa kraju powinna zaczynać się z wielkiej litery.'
             },
             email: {
                 elementType: 'input',
@@ -92,7 +98,8 @@ class ContactData extends Component {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                validationHelp: 'Email powinien zawierać 1 znak "@" i tekst z każdej jego strony.'
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -103,12 +110,9 @@ class ContactData extends Component {
                     ]
                 },
                 children: '',
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false,
-                touched: false
+                value: 'fastests',
+                validation: {},
+                valid: false
             },
             buyTerms: {
                 elementType: 'checkbox',
@@ -123,7 +127,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false
+                valid: false,
+                validationHelp: 'Zgoda jest wymagana jeśli chcesz złożyć zamówienie.'
             },
             numberOfVisits: {
                 elementType: 'radio',
@@ -132,15 +137,13 @@ class ContactData extends Component {
                     name: 'yourType',
                     options: [
                         {value: '1', text: 'Pierwszy raz'},
-                        {value: '<10', text: 'Niecałe 10'},
-                        {value: '>10', text: 'Powyżej 10-u razy'}
+                        {value: '<5', text: 'Niecałe 5'},
+                        {value: '>5', text: 'Powyżej 5-u razy'}
                     ]
                 },
-                children: 'Jak często korzystasz z tego serwisu?',
+                children: 'Jak często w tygodniu korzystasz z tego serwisu?',
                 value: '',
-                validation: {
-                    required: true
-                },
+                validation: {},
                 valid: false
             }
         },
@@ -234,6 +237,7 @@ class ContactData extends Component {
                             elementConfig={formElement.config.elementConfig}
                             value={formElement.config.value}
                             children={formElement.config.children}
+                            validationHelp={formElement.config.validationHelp}
                             invalid={!formElement.config.valid}
                             shouldValidate={formElement.config.validation}
                             touched={formElement.config.touched}
