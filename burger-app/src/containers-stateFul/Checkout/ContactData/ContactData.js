@@ -12,7 +12,7 @@ class ContactData extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'imie'
+                    placeholder: 'imie i nazwisko'
                 },
                 children: '',
                 value: '',
@@ -173,7 +173,10 @@ class ContactData extends Component {
     checkValidity = (value, rules) => {
         let isValid = true;
         if(rules.required) {
-            isValid = value.trim() !== '' && isValid;
+            if(typeof value === 'boolean')
+                isValid = value;
+            else
+                isValid = value.trim() !== '' && isValid;
         }
 
         if(rules.minLength) {
@@ -223,6 +226,8 @@ class ContactData extends Component {
                             elementConfig={formElement.config.elementConfig}
                             value={formElement.config.value}
                             children={formElement.config.children}
+                            invalid={!formElement.config.valid}
+                            shouldValidate={formElement.config.validation}
                             changed={(event) => this.imputChangedHandler(event,formElement.id)}
                         />
                     );

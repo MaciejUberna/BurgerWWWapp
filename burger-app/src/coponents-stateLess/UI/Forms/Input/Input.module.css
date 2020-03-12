@@ -96,3 +96,8 @@
 .InputElement:disabled {
     background-color: #b4b184;
 }
+
+.Invalid {
+    border: 1px solid red;
+    background-color: #FDA49A;
+}
