@@ -15,7 +15,11 @@ class ContactData extends Component {
                     placeholder: 'imie'
                 },
                 children: '',
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             street: {
                 elementType: 'input',
@@ -24,7 +28,11 @@ class ContactData extends Component {
                     placeholder: 'ulica'
                 },
                 children: '',
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             postalCode: {
                 elementType: 'input',
@@ -33,7 +41,13 @@ class ContactData extends Component {
                     placeholder: 'kod-pocztowy'
                 },
                 children: '',
-                value: ''
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5
+                },
+                valid: false
             },
             city: {
                 elementType: 'input',
@@ -42,7 +56,11 @@ class ContactData extends Component {
                     placeholder: 'miejscowość'
                 },
                 children: '',
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             country: {
                 elementType: 'input',
@@ -51,7 +69,11 @@ class ContactData extends Component {
                     placeholder: 'kraj'
                 },
                 children: '',
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             email: {
                 elementType: 'input',
@@ -60,7 +82,11 @@ class ContactData extends Component {
                     placeholder: 'e-mail'
                 },
                 children: '',
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -71,7 +97,11 @@ class ContactData extends Component {
                     ]
                 },
                 children: '',
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             },
             buyTerms: {
                 elementType: 'checkbox',
@@ -82,9 +112,13 @@ class ContactData extends Component {
                     id: 'terms',
                 },
                 children: 'Przystajesz na REGULAMIN świadczenia usługi.',
-                value: false
+                value: false,
+                validation: {
+                    required: true
+                },
+                valid: false
             },
-            sex: {
+            numberOfVisits: {
                 elementType: 'radio',
                 elementConfig: {
                     type: 'radio',
@@ -96,7 +130,11 @@ class ContactData extends Component {
                     ]
                 },
                 children: 'Jak często korzystasz z tego serwisu?',
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
             }
         },
         loading: false
@@ -132,8 +170,25 @@ class ContactData extends Component {
             });
     }
 
+    checkValidity = (value, rules) => {
+        let isValid = true;
+        if(rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if(rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid;;
+        }
+
+        if(rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid;;
+        }
+
+        return isValid;
+    }
+
     imputChangedHandler = (event, inputIdentifier) => {
-        console.log('ContactData.js, imputChangedHandler, event.tatget.value: ',event.target.value);
+        //console.log('ContactData.js, imputChangedHandler, event.tatget.value: ',event.target.value);
         const updatedOrderForm = {
             ...this.state.orderForm
         };
@@ -144,6 +199,8 @@ class ContactData extends Component {
             updatedFormElement.value = event.target.checked;
         else
             updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value,updatedFormElement.validation);
+        console.log('ContactData.js, imputChangedHandler, updatedFormElement: ',updatedFormElement);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         this.setState({orderForm: updatedOrderForm});
     }
