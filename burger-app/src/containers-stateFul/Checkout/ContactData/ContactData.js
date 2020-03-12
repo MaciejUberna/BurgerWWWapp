@@ -107,7 +107,7 @@ class ContactData extends Component {
                 },
                 valid: false,
                 touched: false,
-                validationHelp: 'Email powinien zawierać 1 znak "@" i tekst zcyframi z każdej jego strony.'
+                validationHelp: 'Email powinien zawierać 1 znak "@" i tekst z cyframi z każdej jego strony.'
             },
             deliveryMethod: {
                 elementType: 'select',
