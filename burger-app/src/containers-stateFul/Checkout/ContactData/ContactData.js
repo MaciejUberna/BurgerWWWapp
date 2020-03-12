@@ -5,6 +5,11 @@ import classes from './ContactData.module.css';
 import axios from '../../../axios-orders';
 import Input from '../../../coponents-stateLess/UI/Forms/Input/Input';
 
+// use https://validatejs.org/ to validete forms in production
+// new ideas for validation
+// react-validation package: https://www.npmjs.com/package/react-validation
+// formsy-react package: https://github.com/christianalfoni/formsy-react
+
 class ContactData extends Component {
     state = {
         orderForm: {
