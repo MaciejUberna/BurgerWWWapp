@@ -12,17 +12,17 @@ class ContactData extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'imie i nazwisko'
+                    placeholder: 'imię i nazwisko'
                 },
                 children: '',
                 value: '',
                 validation: {
                     required: true,
-                    regexp: '[A-ZŁ]{1}[a-złńćźżśąęó]{1,}\s{1,}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}'
+                    regexp: /^[A-ZŁ]{1}[a-złńćźżśąęó]{1,}\s{1,}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}$/g
                 },
                 valid: false,
                 touched: false,
-                validationHelp: 'Twoje imie i nazwisko powinno zaczynać się z wielkiej litery i składać się conajmniej z jednego znaku.'
+                validationHelp: 'Twoje imię i nazwisko powinno zaczynać się z wielkiej litery i składać się conajmniej z jednego znaku.'
             },
             street: {
                 elementType: 'input',
@@ -33,7 +33,8 @@ class ContactData extends Component {
                 children: '',
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    regexp: /^[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}\s{1,}\d{1,}[a-z]*\/\d{1,}$/g
                 },
                 valid: false,
                 touched: false,
@@ -49,8 +50,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 5,
-                    maxLength: 5
+                    regexp: /^\d{5}$/g
                 },
                 valid: false,
                 touched: false,
@@ -65,7 +65,8 @@ class ContactData extends Component {
                 children: '',
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    regexp: /^[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,}$/g
                 },
                 valid: false,
                 touched: false,
@@ -80,7 +81,8 @@ class ContactData extends Component {
                 children: '',
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    regexp: /^[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,}$/g
                 },
                 valid: false,
                 touched: false,
@@ -95,11 +97,12 @@ class ContactData extends Component {
                 children: '',
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    regexp: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
                 },
                 valid: false,
                 touched: false,
-                validationHelp: 'Email powinien zawierać 1 znak "@" i tekst z każdej jego strony.'
+                validationHelp: 'Email powinien zawierać 1 znak "@" i tekst zcyframi z każdej jego strony.'
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -138,7 +141,8 @@ class ContactData extends Component {
                     options: [
                         {value: '1', text: 'Pierwszy raz'},
                         {value: '<5', text: 'Niecałe 5'},
-                        {value: '>5', text: 'Powyżej 5-u razy'}
+                        {value: '5', text: 'Równo 5 razy'},
+                        {value: '>5', text: 'Więcej niż 5 razy'}
                     ]
                 },
                 children: 'Jak często w tygodniu korzystasz z tego serwisu?',
@@ -190,11 +194,16 @@ class ContactData extends Component {
         }
 
         if(rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;;
+            isValid = value.length >= rules.minLength && isValid;
         }
 
         if(rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;;
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+
+        if(rules.regexp) {
+            //console.log('value.match(rules.regexp): ',value.match(rules.regexp))
+            isValid = value.match(rules.regexp) && isValid;
         }
 
         return isValid;
