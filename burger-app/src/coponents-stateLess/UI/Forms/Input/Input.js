@@ -55,11 +55,23 @@ const input = ( props ) => {
                     <br/>
                     {props.elementConfig.options.map(option => {
                         return (
-                            <label htmlFor={option.value} key={option.value}>
-                            <br/>
-                            {option.text}
-                            <input {...props.elementConfig} value={option.value} onChange={props.changed}/>
-                            </label>
+                            <table key={option.value}>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input 
+                                            {...props.elementConfig} 
+                                            value={option.value} 
+                                            onChange={props.changed}/>
+                                        </td>
+                                        <td>
+                                            <label htmlFor={option.value} >
+                                            {option.text}
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         )
                     })}
                 </label>

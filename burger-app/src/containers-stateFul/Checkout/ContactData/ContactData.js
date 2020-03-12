@@ -90,12 +90,12 @@ class ContactData extends Component {
                     type: 'radio',
                     name: 'yourType',
                     options: [
-                        {value: 'male', text: 'Męszczyzna'},
-                        {value: 'female', text: 'Kobieta'},
-                        {value: 'biSex', text: 'Hermoafrodyta'}
+                        {value: '1', text: 'Pierwszy raz'},
+                        {value: '<10', text: 'Niecałe 10'},
+                        {value: '>10', text: 'Powyżej 10-u razy'}
                     ]
                 },
-                children: 'Podaj swoją płeć:',
+                children: 'Jak często korzystasz z tego serwisu?',
                 value: ''
             }
         },
@@ -133,7 +133,7 @@ class ContactData extends Component {
     }
 
     imputChangedHandler = (event, inputIdentifier) => {
-        //console.log('ContactData.js, imputChangedHandler, event.tatget.value: ',event.target.value);
+        console.log('ContactData.js, imputChangedHandler, event.tatget.value: ',event.target.value);
         const updatedOrderForm = {
             ...this.state.orderForm
         };
