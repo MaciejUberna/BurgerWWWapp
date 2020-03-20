@@ -34,14 +34,14 @@ class BurgerBuilder extends Component {
 
     componentDidMount () {
         console.log('ComponentDidMount props: ',this.props);
-        axios.get('https://maciej-my-burger.firebaseio.com/ingredients.json')
-            .then(response => {
-                console.log('Ingredients feached from database: ',response)
-                this.setState({ingredients: response.data});
-            })
-            .catch(error => {
-                this.setState({error: true});
-            });
+        // axios.get('https://maciej-my-burger.firebaseio.com/ingredients.json')
+        //     .then(response => {
+        //         console.log('Ingredients feached from database: ',response)
+        //         this.setState({ingredients: response.data});
+        //     })
+        //     .catch(error => {
+        //         this.setState({error: true});
+        //     });
     }
 
     componentDidUpdate () {
