@@ -41,23 +41,13 @@ class BurgerBuilder extends Component {
     }
 
     updatePurchaseState = () => {
-        //Creates an array with string entris "meat", "bacon" and so on...
-        // const sum = Object.keys(updatedIngredients)
-        //     //Map ingredients
-        //     .map(ingredientKey => {
-        //         return updatedIngredients[ingredientKey]
-        //     })
-        //     //sum ap all elements
-        //     .reduce((sum,element) => {
-        //         return sum + element;
-        //     }, 0);
-        //     this.setState({purchasable: sum > 0});
 
         const sum = Object.values(this.props.ings)
             .reduce((sum,element) => {
                 return sum + element;
             }, 0);
         return sum > 0;
+        
     };
 
     purchaseHandler = () => {
@@ -69,47 +59,8 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        // alert('Wybrałeś kontynuację!');
-        // this.setState({loading: true});
-        // const order = {
-        //     ingredients: this.state.ingredients,
-        //     price: this.state.totalPrice,
-        //     customer: {
-        //         name: 'Maciej',
-        //         address: {
-        //             street: 'InfineteLoopStreet 1',
-        //             zipCode: '99-999',
-        //             country: 'Poland'
-        //         },
-        //         email: 'test1@test.com'
-        //     },
-        //     deliveryMethod: 'fastests'
-        // };
-
-        // //for firebase its .json node
-        // axios.post('/orders.json',order)
-        //     .then(response => {
-        //         this.setState({loading: false, purchaseButtonClicked: false});
-        //         console.log('Response to order: ',response)
-        //     })
-        //     .catch(error => {
-        //         this.setState({loading: false, purchaseButtonClicked: false});
-        //         console.log('Response to order error: ',error)
-        //     });
-       
-
-        //Done Max way:
-        const queryParams = [];
-        for(let i in this.props.ings) {
-            queryParams.push(encodeURIComponent(i) + '='
-            + encodeURIComponent(this.state.ingredients[i]))
-        }
-        queryParams.push('price='+this.state.totalPrice);
-        const queryString = queryParams.join('&');
-        this.props.history.push({
-            pathname: '/checkout',
-            search: '?' + queryString
-        });
+        //Done Max way2;
+        this.props.history.push('/checkout');
     };
     
     render () {
