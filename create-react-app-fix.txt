@@ -1,0 +1,10 @@
+For people who are looking for npm version of @nicolo-ribaudo 's workaround, here are the exact steps I took:
+
+delete node_modules and package-lock.json
+add "resolutions": { "@babel/preset-env": "^7.8.7" } to package.json
+npm install npm-force-resolutions --save-dev
+npm install
+npx npm-force-resolutions
+npm install again
+npm run build
+I had to add SKIP_PREFLIGHT_CHECK=true to .env file to make the build work without ejecting
