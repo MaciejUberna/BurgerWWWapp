@@ -13,21 +13,12 @@ import OrderSummary from '../../coponents-stateLess/Burger/OrderSummary/OrderSum
 import axios from '../../axios-orders';
 import * as actionTypes from '../../store/actions';
 
-//For feaching the data best place is componentDidMount
-// const INGREDIENT_PRICES = {
-//     salad: 1,
-//     cheese: 2,
-//     meat: 4,
-//     bacon: 2.7
-// };
-
 class BurgerBuilder extends Component {
     // constructor (props) {
     //     super(props);
     //     this.state = {...}
     // }
     state = {
-        purchasable: false,
         purchaseButtonClicked: false,
         loading: false,
         error: false
@@ -49,7 +40,7 @@ class BurgerBuilder extends Component {
         //console.log('Did update: ',this.state);
     }
 
-    updatePurchaseState = (updatedIngredients) => {
+    updatePurchaseState = () => {
         //Creates an array with string entris "meat", "bacon" and so on...
         // const sum = Object.keys(updatedIngredients)
         //     //Map ingredients
@@ -62,11 +53,11 @@ class BurgerBuilder extends Component {
         //     }, 0);
         //     this.setState({purchasable: sum > 0});
 
-        const sum = Object.values(this.state.ingredients)
+        const sum = Object.values(this.props.ings)
             .reduce((sum,element) => {
                 return sum + element;
             }, 0);
-        this.setState({purchasable: sum > 0});
+        return sum > 0;
     };
 
     purchaseHandler = () => {
@@ -141,7 +132,7 @@ class BurgerBuilder extends Component {
                         ingredientAdded={this.props.onIngredientAdded}
                         ingredientRemoved={this.props.onIngredientRemoved}
                         disabled = {disabledInfo}
-                        purchasable = {this.state.purchasable}
+                        purchasable = {this.updatePurchaseState()}
                         price = {this.props.price}
                         /* if purchase button clicked */
                         ordered={this.purchaseHandler}
