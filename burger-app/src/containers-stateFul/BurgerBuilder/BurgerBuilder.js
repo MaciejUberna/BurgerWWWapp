@@ -11,7 +11,7 @@ import Modal from '../../coponents-stateLess/UI/Modal/Modal';
 import OrderSummary from '../../coponents-stateLess/Burger/OrderSummary/OrderSummary';
 
 import axios from '../../axios-orders';
-import * as actionTypes from '../../store/actions';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 class BurgerBuilder extends Component {
     // constructor (props) {
