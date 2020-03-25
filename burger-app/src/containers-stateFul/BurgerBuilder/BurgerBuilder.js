@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import axios from '../../axios-orders';
+
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Burger from '../../coponents-stateLess/Burger/Burger';
 import BuildControls from '../../coponents-stateLess/Burger/BuildControls/BuildControls';
@@ -10,7 +12,6 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
 import OrderSummary from '../../coponents-stateLess/Burger/OrderSummary/OrderSummary';
 
-import axios from '../../axios-orders';
 import * as burgerBuilderActions from '../../store/actions/burgerBuilder';
 
 class BurgerBuilder extends Component {
@@ -19,21 +20,11 @@ class BurgerBuilder extends Component {
     //     this.state = {...}
     // }
     state = {
-        purchaseButtonClicked: false,
-        loading: false,
-        error: false
+        purchaseButtonClicked: false
     }
 
     componentDidMount () {
         console.log('ComponentDidMount props: ',this.props);
-        // axios.get('https://maciej-my-burger.firebaseio.com/ingredients.json')
-        //     .then(response => {
-        //         console.log('Ingredients feached from database: ',response)
-        //         this.setState({ingredients: response.data});
-        //     })
-        //     .catch(error => {
-        //         this.setState({error: true});
-        //     });
     }
 
     componentDidUpdate () {
@@ -101,9 +92,6 @@ class BurgerBuilder extends Component {
             );
         }
 
-        if (this.state.loading) {
-            orderSummary = <Spinner/>;
-        };
         //console.log('-2- disableInfo: ',disabledInfo);
         return (
             <Auxiliary>
