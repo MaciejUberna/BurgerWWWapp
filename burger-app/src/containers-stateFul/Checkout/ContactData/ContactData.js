@@ -180,18 +180,7 @@ class ContactData extends Component {
             price: this.props.price,
             orderData: formData
         };
-
-        //for firebase its .json node
-        axios.post('/orders.json',order)
-            .then(response => {
-                this.setState({loading: false});
-                this.props.history.push('/');
-                console.log('Response to order: ',response)
-            })
-            .catch(error => {
-                this.setState({loading: false});
-                console.log('Response to order error: ',error)
-            });
+        
     }
 
     checkValidity = (value, rules) => {
