@@ -6,6 +6,8 @@ import axios from '../../../axios-orders';
 import { connect } from 'react-redux';
 
 import Input from '../../../coponents-stateLess/UI/Forms/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions/index';
 
 // use https://validatejs.org/ to validete forms in production
 // new ideas for validation
@@ -170,7 +172,6 @@ class ContactData extends Component {
         event.preventDefault();
         //console.log('ingredients in ContactData: ',this.props.ingredients);
 
-        this.setState({loading: true});
         const formData = {};
         for(let formElementIndentifier in this.state.orderForm) {
             formData[formElementIndentifier] = this.state.orderForm[formElementIndentifier].value;
@@ -180,7 +181,9 @@ class ContactData extends Component {
             price: this.props.price,
             orderData: formData
         };
-        
+
+        this.props.onOrderBurger(order);
+
     }
 
     checkValidity = (value, rules) => {
@@ -283,4 +286,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseBurgerStart(orderData))
+    }
+};
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData,axios));
