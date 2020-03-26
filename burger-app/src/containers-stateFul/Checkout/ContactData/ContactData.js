@@ -163,7 +163,6 @@ class ContactData extends Component {
             }
         },
         formIsValid: false,
-        loading: false
     }
 
     //I dont want to send request automatically because that would reload my page
@@ -267,7 +266,7 @@ class ContactData extends Component {
                 <Button btnType='Success' disabled={!this.state.formIsValid}>Zamówienie</Button>
             </form>
         );
-        if(this.state.loading) {
+        if(this.props.loading) {
             form = <Spinner />;
         }
         return (
@@ -282,7 +281,8 @@ class ContactData extends Component {
 const mapStateToProps = state => {
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        loading: state.loading
     }
 }
 
