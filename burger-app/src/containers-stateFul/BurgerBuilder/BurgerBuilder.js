@@ -12,7 +12,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
 import OrderSummary from '../../coponents-stateLess/Burger/OrderSummary/OrderSummary';
 
-import * as burgerBuilderActions from '../../store/actions/burgerBuilder';
+import * as actions from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
     // constructor (props) {
@@ -52,6 +52,7 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
         //Done Max way2;
+        this.props.onInitPurchase();
         this.props.history.push('/checkout');
     };
     
@@ -115,9 +116,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
-        onInitIngredints: () => dispatch(burgerBuilderActions.initIngredints())
+        onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
+        onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
+        onInitIngredints: () => dispatch(actions.initIngredints()),
+        onInitPurchase: () => dispatch(actions.purchaseInit())
     }
 }
 
