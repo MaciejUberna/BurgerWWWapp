@@ -53,7 +53,7 @@ const fetchOrdersStart = (state) => {
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.PURCHASE_INIT: return purcheseInit(state); 
-        case actionTypes.PURCHASE_BURGER_START: purchaseBurgerStart(state);
+        case actionTypes.PURCHASE_BURGER_START: return purchaseBurgerStart(state);
         case actionTypes.PURCHASE_BURGER_SUCCESS: return purchaseBurgerSuccess(state,action);
         case actionTypes.PURCHASE_BURGER_FAIL: return purchaseBurgerFail(state);
         case actionTypes.FETCH_ORDERS_SUCCESS: return fetchOrdersSuccess(state,action);
