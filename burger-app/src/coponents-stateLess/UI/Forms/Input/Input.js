@@ -35,6 +35,14 @@ const input = ( props ) => {
                 />
             );
         break;
+        case ('password'):
+            inputElement = ( <password 
+                className={inputClasses.join(' ')} 
+                value={props.value}
+                onChange={props.changed}        
+                />
+            );
+        break;
         case ('select'):
             inputElement = (
                 <select
