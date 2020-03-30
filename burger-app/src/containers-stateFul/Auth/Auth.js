@@ -44,7 +44,8 @@ class Auth extends Component {
                 touched: false,
                 validationHelp: 'Hasło bez polskich znaków, powinno się składać conajmniej z jednaj małej litery, jednej dużej litery, z cyfry, a długość hasła min 8 znaków max 24 znaki.'
             }
-        }
+        },
+        isSignUp: true
     };
 
     checkValidity = (value, rules) => {
@@ -72,7 +73,7 @@ class Auth extends Component {
         }
 
         return isValid;
-    }
+    };
 
     imputChangedHandler = (event, controlName) => {
         const updatedControls = {
@@ -85,11 +86,17 @@ class Auth extends Component {
             }
         };
         this.setState({controls: updatedControls})
-    }
+    };
 
     submitHandler = (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value);
+        this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignUp);
+    };
+
+    switchAuthModeHandler = () => {
+        this.setState(prevState => {
+            return {isSignUp: !prevState.isSignUp}
+        });
     };
 
     render() {
@@ -98,7 +105,7 @@ class Auth extends Component {
             formElementsArray.push({
                 id: key,
                 config: this.state.controls[key] 
-            })
+            });
         }
 
         const form = formElementsArray.map(f => (
@@ -120,8 +127,17 @@ class Auth extends Component {
             <div className={classes.Auth}>
                 <form onSubmit={this.submitHandler}>
                     {form}
-                    <Button btnType="Success">Zaloguj się</Button>
+                    <Button btnType="Success">Wyślij</Button>
                 </form>
+                <Button 
+                    clicked={this.switchAuthModeHandler}
+                    btnType="Danger">
+                        Zmień na 
+                        {!this.state.isSignUp 
+                        ? 
+                        ' Zarejestruj się' 
+                        : ' Zaloguj'}
+                </Button>
             </div>
         );
     };
@@ -129,7 +145,7 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
     };
 };
 
