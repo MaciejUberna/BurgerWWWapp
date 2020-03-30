@@ -6,6 +6,9 @@ import Button from '../../coponents-stateLess/UI/Button/Button';
 import classes from './Auth.module.css';
 import * as actions from '../../store/actions/index';
 
+// Firebase rest auth:
+// https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
+
 class Auth extends Component {
     state = {
         controls: {
