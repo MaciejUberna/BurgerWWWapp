@@ -1,20 +1,21 @@
 import * as ActionTypes from './actionTypes';
 import axios from 'axios';
 
-export const authStart = () => {
+const authStart = () => {
     return {
         type: ActionTypes.AUTH_START
     };
 };
 
-export const authSuccess = (authData) => {
+const authSuccess = (idToken, localId) => {
     return {
         type: ActionTypes.AUTH_SUCCESS,
-        authData: authData
+        idToken: idToken,
+        userId: localId
     };
 };
 
-export const authFail = (error) => {
+const authFail = (error) => {
     return {
         type: ActionTypes.AUTH_FAIL,
         error: error
@@ -35,7 +36,7 @@ export const auth = (email, password,isSignUp) => {
         axios.post(url,authData)
             .then(response =>{
                 console.log('Firebase response success: ',response);
-                dispatch(authSuccess(response.data));
+                dispatch(authSuccess(response.data.idToken,response.data.localId));
             })
             .catch(err => {
                 console.log('Firebase api auth error: ',err);
