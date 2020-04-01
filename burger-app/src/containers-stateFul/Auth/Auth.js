@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import Input from '../../coponents-stateLess/UI/Forms/Input/Input';
 import Button from '../../coponents-stateLess/UI/Button/Button';
+import Spinner from '../../coponents-stateLess/UI/Spinner/Spinner';
+
 import classes from './Auth.module.css';
 import * as actions from '../../store/actions/index';
 
@@ -22,7 +24,7 @@ class Auth extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    regexp: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
+                    regexp: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:+)\])/
                 },
                 valid: false,
                 touched: false,
@@ -38,14 +40,15 @@ class Auth extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    regexp: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,24})/g
+                    regexp: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,24})/
                 },
                 valid: false,
                 touched: false,
                 validationHelp: 'Hasło bez polskich znaków, powinno się składać conajmniej z jednaj małej litery, jednej dużej litery, z cyfry, a długość hasła min 8 znaków max 24 znaki.'
             }
         },
-        isSignUp: true
+        isSignUp: true,
+        formIsValid: false
     };
 
     checkValidity = (value, rules) => {
@@ -69,7 +72,7 @@ class Auth extends Component {
 
         if(rules.regexp) {
             //console.log('value.match(rules.regexp): ',value.match(rules.regexp))
-            isValid = value.match(rules.regexp) && isValid;
+            isValid = rules.regexp.test(value) && isValid;
         }
 
         return isValid;
@@ -85,8 +88,17 @@ class Auth extends Component {
                 touched: true
             }
         };
-        this.setState({controls: updatedControls})
+        this.setState({controls: updatedControls});
+        this.setTotalFormValidity(updatedControls);
     };
+
+    setTotalFormValidity = (controls) => {
+        let totalValidity = true;
+        for(let key in controls) {
+            totalValidity = controls[key].valid && totalValidity;
+        }
+        this.setState({formIsValid: totalValidity});
+    }
 
     submitHandler = (event) => {
         event.preventDefault();
@@ -108,7 +120,7 @@ class Auth extends Component {
             });
         }
 
-        const form = formElementsArray.map(f => (
+        let form = formElementsArray.map(f => (
             <Input
                 key={f.id}
                 elementType={f.config.elementType}
@@ -123,11 +135,22 @@ class Auth extends Component {
             />
         ));
 
+        if (this.props.loading) {
+            form = <Spinner/>;
+        };
+
+        let errorMessage = null;
+
+        if(this.props.error) {
+            errorMessage = (<p id={classes.ErrorMessage}>{this.props.error.message}</p>)
+        };
+
         return (
             <div className={classes.Auth}>
+                {errorMessage}
                 <form onSubmit={this.submitHandler}>
                     {form}
-                    <Button btnType="Success">Wyślij</Button>
+                    <Button disabled={!this.state.formIsValid} btnType="Success">Wyślij</Button>
                 </form>
                 <Button 
                     clicked={this.switchAuthModeHandler}
@@ -143,10 +166,17 @@ class Auth extends Component {
     };
 };
 
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
     };
 };
 
-export default connect(null,mapDispatchToProps)(Auth);
+export default connect(mapStateToProps,mapDispatchToProps)(Auth);

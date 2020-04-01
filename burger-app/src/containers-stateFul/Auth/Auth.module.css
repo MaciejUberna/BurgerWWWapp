@@ -8,6 +8,12 @@
     box-sizing: border-box;
 }
 
+#ErrorMessage {
+    color: red;
+    font-size: 1rem;
+    text-align: center;
+}
+
 @media (min-width: 600px) {
     .Auth {
         width: 500px;

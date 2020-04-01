@@ -27,7 +27,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    regexp: /^[A-ZŁ]{1}[a-złńćźżśąęó]{1,}\s{1,}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}$/g
+                    regexp: /^[A-ZŁ]{1}[a-złńćźżśąęó]{1,}\s{1,}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}$/
                 },
                 valid: false,
                 touched: false,
@@ -43,7 +43,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    regexp: /^[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}\s{1,}\d{1,}[a-z]*\/\d{1,}$/g
+                    regexp: /^[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}\s{1,}\d{1,}[a-z]*\/\d{1,}$/
                 },
                 valid: false,
                 touched: false,
@@ -59,7 +59,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    regexp: /^\d{5}$/g
+                    regexp: /^\d{5}$/
                 },
                 valid: false,
                 touched: false,
@@ -75,7 +75,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    regexp: /^[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,}(\s{1,}[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,})*$/g
+                    regexp: /^[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,}(\s{1,}[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,})*$/
                 },
                 valid: false,
                 touched: false,
@@ -91,7 +91,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    regexp: /^[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,}(\s{1,}[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,})*$/g
+                    regexp: /^[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,}(\s{1,}[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,})*$/
                 },
                 valid: false,
                 touched: false,
@@ -107,7 +107,7 @@ class ContactData extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    regexp: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g
+                    regexp: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:+)\])/
                 },
                 valid: false,
                 touched: false,
@@ -206,7 +206,7 @@ class ContactData extends Component {
 
         if(rules.regexp) {
             //console.log('value.match(rules.regexp): ',value.match(rules.regexp))
-            isValid = value.match(rules.regexp) && isValid;
+            isValid = rules.regexp.test(value) && isValid;
         }
 
         return isValid;
@@ -233,7 +233,7 @@ class ContactData extends Component {
         for(let inputIdentifier in updatedOrderForm){
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
         }
-        console.log('FormIsValid? :: ',formIsValid);
+        //console.log('FormIsValid? :: ',formIsValid);
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     }
 
