@@ -22,6 +22,20 @@ const authFail = (error) => {
     };
 };
 
+const logout = () => {
+    return {
+        type: ActionTypes.AUTH_LOGOUT
+    };
+};
+
+const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout());
+        },expirationTime * 1000);
+    };
+};
+
 export const auth = (email, password,isSignUp) => {
     return dispatch => {
         dispatch(authStart());
@@ -37,6 +51,7 @@ export const auth = (email, password,isSignUp) => {
             .then(response =>{
                 console.log('Firebase response success: ',response);
                 dispatch(authSuccess(response.data.idToken,response.data.localId));
+                dispatch(checkAuthTimeout(response.data.expiresIn));
             })
             .catch(err => {
                 console.log('Firebase api auth error: ',err.message);
