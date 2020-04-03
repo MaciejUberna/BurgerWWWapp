@@ -9,7 +9,10 @@ const navigationItems = (props) => {
             {/* For bulien variables we just have to write variable name without value so it's true */}
             <NavigationItem link="/" exact>Kreator Burgera</NavigationItem>
             <NavigationItem link="/orders" >Zamówienia</NavigationItem>
-            <NavigationItem link="/auth" >Rejestracja/Logowanie</NavigationItem>
+            {!props.isAuthenticated 
+                ? <NavigationItem link="/auth" >Rejestracja/Logowanie</NavigationItem> 
+                : <NavigationItem link="/logout" >Wyloguj</NavigationItem>
+            }
         </ul>
     );
 }
