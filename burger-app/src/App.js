@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers-stateFul/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers-stateFul/Checkout/Checkout';
@@ -7,7 +7,14 @@ import Orders from './containers-stateFul/Orders/Orders';
 import Auth from './containers-stateFul/Auth/Auth';
 import Logout from './containers-stateFul/Auth/Logout/Logout';
 
+import { connect } from 'react-redux';
+import * as actions from './store/actions/index';
+
 class App extends Component {
+
+  componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
 
   // state = {
   //   show: true
@@ -35,7 +42,14 @@ class App extends Component {
         </Switch>
       </Layout>
     </div>
-  );}
+    );
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(actions.authCheckState())
+  };
 }
 
-export default App;
+export default withRouter(connect(null,mapDispatchToProps)(App));
