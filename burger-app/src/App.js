@@ -10,6 +10,9 @@ import Logout from './containers-stateFul/Auth/Logout/Logout';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 
+// SPA Authentication in general: https://stormpath.com/blog/token-auth-spa
+// Firebase authentication REST API: https://firebase.google.com/docs/reference/rest/auth/ 
+
 class App extends Component {
 
   componentDidMount() {
