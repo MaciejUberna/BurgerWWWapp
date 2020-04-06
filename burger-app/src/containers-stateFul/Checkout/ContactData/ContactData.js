@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Input from '../../../coponents-stateLess/UI/Forms/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/index';
+import autoValidate from '../../../shared/checkValidity';
 
 // use https://validatejs.org/ to validete forms in production
 // new ideas for validation
@@ -186,33 +187,6 @@ class ContactData extends Component {
 
     }
 
-    checkValidity = (value, rules) => {
-        let isValid = true;
-        if(!rules) 
-            return true;
-        if(rules.required) {
-            if(typeof value === 'boolean')
-                isValid = value;
-            else
-                isValid = value.trim() !== '' && isValid;
-        }
-
-        if(rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-
-        if(rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-
-        if(rules.regexp) {
-            //console.log('value.match(rules.regexp): ',value.match(rules.regexp))
-            isValid = rules.regexp.test(value) && isValid;
-        }
-
-        return isValid;
-    }
-
     imputChangedHandler = (event, inputIdentifier) => {
         //console.log('ContactData.js, imputChangedHandler, event.tatget.value: ',event.target.value);
         const updatedOrderForm = {
@@ -225,14 +199,14 @@ class ContactData extends Component {
             updatedFormElement.value = event.target.checked;
         else
             updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value,updatedFormElement.validation);
+        updatedFormElement.valid = autoValidate(updatedFormElement.value,updatedFormElement.validation);
         updatedFormElement.touched = true;
         //console.log('ContactData.js, imputChangedHandler, updatedFormElement: ',updatedFormElement);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
         let formIsValid = true;
-        for(let inputIdentifier in updatedOrderForm){
-            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+        for(let key in updatedOrderForm){
+            formIsValid = updatedOrderForm[key].valid && formIsValid;
         }
         //console.log('FormIsValid? :: ',formIsValid);
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
