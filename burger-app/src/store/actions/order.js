@@ -27,11 +27,11 @@ export const purchaseBurger = (orderData, token) => {
         dispatch(purchaseBurgerStart());
         axios.post('/orders.json?auth=' + token,orderData)
         .then(response => {
-            console.log('Response data: ',response.data);
+            //console.log('Response data: ',response.data);
             dispatch(purchaseBurgerSuccess(response.data.name,orderData));
         })
         .catch(error => {
-            console.log('Response to order error: ',error);
+            //console.log('Response to order error: ',error);
             dispatch(purchaseBurgerFail(error));
         });
     };
@@ -76,12 +76,11 @@ export const fetchOrders = (authToken, userId) => {
                         id: key
                     });
                 }
-                console.log('order.js ac.creator, fetchOrders, response: ',res);
+                //console.log('order.js] fetchOrders, response: ',res);
                 dispatch(fetchOrdersSuccess(orders))
             })
             .catch(err => {
-                //this.setState({loading: false});
-                console.log('order.js ac.creator, fetchOrders, error: ',err);
+                //console.log('order.js fetchOrders, error: ',err);
                 dispatch(fetchOrdersFail(err));
             })
     };

@@ -54,7 +54,7 @@ export const auth = (email, password,isSignUp) => {
             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDn9qfJw4afsx2zmoMUKS4cpia4WSXroeo';
         axios.post(url,authData)
             .then(response =>{
-                console.log('Firebase response success: ',response);
+                //console.log('Firebase response success: ',response);
 
                 const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
 

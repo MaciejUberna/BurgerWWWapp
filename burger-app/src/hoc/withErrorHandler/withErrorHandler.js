@@ -25,7 +25,7 @@ const withComponentHandler = (WrappedComponent, axios) => {
 
         //Prevents memory licks when component is not needed anymore
         componentWillUnmount () {
-            console.log('Will Unmount: req::',this.reqInterceptor,' res::',this.resInterceptor);
+            //console.log('Will Unmount: req::',this.reqInterceptor,' res::',this.resInterceptor);
             axios.interceptors.request.eject(this.reqInterceptor);
             axios.interceptors.response.eject(this.resInterceptor);
         };

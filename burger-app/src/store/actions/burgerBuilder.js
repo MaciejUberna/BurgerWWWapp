@@ -32,11 +32,11 @@ export const initIngredints = () => {
     return dispatch => {
         axios.get('https://maciej-my-burger.firebaseio.com/ingredients.json')
         .then(response => {
-            console.log('Ingredients feached from database: ',response)
+            //console.log('Ingredients feached from database: ',response)
             dispatch(setIngredients(response.data))
         })
         .catch(error => {
-            console.log('Ingredients not fetched, error: ',error)
+            //console.log('Ingredients not fetched, error: ',error)
             dispatch(fetchIngredientsFailed())
         });
 
