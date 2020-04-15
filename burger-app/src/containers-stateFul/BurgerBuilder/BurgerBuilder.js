@@ -14,7 +14,7 @@ import OrderSummary from '../../coponents-stateLess/Burger/OrderSummary/OrderSum
 
 import * as actions from '../../store/actions/index';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
     // constructor (props) {
     //     super(props);
     //     this.state = {...}
@@ -25,7 +25,7 @@ class BurgerBuilder extends Component {
 
     componentDidMount () {
         //console.log('ComponentDidMount props: ',this.props);
-        this.props.onInitIngredints();
+        this.props.onInitIngredients();
     }
 
     componentDidUpdate () {
@@ -125,7 +125,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
         onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
-        onInitIngredints: () => dispatch(actions.initIngredints()),
+        onInitIngredients: () => dispatch(actions.initIngredints()),
         onInitPurchase: () => dispatch(actions.purchaseInit()),
         onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     }
