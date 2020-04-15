@@ -8,11 +8,22 @@ import NavigationItem from './NavigationItem/NavigationItem';
 
 configure({adapter: new Adapter()});
 
-//Dont have to import that describe, it and expect. It will be run automatically.
+//Dont have to import that describe, it and beforeEach, expect. It will be run automatically.
 describe('<NavigationItems />', () => {
+    let wrapper;
+    beforeEach(() => {
+        wrapper = shallow(<NavigationItems/>);
+    })
+
     it('should render two <NavigationItem /> elements if not authenticated.',() => {
-        const wrapper = shallow(<NavigationItems/>);
+        
         //Expect defines the thing we want to check, we apply non jsx elements in expect!
         expect(wrapper.find(NavigationItem)).toHaveLength(2);
+    });
+
+    it('should render three <NavigationItem /> elements if is authenticated.',() => {
+        // wrapper = shallow(<NavigationItems isAuthenticated/>);
+        wrapper.setProps({isAuthenticated: true});
+        expect(wrapper.find(NavigationItem)).toHaveLength(3);
     });
 });
