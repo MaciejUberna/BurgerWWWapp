@@ -13,6 +13,13 @@ import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
 
+//To install project on firebase: 
+//1. npm install -g firebase-tools
+//2. firebase login
+//3. firebase init: 1.a Y | 1b hosting only | 1c use an existing project | 1d select the project | 1e not public but "build" (without quotes)
+// | 1f configure as single page app: y | 1g File build/index.html already exists. Overwrite: N
+//4. firebase deploy
+
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__  : null || compose;
 
 const rootReducer = combineReducers({

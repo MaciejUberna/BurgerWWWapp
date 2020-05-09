@@ -1,6 +1,7 @@
 # Don't track content of these folders
 /burger-app/node_modules/
-
+/burger-app/build/
+/burger-app/coverage/
 
 # Compiled source #
 ###################
