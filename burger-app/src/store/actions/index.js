@@ -14,7 +14,7 @@ export {
        fetchOrders,
        fetchOrdersSuccess,
        fetchOrdersFail,
-       fetchOrderStart
+       fetchOrdersStart
 } from './order';
 export {
     authCheckState,

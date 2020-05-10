@@ -14,10 +14,10 @@ export function* watchAuth() {
 };
 
 export function* watchBurgerBuilder() {
-    yield takeEvery(actionTypes.INIT_INGREDIENTS,initIngredintsSaga);
+    yield takeEvery(actionTypes.INIT_INGREDIENTS, initIngredintsSaga);
 };
 
 export function* watchOrder() {
-    yield takeEvery(actionTypes.PURCHASE_BURGER,purchaseBurgerSaga);
-    yield takeEvery(actionTypes.FETCH_ORDERS,fetchOrdersSaga);
+    yield takeEvery(actionTypes.PURCHASE_BURGER, purchaseBurgerSaga);
+    yield takeEvery(actionTypes.FETCH_ORDERS, fetchOrdersSaga);
 };
