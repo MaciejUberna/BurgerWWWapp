@@ -1,13 +1,12 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
 
-const authStart = () => {
+export const authStart = () => {
     return {
         type: actionTypes.AUTH_START
     };
 };
 
-const authSuccess = (idToken, localId) => {
+export const authSuccess = (idToken, localId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: idToken,
@@ -15,7 +14,7 @@ const authSuccess = (idToken, localId) => {
     };
 };
 
-const authFail = (error) => {
+export const authFail = (error) => {
     return {
         type: actionTypes.AUTH_FAIL,
         error: error
@@ -37,7 +36,7 @@ export const logoutSucceed = () => {
     };
 };
 
-const checkAuthTimeout = (expirationTime) => {
+export const checkAuthTimeout = (expirationTime) => {
     return {
         type: actionTypes.AUTH_CHECK_TIMEOUT,
         expirationTime: expirationTime
@@ -45,34 +44,11 @@ const checkAuthTimeout = (expirationTime) => {
 };
 
 export const auth = (email, password,isSignUp) => {
-    return dispatch => {
-        dispatch(authStart());
-        const authData = {
-            email: email,
-            password: password,
-            returnSecureToken: true
-        };
-        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDn9qfJw4afsx2zmoMUKS4cpia4WSXroeo'
-        if(!isSignUp)
-            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDn9qfJw4afsx2zmoMUKS4cpia4WSXroeo';
-        axios.post(url,authData)
-            .then(response =>{
-                //console.log('Firebase response success: ',response);
-
-                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-
-                localStorage.setItem('token',response.data.idToken);
-                localStorage.setItem('expirationDate',expirationDate);
-                localStorage.setItem('userId',response.data.localId)
-
-
-                dispatch(authSuccess(response.data.idToken,response.data.localId));
-                dispatch(checkAuthTimeout(response.data.expiresIn));
-            })
-            .catch(err => {
-                console.log('Firebase api auth error: ',err.message);
-                dispatch(authFail(err));
-            });
+    return {
+        type: actionTypes.AUTH_USER,
+        email: email,
+        password: password,
+        isSignUp: isSignUp
     };
 };
 
