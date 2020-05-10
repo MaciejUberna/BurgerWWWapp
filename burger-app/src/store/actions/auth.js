@@ -1,15 +1,15 @@
-import * as ActionTypes from './actionTypes';
+import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
 const authStart = () => {
     return {
-        type: ActionTypes.AUTH_START
+        type: actionTypes.AUTH_START
     };
 };
 
 const authSuccess = (idToken, localId) => {
     return {
-        type: ActionTypes.AUTH_SUCCESS,
+        type: actionTypes.AUTH_SUCCESS,
         idToken: idToken,
         userId: localId
     };
@@ -17,7 +17,7 @@ const authSuccess = (idToken, localId) => {
 
 const authFail = (error) => {
     return {
-        type: ActionTypes.AUTH_FAIL,
+        type: actionTypes.AUTH_FAIL,
         error: error
     };
 };
@@ -27,7 +27,7 @@ export const logout = () => {
     // localStorage.removeItem('expirationDate');
     // localStorage.removeItem('userId');
     return {
-        type: ActionTypes.AUTH_INITIATE_LOGOUT
+        type: actionTypes.AUTH_INITIATE_LOGOUT
     };
 };
 
@@ -38,10 +38,9 @@ export const logoutSucceed = () => {
 };
 
 const checkAuthTimeout = (expirationTime) => {
-    return dispatch => {
-        setTimeout(() => {
-            dispatch(logout());
-        },expirationTime * 1000);
+    return {
+        type: actionTypes.AUTH_CHECK_TIMEOUT,
+        expirationTime: expirationTime
     };
 };
 
@@ -79,7 +78,7 @@ export const auth = (email, password,isSignUp) => {
 
 export const setAuthRedirectPath = (path) => {
     return {
-        type: ActionTypes.SET_AUTH_REDIRECT_PATH,
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
         path: path
     };
 };
