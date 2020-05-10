@@ -37,6 +37,22 @@ export function* authUserSaga(action) {
         yield put(actions.checkAuthTimeout(response.data.expiresIn));
     } catch(error) {
         //yield console.log('Firebase or auth error: ',error.message);
-        yield put(actions.authFail(error.message));
+        yield put(actions.authFail(error));
+    };
+};
+
+export function* authCheckStateSaga() {
+    const token = yield localStorage.getItem('token');
+    if(!token) {
+        yield put(actions.logout());
+    } else {
+        const expirationDate = yield new Date(localStorage.getItem('expirationDate'));
+        if(expirationDate <= new Date()) {
+            yield put(actions.logout());
+        } else {
+            const userId = yield localStorage.getItem('userId');
+            yield put(actions.authSuccess(token,userId));
+            yield put(actions.checkAuthTimeout( (expirationDate.getTime() - new Date().getTime())/ 1000 ))
+        };
     };
 };
