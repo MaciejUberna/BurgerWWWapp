@@ -7,7 +7,7 @@ import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 //This for redux-saga to bee seen by store:
 import createSagaMiddleware from 'redux-saga';
-import { logoutSaga } from './store/sagas/auth';
+import { watchAuth } from './store/sagas/index';
 
 import './index.css';
 import App from './App';
@@ -37,7 +37,7 @@ const store = createStore(rootReducer,
     composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
     );
 
-sagaMiddleware.run(logoutSaga);
+sagaMiddleware.run(watchAuth);
 
 const app = (
     <Provider store={store}>
