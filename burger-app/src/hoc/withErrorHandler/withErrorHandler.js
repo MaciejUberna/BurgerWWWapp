@@ -1,51 +1,44 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
 import Axiliary from '../Auxiliary/Auxiliary';
 
 const withComponentHandler = (WrappedComponent, axios) => {
-    return class extends Component {
+    return props => {
 
-        state = {
-            error: null,
-            reqInterceptor: null,
-            resInterceptor: null
-        };
+        const [error, setError] = useState(null);
 
-        constructor(props) {
-            super(props);
-            this.reqInterceptor = axios.interceptors.request.use(req => {
-                this.setState({error: null});
-                return req;
-            });
-            this.resInterceptor = axios.interceptors.response.use(response => response, error => {
-                this.setState({error: error})
-            });
-        };
+        const reqInterceptor = axios.interceptors.request.use(req => {
+            setError(null);
+            return req;
+        });
+
+        const resInterceptor = axios.interceptors.response.use(response => response, err => {
+            setError(err);
+        });
 
         //Prevents memory licks when component is not needed anymore
-        componentWillUnmount () {
-            //console.log('Will Unmount: req::',this.reqInterceptor,' res::',this.resInterceptor);
-            axios.interceptors.request.eject(this.reqInterceptor);
-            axios.interceptors.response.eject(this.resInterceptor);
+        useEffect(() => {
+            return () => {
+                axios.interceptors.request.eject(reqInterceptor);
+                axios.interceptors.response.eject(resInterceptor);
+            };
+        },[reqInterceptor,resInterceptor]);
+
+        const errorConfirmedHandler = () => {
+            setError(null);
         };
 
-        errorConfirmedHandler = () => {
-            this.setState({error: null})
-        };
-
-        render () {
-            return (
+        return (
                 <Axiliary>
-                    <Modal show={this.state.error ? true : false}
-                    modalClosed={this.errorConfirmedHandler}
+                    <Modal show={error ? true : false}
+                    modalClosed={errorConfirmedHandler}
                     >
-                        {this.state.error ? this.state.error.message : null}
+                        {error ? error.message : null}
                     </Modal>
-                    <WrappedComponent {...this.props}/>
+                    <WrappedComponent {...props}/>
                 </Axiliary>
-            );
-        }
+        );
     };
 };
 
