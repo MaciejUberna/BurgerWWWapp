@@ -18,6 +18,7 @@ class Checkout extends Component {
         let summary = <Redirect to="/"/>
         //console.log('Render Checkout.js : Ingredients :: ',this.state.ingredients)
         if(this.props.ings){
+            //console.log('Path=',this.props.match)
             const purchasedRedirect = this.props.purchased ? <Redirect to="/"/> : null;
             summary = (
                 <div>
