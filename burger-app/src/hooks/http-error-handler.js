@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react';
 
+// Official Hooks Docs: https://reactjs.org/docs/hooks-intro.html
+
 export default HttpClient => {
     const [error, setError] = useState(null);
 
