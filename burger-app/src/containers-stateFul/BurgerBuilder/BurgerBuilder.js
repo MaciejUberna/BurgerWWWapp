@@ -18,10 +18,12 @@ const BurgerBuilder = props => {
 
     const [purchaseButtonClicked,setPurchaseButtonClicked] = useState(false);
 
+    const {onInitIngredients} = props;
+
     useEffect ( () => {
         //console.log('ComponentDidMount props: ',this.props);
-        props.onInitIngredients();
-    }, []);
+        onInitIngredients();
+    }, [onInitIngredients]);
 
     const updatePurchaseState = () => {
 

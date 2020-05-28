@@ -1,14 +1,13 @@
-import React , { Component } from 'react';
+import React from 'react';
 import classes from './BurgerIngredient.module.css';
 import PropTypes from 'prop-types';
 
 //Props should hold info which burger ingredient to render
-class BurgerIngredient extends  Component {
+const BurgerIngredient = props => {
 
-    render () {
         let ingredient = null;
 
-        switch (this.props.type) {
+        switch (props.type) {
             case ('bread-bottom'):
                 ingredient = <div className = {classes.BreadBottom}></div>;
                 break;
@@ -33,11 +32,10 @@ class BurgerIngredient extends  Component {
                 ingredient = <div className = {classes.Bacon}></div>
                 break;
             default:
-                    console.error("[E]BurgerIngredient.render().switch().default[E] :: unknown ingredient ",this.props.type," provided!");
+                    console.error("[E]BurgerIngredient.render().switch().default[E] :: unknown ingredient ",props.type," provided!");
         }
     
         return ingredient;
-    }
 
 }
 
