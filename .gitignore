@@ -1,4 +1,5 @@
 # Don't track content of these folders
+/auth--04-finished/node_modules/
 /burger-app/node_modules/
 /burger-app/build/
 /burger-app/coverage/
