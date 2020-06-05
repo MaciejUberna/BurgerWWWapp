@@ -6,11 +6,12 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (idToken, localId) => {
+export const authSuccess = (idToken, localId, login) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: idToken,
-        userId: localId
+        userId: localId,
+        login: login
     };
 };
 
@@ -22,9 +23,6 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('expirationDate');
-    // localStorage.removeItem('userId');
     return {
         type: actionTypes.AUTH_INITIATE_LOGOUT
     };

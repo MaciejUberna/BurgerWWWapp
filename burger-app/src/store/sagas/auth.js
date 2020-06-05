@@ -1,18 +1,15 @@
 import axios from 'axios';
 
-import { delay } from 'redux-saga/effects';
-import { put, call } from 'redux-saga/effects';
+import { delay, put, call } from 'redux-saga/effects';
 
 import * as actions from '../actions/index';
 
 export function* logoutSaga() {
     //call is better for testing (test generators) since I can easylly mock this.
-    yield call([localStorage,'removeItem'], "token")
-    yield call([localStorage,'removeItem'], "expirationDate")
-    yield call([localStorage,'removeItem'], "userId")
-    //yield localStorage.removeItem('token');
-    //yield localStorage.removeItem('expirationDate');
-    //yield localStorage.removeItem('userId');
+    yield call([localStorage,'removeItem'], "token");
+    yield call([localStorage,'removeItem'], "expirationDate");
+    yield call([localStorage,'removeItem'], "userId");
+    yield call([localStorage,'removeItem'], "login");
     yield put(actions.logoutSucceed());
 };
 
@@ -34,10 +31,11 @@ export function* authUserSaga(action) {
     try {
         const response = yield axios.post(url,authData); 
         const expirationDate = yield new Date(new Date().getTime() + response.data.expiresIn * 1000);
-        yield localStorage.setItem('token',response.data.idToken);
-        yield localStorage.setItem('expirationDate',expirationDate);
-        yield localStorage.setItem('userId',response.data.localId)
-        yield put(actions.authSuccess(response.data.idToken,response.data.localId));
+        yield call([localStorage,'setItem'],'token', response.data.idToken);
+        yield call([localStorage,'setItem'],'expirationDate', expirationDate);
+        yield call([localStorage,'setItem'],'userId', response.data.localId);
+        yield call([localStorage,'setItem'],'login', action.email);
+        yield put(actions.authSuccess(response.data.idToken,response.data.localId,action.email));
         yield put(actions.checkAuthTimeout(response.data.expiresIn));
     } catch(error) {
         //yield console.log('Firebase or auth error: ',error.message);
@@ -55,7 +53,7 @@ export function* authCheckStateSaga() {
             yield put(actions.logout());
         } else {
             const userId = yield localStorage.getItem('userId');
-            yield put(actions.authSuccess(token,userId));
+            yield put(actions.authSuccess(token,userId,localStorage.getItem('login')));
             yield put(actions.checkAuthTimeout( (expirationDate.getTime() - new Date().getTime())/ 1000 ))
         };
     };
