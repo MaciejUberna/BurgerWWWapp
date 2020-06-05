@@ -12,6 +12,7 @@ import { purchaseBurgerSaga, fetchOrdersSaga } from './order'
 //Pros & Cons for Redux Saga vs Thunks: https://stackoverflow.com/questions/34930735/pros-cons-of-using-redux-saga-with-es6-generators-vs-redux-thunk-with-es2017-asy/34933395
 
 //This is listener that listens to ActionTypes.AUTH_INITIATE_LOGOUT and executes logoutSaga
+//takeLatest can be used for the latest execution of thread.
 export function* watchAuth() {
     //all runs tasks simultanously
     yield all([
