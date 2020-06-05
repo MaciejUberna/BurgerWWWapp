@@ -27,7 +27,7 @@ export function* watchBurgerBuilder() {
 };
 
 export function* watchOrder() {
-    //takeLatest will automatically cansal any ongoin executions of purchaseBurgerSaga
+    //takeLatest will automatically cansel any ongoin executions of purchaseBurgerSaga
     //and always execute the latest one.
     yield takeLatest(actionTypes.PURCHASE_BURGER, purchaseBurgerSaga);
     yield takeEvery(actionTypes.FETCH_ORDERS, fetchOrdersSaga);
