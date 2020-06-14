@@ -97,21 +97,21 @@ const ContactData = props => {
             touched: false,
             validationHelp: 'Nazwa kraju powinna zaczynać się z wielkiej litery.'
         },
-        email: {
+        telephone: {
             elementType: 'input',
             elementConfig: {
                 type: 'text',
-                placeholder: 'e-mail'
+                placeholder: 'telefon'
             },
             children: '',
             value: '',
             validation: {
                 required: true,
-                regexp: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:+)\])/
+                regexp: /^([0-9]{1})(\s{0,1})([0-9]{1})(\s{0,1})([0-9]{1})(\s{0,1})([0-9]{1})(\s{0,1})([0-9]{1})(\s{0,1})([0-9]{1})(\s{0,1})([0-9]{1})(\s{0,1})([0-9]{1})(\s{0,1})([0-9]{1})$/
             },
             valid: false,
             touched: false,
-            validationHelp: 'Email powinien zawierać 1 znak "@" i tekst z cyframi z każdej jego strony.'
+            validationHelp: 'Wprowadź 9 cyfr.'
         },
         deliveryMethod: {
             elementType: 'select',
@@ -172,6 +172,7 @@ const ContactData = props => {
         //console.log('ingredients in ContactData: ',props.ingredients);
 
         const formData = {};
+        formData['email'] = props.login;
         for(let formElementIndentifier in orderForm) {
             formData[formElementIndentifier] = orderForm[formElementIndentifier].value;
         }
@@ -257,7 +258,8 @@ const mapStateToProps = state => {
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
         token: state.auth.token,
-        userId: state.auth.userId
+        userId: state.auth.userId,
+        login: state.auth.login
     }
 }
 
