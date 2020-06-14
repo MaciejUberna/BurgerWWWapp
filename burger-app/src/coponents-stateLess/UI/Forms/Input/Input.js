@@ -72,31 +72,23 @@ const input = ( props ) => {
         break;
         case ('radio'):
             inputElement = (
-                <label className={inputClasses.join(' ')}>
+                <label className={classes.InputElement}>
                     {props.children}
                     <br/>
                     {props.elementConfig.options.map(option => {
                         return (
-                            <table key={option.value}>
-                                <tbody>
-                                    <tr>
-
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input 
-                                            {...props.elementConfig} 
-                                            value={option.value} 
-                                            onChange={props.changed}/>
-                                        </td>
-                                        <td>
-                                            <label htmlFor={option.value} >
-                                            {option.text}
-                                            </label>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div className={classes.Radio} key={option.value}>
+                                <input className={classes.RadioInput}
+                                    {...props.elementConfig} 
+                                    value={option.value} 
+                                    onChange={props.changed}
+                                />
+                                <label className={classes.RadioLabel} htmlFor={option.value} value={option.value}>
+                                    <span className={classes.RadioButton}></span>
+                                    <span>&nbsp;</span>
+                                    {option.text}
+                                </label>
+                            </div>
                         )
                     })}
                 </label>
