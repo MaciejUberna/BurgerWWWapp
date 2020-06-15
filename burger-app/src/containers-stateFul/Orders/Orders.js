@@ -2,6 +2,7 @@ import React , { useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import classes from './Orders.module.css';
 import Order from '../../coponents-stateLess/Order/Order';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../coponents-stateLess/UI/Spinner/Spinner';
@@ -31,6 +32,8 @@ const Orders = props => {
     };
     return (
         <div>
+            <h3 className={classes.Login}>Zamówienia użytkownika: "{props.login}"</h3>
+            <p><br/><br/></p>
             {orders}
         </div>
     );
@@ -42,7 +45,8 @@ const mapStateToProps = state => {
         orders: state.order.orders,
         loading: state.order.loading,
         token: state.auth.token,
-        userId: state.auth.userId
+        userId: state.auth.userId,
+        login: state.auth.login
     };
 };
 

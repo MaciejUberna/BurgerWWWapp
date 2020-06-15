@@ -1,0 +1,12 @@
+.Login {
+    position: fixed;
+    background-color: white;
+    width: 70%;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px black;
+    padding: 16px;
+    left: 1vw;
+    top: 1vh;
+    box-sizing: border-box;
+    transition: all 1s ease-out;
+}
