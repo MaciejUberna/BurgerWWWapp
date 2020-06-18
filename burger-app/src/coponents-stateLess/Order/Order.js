@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './Order.module.css';
+import Button from '../UI/Button/Button';
 
 const EnglishToPolishIngredients = {
     meat: 'Mięsko',
@@ -26,8 +27,14 @@ const order = (props) => {
     ingredients.push(<span key={props.id+ctr}>Bułka(1)</span>)
     return (
         <div className={classes.Order}>
+            <p>Danie: Burger</p>
             <p>Składniki: {ingredients}</p>
             <p>Cena: <strong> {Number.parseFloat(props.price.toFixed(2))} zł</strong></p>
+            <p> 
+                <Button btnType="Success" clicked={props.orderDetails}>Dane dostawy</Button> 
+                    &nbsp; 
+                <Button btnType="Danger" clicked={props.deleteOrder}>Usuń</Button> 
+            </p>
         </div>
     )
 };
