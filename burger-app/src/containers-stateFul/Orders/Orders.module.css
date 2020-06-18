@@ -1,11 +1,12 @@
 .Login {
     position: fixed;
+    text-align: center;
     background-color: white;
-    width: 70%;
+    width: 80%;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px black;
     padding: 16px;
-    left: 1vw;
+    left: 10%;
     top: 1vh;
     box-sizing: border-box;
     transition: all 1s ease-out;

@@ -1,4 +1,4 @@
-import React , { useEffect } from 'react';
+import React , { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -6,14 +6,39 @@ import classes from './Orders.module.css';
 import Order from '../../coponents-stateLess/Order/Order';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../coponents-stateLess/UI/Spinner/Spinner';
+import Modal from '../../coponents-stateLess/UI/Modal/Modal';
+import Button from '../../coponents-stateLess/UI/Button/Button';
 
 const Orders = props => {
 
     const {onFetchOrders, token, userId} = props;
 
+    const [showModalOfOrderDetails, setShowModalOfOrderDetails] = useState(false);
+    const [showModalOfDeletion, setShowModalOfDeletion] = useState(false);
+
+    const [orderId, setOrderId] = useState(null);
+
+    
+    const performDeletionHandler = () => {
+        //here we should send deletion request and reload orders page.
+        //right now we just close modal
+        onFetchOrders(token, userId);
+        setShowModalOfDeletion(false);
+    };
+
     useEffect( () => {
         onFetchOrders(token, userId);
     },[onFetchOrders, token, userId]);
+
+    const toggleOrderDetailsModal = (id) => {
+        setOrderId(id);
+        setShowModalOfOrderDetails(true);
+    };
+
+    const toggleDeleteOrderModal = (id) => {
+        setOrderId(id);
+        setShowModalOfDeletion(true);
+    };
 
     let orders = null;
     if(props.loading)
@@ -26,12 +51,28 @@ const Orders = props => {
                     ingredients={o.ingredients}
                     price={o.price}
                     id={o.id}
+                    orderDetails={toggleOrderDetailsModal.bind(this,o.id)}
+                    deleteOrder={toggleDeleteOrderModal.bind(this,o.id)}
                 />;
             })
         );
     };
+
+
+
     return (
         <div>
+            <Modal show={showModalOfOrderDetails}>
+                <p>{orderId}</p>
+                <center><Button btnType="Success" clicked={setShowModalOfOrderDetails.bind(this,false)}> OK </Button></center>
+            </Modal>
+            <Modal show={showModalOfDeletion}>
+                <center>
+                    <p>Czy na pewno chcesz usunąć to zamówienie?</p>
+                    <Button btnType="Success" clicked={setShowModalOfDeletion.bind(this,false)}> Anuluj </Button>
+                    <Button btnType="Danger" clicked={performDeletionHandler}> Usuń </Button>
+                </center>
+            </Modal>
             <h3 className={classes.Login}>Zamówienia użytkownika: "{props.login}"</h3>
             <p><br/><br/></p>
             {orders}
