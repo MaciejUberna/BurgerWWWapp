@@ -3,7 +3,7 @@ import { takeEvery, all, takeLatest } from 'redux-saga/effects';
 import * as actionTypes from '../actions/actionTypes';
 import { logoutSaga, checkAuthTimeoutSaga, authUserSaga, authCheckStateSaga } from './auth';
 import { initIngredintsSaga } from './burgerBuilder';
-import { purchaseBurgerSaga, fetchOrdersSaga } from './order'
+import { purchaseBurgerSaga, fetchOrdersSaga, deleteOrderSaga } from './order'
 
 //More on redux-saga on page: https://redux-saga.js.org
 //Advanced Concepts: https://redux-saga.js.org/docs/advanced/
@@ -31,5 +31,6 @@ export function* watchOrder() {
     //takeLatest will automatically cansel any ongoin executions of purchaseBurgerSaga
     //and always execute the latest one.
     yield takeLatest(actionTypes.PURCHASE_BURGER, purchaseBurgerSaga);
+    yield takeEvery(actionTypes.DELETE_ORDER, deleteOrderSaga);
     yield takeEvery(actionTypes.FETCH_ORDERS, fetchOrdersSaga);
 };

@@ -7,10 +7,21 @@ import * as actions from '../actions';
 export function* purchaseBurgerSaga(action) {
     yield put(actions.purchaseBurgerStart());
     try {
-        const response = yield axios.post('/orders.json?auth=' + action.token,action.orderData)
+        const response = yield axios.post('/orders.json?auth=' + action.authToken,action.orderData);
         yield put(actions.purchaseBurgerSuccess(response.data.name,action.orderData));
     } catch(error) {
         yield put(actions.purchaseBurgerFail(error));
+    };
+};
+
+export function* deleteOrderSaga(action){
+    yield put(actions.deleteOrderStart());
+    try {
+        yield axios.delete('/orders/'+action.id+'.json?auth='+action.authToken);
+        //console.log('Response: ',response)
+        yield put(actions.deleteOrderSuccess(action.id));
+    } catch (error){
+        yield put(actions.deleteOrderFail(error));
     };
 };
 
