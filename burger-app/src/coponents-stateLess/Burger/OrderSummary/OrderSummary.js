@@ -2,13 +2,7 @@ import React from 'react';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import Button from '../../UI/Button/Button';
 import PropTypes from 'prop-types';
-
-const INGREDIENTS_TO_POLISH = {
-    meat: 'mięsko',
-    cheese: 'ser',
-    bacon: 'bekon',
-    salad: 'sałata'
-}
+import { ingredientsToPolish } from '../../../polish-translations';
 
 const OrderSummary  = props => {
 
@@ -18,7 +12,7 @@ const OrderSummary  = props => {
             return ( 
             <li key={ingredientKey} >
                 <span style={{textTransform: "capitalize"}}>
-                    {INGREDIENTS_TO_POLISH[ingredientKey]}
+                    {ingredientsToPolish[ingredientKey]}
                 </span> 
                 : {props.ingredients[ingredientKey]}
             </li>
