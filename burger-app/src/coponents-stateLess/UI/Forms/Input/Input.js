@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './Input.module.css';
 
-const input = ( props ) => {
+const Input = ( props ) => {
 
     let validationMessage = null;
     let inputElement = null;
     const inputClasses = [classes.InputElement];
     const checkboxClasses = [classes.CheckboxLabel];
+
+    const [radioSelectedValue, setRadioSelectedValue] = useState(null);
 
     if(props.invalid && props.shouldValidate && props.touched) {
         inputClasses.push(classes.Invalid);
@@ -82,11 +84,18 @@ const input = ( props ) => {
                         return (
                             <div className={classes.Radio} key={option.value}>
                                 <input className={classes.RadioInput}
-                                    {...props.elementConfig} 
+                                    {...props.elementConfig}
+                                    checked={radioSelectedValue === option.value}
                                     value={option.value} 
                                     onChange={props.changed}
+                                    onClick={setRadioSelectedValue.bind(this,option.value)}
                                 />
-                                <label className={classes.RadioLabel} htmlFor={option.value} value={option.value}>
+                                <label 
+                                    className={classes.RadioLabel} 
+                                    htmlFor={option.value} 
+                                    value={option.value}
+                                    onClick={setRadioSelectedValue.bind(this,option.value)}
+                                >
                                     <span className={classes.RadioButton}></span>
                                     <span>&nbsp;</span>
                                     {option.text}
@@ -101,6 +110,7 @@ const input = ( props ) => {
                 inputElement = ( <input 
                     className={inputClasses.join(' ')} 
                     {...props.elementConfig}
+                    autoComplete="off"
                     value={props.value}
                     onChange={props.changed}
                     />
@@ -117,4 +127,4 @@ const input = ( props ) => {
     );
 }
 
-export default input;
+export default Input;

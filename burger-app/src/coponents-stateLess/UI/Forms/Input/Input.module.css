@@ -49,7 +49,8 @@
 
   /* When the checkbox is checked, add a blue background */
 .CheckboxLabel input:checked ~ .Checkmark {
-    background-color: #2196F3;
+    /* background-color: #2196F3; */
+    background-color: #b4b184;
   }
   
   /* Create the checkmark/indicator (hidden when not checked) */
@@ -144,10 +145,11 @@
 .RadioButton{
   height: 1.3rem;
   width: 1.3rem;
-  border: 3px solid black;
+  border: 3px solid #703B09;
   border-radius: 50%;
   position: relative;
   display: inline-block;
+  cursor: pointer;
   vertical-align: middle;
 }
 
@@ -166,12 +168,12 @@
       opacity: 0;
 }
 
-.RadioInput:hover + .RadioLabel .RadioButton::after {
+.RadioLabel:hover .RadioButton::after {
   opacity: 1;
-  background-color: #ccc;
+  background-color: #ddd;
 }
 
 .RadioInput:checked + .RadioLabel .RadioButton::after {
   opacity: 1;
-  background-color: black;
+  background-color: #8f5C2C;
 }
