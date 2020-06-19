@@ -5,6 +5,13 @@ export const ingredientsToPolish = {
     salad: 'sałata'
 };
 
+export const controlsPolish = [
+    { label: 'Sałata', type: 'salad' },
+    { label: 'Ser', type: 'cheese' },
+    { label: 'Mięsko', type: 'meat' },
+    { label: 'Bekon', type: 'bacon' }
+];
+
 export const contactsToPolish = {
     buyTerms: 'Zgoda na przetwarzanie danych',
     city: 'Miasto',
@@ -17,10 +24,3 @@ export const contactsToPolish = {
     street: 'Adres',
     telephone: 'Telefon'
 };
-
-export const controlsPolish = [
-    { label: 'Sałata', type: 'salad' },
-    { label: 'Ser', type: 'cheese' },
-    { label: 'Mięsko', type: 'meat' },
-    { label: 'Bekon', type: 'bacon' }
-];
