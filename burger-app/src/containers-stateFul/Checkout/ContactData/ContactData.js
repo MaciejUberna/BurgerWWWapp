@@ -179,7 +179,7 @@ const ContactData = props => {
         const order = {
             userId: props.userId,
             ingredients: props.ings,
-            price: props.price,
+            price: props.price.toFixed(2),
             orderData: formData
         };
 
