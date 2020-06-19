@@ -2,19 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classes from './BuildControls.module.css'
 import BuildControl from './BuildControl/BuildComntrol';
-
-const controls = [
-    { label: 'Sałata', type: 'salad' },
-    { label: 'Ser', type: 'cheese' },
-    { label: 'Mięsko', type: 'meat' },
-    { label: 'Bekon', type: 'bacon' }
-];
+import { controlsPolish } from '../../../polish-translations';
  
 const buildControls = (props) => {
     return (
         <div className={classes.BuildControls}>
             <p>Aktualna cena: <strong>{props.price.toFixed(2)}</strong> zł.</p>
-            {controls.map(ctrl => (
+            {controlsPolish.map(ctrl => (
                 <BuildControl 
                 added={() => props.ingredientAdded(ctrl.type)}
                 removed={() => props.ingredientRemoved(ctrl.type)}
