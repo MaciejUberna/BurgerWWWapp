@@ -8,6 +8,8 @@ import * as actions from '../../store/actions/index';
 import Spinner from '../../coponents-stateLess/UI/Spinner/Spinner';
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
 import Button from '../../coponents-stateLess/UI/Button/Button';
+import { contactsToPolish } from '../../polish-translations';
+import Hoc from '../../hoc/Auxiliary/Auxiliary';
 
 const Orders = props => {
 
@@ -17,6 +19,7 @@ const Orders = props => {
     const [showModalOfDeletion, setShowModalOfDeletion] = useState(false);
 
     const [orderId, setOrderId] = useState(null);
+    const [orderDetails, setOrderDetails] = useState(null);
 
     
     const performDeletionHandler = () => {
@@ -30,8 +33,19 @@ const Orders = props => {
         onFetchOrders(token, userId);
     },[onFetchOrders, token, userId]);
 
-    const toggleOrderDetailsModal = (id) => {
-        setOrderId(id);
+    const toggleOrderDetailsModal = (detailsObject) => {
+        const details = [];
+
+        for(let key in detailsObject) {
+            if(contactsToPolish[key])
+                details.push(
+                    <Hoc key={key}>
+                        <p>{contactsToPolish[key]}&nbsp;:&nbsp;{detailsObject[key]}</p>
+                        <hr></hr>
+                    </Hoc>
+            );
+        };
+        setOrderDetails(details);
         setShowModalOfOrderDetails(true);
     };
 
@@ -51,7 +65,7 @@ const Orders = props => {
                     ingredients={o.ingredients}
                     price={o.price}
                     id={o.id}
-                    orderDetails={toggleOrderDetailsModal.bind(this,o.id)}
+                    orderDetails={toggleOrderDetailsModal.bind(this,o.orderData)}
                     deleteOrder={toggleDeleteOrderModal.bind(this,o.id)}
                 />;
             })
@@ -62,11 +76,11 @@ const Orders = props => {
 
     return (
         <div>
-            <Modal show={showModalOfOrderDetails}>
-                <p>{orderId}</p>
+            <Modal show={showModalOfOrderDetails} modalClosed={setShowModalOfOrderDetails.bind(this,false)}>
+                {orderDetails}
                 <center><Button btnType="Success" clicked={setShowModalOfOrderDetails.bind(this,false)}> OK </Button></center>
             </Modal>
-            <Modal show={showModalOfDeletion}>
+            <Modal show={showModalOfDeletion} modalClosed={setShowModalOfDeletion.bind(this,false)}>
                 <center>
                     <p>Czy na pewno chcesz usunąć to zamówienie?</p>
                     <Button btnType="Success" clicked={setShowModalOfDeletion.bind(this,false)}> Anuluj </Button>
