@@ -29,7 +29,7 @@ const order = (props) => {
         <div className={classes.Order}>
             <p>Danie: Burger</p>
             <p>Składniki: {ingredients}</p>
-            <p>Cena: <strong> {Number.parseFloat(props.price.toFixed(2))} zł</strong></p>
+            <p>Cena: <strong> {props.price} zł</strong></p>
             <p> 
                 <Button btnType="Success" clicked={props.orderDetails}>Dane dostawy</Button> 
                     &nbsp; 
