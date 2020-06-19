@@ -6,15 +6,19 @@ export {
     fetchIngredientsFailed
 } from './burgerBuilder';
 export {
-       purchaseBurger,
-       purchaseBurgerStart,
-       purchaseBurgerSuccess,
-       purchaseBurgerFail,
-       purchaseInit,
-       fetchOrders,
-       fetchOrdersSuccess,
-       fetchOrdersFail,
-       fetchOrdersStart
+        deleteOrder,
+        deleteOrderStart,
+        deleteOrderSuccess,
+        deleteOrderFail,
+        purchaseBurger,
+        purchaseBurgerStart,
+        purchaseBurgerSuccess,
+        purchaseBurgerFail,
+        purchaseInit,
+        fetchOrders,
+        fetchOrdersSuccess,
+        fetchOrdersFail,
+        fetchOrdersStart
 } from './order';
 export {
     authCheckState,

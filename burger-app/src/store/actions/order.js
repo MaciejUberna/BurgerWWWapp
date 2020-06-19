@@ -1,5 +1,33 @@
 import * as actionTypes from './actionTypes';
 
+export const deleteOrder = (authToken, id) => {
+    return {
+        type: actionTypes.DELETE_ORDER,
+        id: id,
+        authToken: authToken
+    };
+};
+
+export const deleteOrderStart = () => {
+    return {
+        type: actionTypes.DELETE_ORDER_START
+    };
+};
+
+export const deleteOrderSuccess = (id) => {
+    return {
+        type: actionTypes.DELETE_ORDER_SUCCESS,
+        id: id,
+    };
+};
+
+export const deleteOrderFail = (error) => {
+    return {
+        type: actionTypes.DELETE_ORDER_FAIL,
+        error: error
+    };
+};
+
 export const purchaseBurgerSuccess = (id, orderData) => {
     return {
         type: actionTypes.PURCHASE_BURGER_SUCCESS,
@@ -21,11 +49,11 @@ export const purchaseBurgerStart = () => {
     };
 };
 
-export const purchaseBurger = (orderData, token) => {
+export const purchaseBurger = (orderData, authToken) => {
     return {
         type: actionTypes.PURCHASE_BURGER,
         orderData: orderData,
-        token: token
+        authToken: authToken
     };
 };
 
