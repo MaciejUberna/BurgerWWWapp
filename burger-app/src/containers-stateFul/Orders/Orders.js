@@ -13,7 +13,7 @@ import Hoc from '../../hoc/Auxiliary/Auxiliary';
 
 const Orders = props => {
 
-    const {onFetchOrders, token, userId} = props;
+    const {onFetchOrders, onDeleteOrder, token, userId} = props;
 
     const [showModalOfOrderDetails, setShowModalOfOrderDetails] = useState(false);
     const [showModalOfDeletion, setShowModalOfDeletion] = useState(false);
@@ -23,15 +23,13 @@ const Orders = props => {
 
     
     const performDeletionHandler = () => {
-        //here we should send deletion request and reload orders page.
-        //right now we just close modal
-        onFetchOrders(token, userId);
+        onDeleteOrder(token,orderId);
         setShowModalOfDeletion(false);
     };
 
     useEffect( () => {
         onFetchOrders(token, userId);
-    },[onFetchOrders, token, userId]);
+    },[onFetchOrders, onDeleteOrder , token, userId]);
 
     const toggleOrderDetailsModal = (detailsObject) => {
         const details = [];
@@ -87,7 +85,7 @@ const Orders = props => {
                     <Button btnType="Danger" clicked={performDeletionHandler}> Usuń </Button>
                 </center>
             </Modal>
-            <h3 className={classes.Login}>Zamówienia użytkownika: "{props.login}"</h3>
+            <h3 className={classes.Login}>Zalogowano na: {props.login}</h3>
             <p><br/><br/></p>
             {orders}
         </div>
@@ -107,7 +105,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: (token,userId) => dispatch(actions.fetchOrders(token,userId))
+        onFetchOrders: (token,userId) => dispatch(actions.fetchOrders(token,userId)),
+        onDeleteOrder: (token,orderId) => dispatch(actions.deleteOrder(token,orderId))
     };
 };
 
