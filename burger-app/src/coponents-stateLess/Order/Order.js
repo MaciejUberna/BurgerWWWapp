@@ -1,13 +1,7 @@
 import React from 'react';
 import classes from './Order.module.css';
 import Button from '../UI/Button/Button';
-
-const EnglishToPolishIngredients = {
-    meat: 'Mięsko',
-    cheese: 'Ser',
-    salad: 'Sałata',
-    bacon: 'Bekon'
-};
+import { ingredientsToPolish } from '../../polish-translations';
 
 const order = (props) => {
     const ingredients = [];
@@ -18,7 +12,7 @@ const order = (props) => {
                 <span 
                 key={props.id+ctr}
                 >
-                    {EnglishToPolishIngredients[key]}
+                    {ingredientsToPolish[key]}
                     ({props.ingredients[key]}),
                 </span>);
             ctr++;
