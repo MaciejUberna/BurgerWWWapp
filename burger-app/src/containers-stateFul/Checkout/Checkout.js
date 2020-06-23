@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CheckoutSummary from '../../coponents-stateLess/Order/CheckoutSummary/CheckoutSummary';
 import { Route, Redirect } from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
 import { connect } from 'react-redux';
+import { terms } from '../../regulations/terms-of-use';
+import Modal from '../../coponents-stateLess/UI/Modal/Modal';
+import Button from '../../coponents-stateLess/UI/Button/Button';
 
 const Checkout = props => {
+
+    const [showModal, setShowModal] = useState(false);
 
     const checkoutCancelledHandler = () => {
         props.history.goBack();
@@ -22,13 +27,25 @@ const Checkout = props => {
         summary = (
             <div>
                 {purchasedRedirect}
-                <CheckoutSummary ingredients={props.ings}
-                checkoutCancelled={checkoutCancelledHandler}
-                checkoutContinued={checkoutContinuedHandler} 
+                <Modal show={showModal} modalClosed={setShowModal.bind(this,false)}>
+                    { terms }
+                    <center>
+                        <Button 
+                            btnType="Success" 
+                            clicked={setShowModal.bind(this,false)}
+                        >
+                            OK
+                        </Button>
+                    </center>
+                </Modal>
+                <CheckoutSummary 
+                    ingredients={props.ings}
+                    checkoutCancelled={checkoutCancelledHandler}
+                    checkoutContinued={checkoutContinuedHandler} 
                 />
                 <Route 
-                path={props.match.path + '/contact-data'} 
-                component={ContactData}
+                    path={props.match.path + '/contact-data'} 
+                    render={(props) => <ContactData {...props} showRules={setShowModal.bind(this,true)} />}
                 />
             </div>
         );
