@@ -16,6 +16,7 @@ import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
 
+//npm run build
 //To install project on firebase: 
 //1. npm install -g firebase-tools
 //2. firebase login
