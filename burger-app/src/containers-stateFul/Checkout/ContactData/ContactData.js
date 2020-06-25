@@ -16,6 +16,7 @@ import autoValidate from '../../../shared/checkValidity';
 // formsy-react package: https://github.com/christianalfoni/formsy-react
 
 const ContactData = props => {
+
     const [orderForm, setOrderForm] = useState({
         name: {
             elementType: 'input',
@@ -31,7 +32,7 @@ const ContactData = props => {
             },
             valid: false,
             touched: false,
-            validationHelp: 'Twoje imię i nazwisko powinno zaczynać się z wielkiej litery i składać się conajmniej z jednego znaku.'
+            validationHelp: 'Twoje imię i nazwisko powinno zaczynać się z wielkiej litery i składać się conajmniej z dwuch.'
         },
         street: {
             elementType: 'input',
@@ -132,9 +133,9 @@ const ContactData = props => {
                 type: 'checkbox',
                 name: 'terms',
                 value: 'checked',
-                id: 'terms',
+                id: 'terms'
             },
-            children: 'Przystajesz na REGULAMIN świadczenia usługi.',
+            children: 'Przystajesz na `REGULAMIN` świadczenia usługi.',
             value: false,
             validation: {
                 required: true
@@ -238,6 +239,7 @@ const ContactData = props => {
                         shouldValidate={formElement.config.validation}
                         touched={formElement.config.touched}
                         changed={(event) => imputChangedHandler(event,formElement.id)}
+                        displayRules={props.showRules}
                     />
                 );
             })}
@@ -248,9 +250,11 @@ const ContactData = props => {
         form = <Spinner />;
     }
     return (
-        <div className={classes.ContactData}>
-            <h4>Wprowadź swoje dane kontaktowe</h4>
-            {form}
+        <div>
+            <div className={classes.ContactData}>
+                <h4>Wprowadź swoje dane kontaktowe</h4>
+                {form}
+            </div>
         </div>
     );
 }
