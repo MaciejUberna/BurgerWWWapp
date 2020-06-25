@@ -10,12 +10,16 @@
     margin-bottom: 8px;
 }
 
+.CheckboxUseTerms {
+  color: #8f5C2C;
+  cursor: pointer;
+}
+
 /* Customize the label (the container) */
 .CheckboxLabel {
     display: block;
     position: relative;
     margin-bottom: 1.2rem;
-    cursor: pointer;
     font-size: 1rem;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -27,7 +31,6 @@
   .CheckboxLabel input {
     position: absolute;
     opacity: 0;
-    cursor: pointer;
     height: 0;
     width: 0;
   }
@@ -42,15 +45,17 @@
     background-color: #eee;
   }
   
-  /* On mouse-over, add a grey background color */
-  .CheckboxLabel:hover input ~ .Checkmark {
+  /* On mouse-over, add a grey background color
+  /*.CheckboxLabel:hover input ~ .Checkmark */
+  input:hover ~ .Checkmark{
     background-color: #ccc;
   }
 
-  /* When the checkbox is checked, add a blue background */
-.CheckboxLabel input:checked ~ .Checkmark {
+  /* When the checkbox is checked, add a color background */
+/*.CheckboxLabel input:checked ~ .Checkmark */
+input:checked ~ .Checkmark {
     /* background-color: #2196F3; */
-    background-color: #b4b184;
+    background-color: #8f5C2C;
   }
   
   /* Create the checkmark/indicator (hidden when not checked) */
@@ -61,7 +66,8 @@
   }
   
   /* Show the checkmark when checked */
-  .CheckboxLabel input:checked ~ .Checkmark:after {
+  /* .CheckboxLabel input:checked ~ .Checkmark:after */
+  input:checked ~ .Checkmark:after {
     display: block;
   }
   
