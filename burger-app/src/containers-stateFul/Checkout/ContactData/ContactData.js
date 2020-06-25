@@ -138,7 +138,8 @@ const ContactData = props => {
             children: 'Przystajesz na `REGULAMIN` świadczenia usługi.',
             value: false,
             validation: {
-                required: true
+                required: true,
+                regexp: /^(Tak)$/
             },
             valid: false,
             validationHelp: 'Zgoda jest wymagana jeśli chcesz złożyć zamówienie.'
@@ -158,9 +159,10 @@ const ContactData = props => {
             children: 'Jak często w tygodniu korzystasz z tego serwisu?',
             value: '',
             validation: {
-                required: true
+                required: false
             },
-            valid: false
+            valid: true,
+            validationHelp: 'Wybierz którąkolwiek z opcji.'
         }
     });
 
@@ -189,32 +191,30 @@ const ContactData = props => {
     }
 
     const imputChangedHandler = (event, inputIdentifier) => {
-        //console.log('ContactData.js, imputChangedHandler, event.tatget.value: ',event.target.value);
         const updatedOrderForm = {
             ...orderForm
         };
         const updatedFormElement = {
             ...updatedOrderForm[inputIdentifier]
         };
-        if(updatedFormElement.elementType==='checkbox')
-            if(event.target.checked)
-                updatedFormElement.value = 'Tak';
-            else 
-                updatedFormElement.value = 'Nie';
-        else
+        if(updatedFormElement.elementType==='checkbox') {
+            if(!event.target.checked)
+                updatedFormElement.value = 'Tak'
+            else
+                updatedFormElement.value = 'Nie'
+        } else
             updatedFormElement.value = event.target.value;
         updatedFormElement.valid = autoValidate(updatedFormElement.value,updatedFormElement.validation);
         updatedFormElement.touched = true;
-        //console.log('ContactData.js, imputChangedHandler, updatedFormElement: ',updatedFormElement);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
-        let formIsValid = true;
+        let formValid = true;
         for(let key in updatedOrderForm){
-            formIsValid = updatedOrderForm[key].valid && formIsValid;
+            formValid = updatedOrderForm[key].valid && formValid;
         }
         //console.log('FormIsValid? :: ',formIsValid);
         setOrderForm(updatedOrderForm);
-        setFormIsValid(formIsValid);
+        setFormIsValid(formValid);
     }
 
     const formElementsArray = [];
