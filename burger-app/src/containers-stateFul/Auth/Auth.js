@@ -6,6 +6,8 @@ import Input from '../../coponents-stateLess/UI/Forms/Input/Input';
 import Button from '../../coponents-stateLess/UI/Button/Button';
 import Spinner from '../../coponents-stateLess/UI/Spinner/Spinner'; 
 import autoValidation from '../../shared/checkValidity';
+import Modal from '../../coponents-stateLess/UI/Modal/Modal';
+import { terms } from '../../regulations/terms-of-use';
 
 import classes from './Auth.module.css';
 import * as actions from '../../store/actions/index';
@@ -14,6 +16,8 @@ import * as actions from '../../store/actions/index';
 // https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
 
 const Auth = props => {
+    const [showModal, setShowModal] = useState(false);
+
     const [authForm, setAuthForm] = useState({
             email: {
                 elementType: 'input',
@@ -46,6 +50,23 @@ const Auth = props => {
                 valid: false,
                 touched: false,
                 validationHelp: 'Hasło bez polskich znaków, powinno się składać conajmniej z jednaj małej litery, jednej dużej litery, z cyfry, a długość hasła min 8 znaków max 24 znaki.'
+            },
+            termsOfUse: {
+                elementType: 'checkbox',
+                elementConfig: {
+                    type: 'checkbox',
+                    name: 'terms',
+                    value: 'checked',
+                    id: 'terms'
+                },
+                children: 'Przystajesz na `REGULAMIN` korzystania z serwisu.',
+                value: false,
+                validation: {
+                    required: true,
+                    regexp: /^(Tak)$/
+                },
+                valid: false,
+                validationHelp: 'Zgoda jest wymagana jeśli chcesz korzystać z dema servisu.'
             }
         });
 
@@ -61,11 +82,18 @@ const Auth = props => {
     },[buildingBurger,authRedirectPath,onSetAuthRedirectPath]);
 
     const imputChangedHandler = (event, controlName) => {
+        let value = event.target.value;
+        if (controlName === 'termsOfUse') {
+            if (event.target.checked) 
+                value = 'Tak';
+            else
+                value = 'Nie';
+        }
         const updatedControls = {
             ...authForm,
             [controlName]: {
                 ...authForm[controlName],
-                value: event.target.value,
+                value: value,
                 valid: autoValidation(event.target.value,authForm[controlName].validation),
                 touched: true
             }
@@ -111,6 +139,7 @@ const Auth = props => {
             shouldValidate={f.config.validation}
             touched={f.config.touched}
             changed={(event) => imputChangedHandler(event,f.id)}
+            displayRules={setShowModal.bind(this,true)}
         />
     ));
 
@@ -133,6 +162,17 @@ const Auth = props => {
         <div className={classes.Auth}>
             {authRedirect}
             {errorMessage}
+            <Modal show={showModal} modalClosed={setShowModal.bind(this,false)}>
+                    { terms }
+                    <center>
+                        <Button 
+                            btnType="Success" 
+                            clicked={setShowModal.bind(this,false)}
+                        >
+                            OK
+                        </Button>
+                    </center>
+                </Modal>
             <form onSubmit={submitHandler}>
                 {form}
                 <Button disabled={!formIsValid} btnType="Success">Wyślij</Button>
