@@ -38,7 +38,7 @@ const ContactData = props => {
             elementType: 'input',
             elementConfig: {
                 type: 'text',
-                placeholder: 'ulica'
+                placeholder: 'adres'
             },
             children: '',
             value: '',
