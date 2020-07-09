@@ -3,6 +3,8 @@
 /burger-app/node_modules/
 /burger-app/build/
 /burger-app/coverage/
+/burger-app/.firebase
+/burger-app/.gitignore
 
 # Compiled source #
 ###################

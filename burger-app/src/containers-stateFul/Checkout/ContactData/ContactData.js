@@ -199,9 +199,9 @@ const ContactData = props => {
         };
         if(updatedFormElement.elementType==='checkbox') {
             if(!event.target.checked)
-                updatedFormElement.value = 'Tak'
+                updatedFormElement.value = 'Tak';
             else
-                updatedFormElement.value = 'Nie'
+                updatedFormElement.value = 'Nie';
         } else
             updatedFormElement.value = event.target.value;
         updatedFormElement.valid = autoValidate(updatedFormElement.value,updatedFormElement.validation);
