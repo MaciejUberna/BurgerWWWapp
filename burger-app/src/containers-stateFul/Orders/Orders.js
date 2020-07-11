@@ -75,7 +75,9 @@ const Orders = props => {
     return (
         <div>
             <Modal show={showModalOfOrderDetails} modalClosed={setShowModalOfOrderDetails.bind(this,false)}>
-                {orderDetails}
+                <div className={classes.Details}>
+                    {orderDetails}
+                </div>
                 <center><Button btnType="Success" clicked={setShowModalOfOrderDetails.bind(this,false)}> OK </Button></center>
             </Modal>
             <Modal show={showModalOfDeletion} modalClosed={setShowModalOfDeletion.bind(this,false)}>
