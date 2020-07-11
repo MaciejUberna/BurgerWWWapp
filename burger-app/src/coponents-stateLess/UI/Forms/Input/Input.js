@@ -65,7 +65,38 @@ const Input = ( props ) => {
         break;
         case ('checkbox'):
             const workArray = props.children.split("`");
-            inputElement = (
+            if(workArray.length === 3) {
+                inputElement = (
+                        <label className={checkboxClasses.join(' ')} >
+                            <input 
+                            {...props.elementConfig}
+                            value={props.value}
+                            onChange={props.changed}
+                            checked={radioSelectedValue}
+                            />
+                            <span
+                                onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}
+                                className={classes.Checkmark}
+                            >
+                            </span> 
+                            <p> 
+                                <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
+                                    {workArray[0]} 
+                                </span>
+                                <span 
+                                    className={classes.CheckboxUseTerms} 
+                                    onClick={props.displayRules}
+                                > 
+                                    {workArray[1]} 
+                                </span>
+                                <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
+                                    {workArray[2]} 
+                                </span>
+                            </p>
+                        </label>
+                );
+            } else {
+                inputElement = (
                     <label className={checkboxClasses.join(' ')} >
                         <input 
                         {...props.elementConfig}
@@ -82,18 +113,10 @@ const Input = ( props ) => {
                             <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
                                 {workArray[0]} 
                             </span>
-                            <span 
-                                className={classes.CheckboxUseTerms} 
-                                onClick={props.displayRules}
-                            > 
-                                {workArray[1]} 
-                            </span>
-                            <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
-                                {workArray[2]} 
-                            </span>
                         </p>
-                    </label>
-            );
+                </label>
+                );
+            }
         break;
         case ('radio'):
             inputElement = (
