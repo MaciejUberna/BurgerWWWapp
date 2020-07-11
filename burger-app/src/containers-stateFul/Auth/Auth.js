@@ -83,8 +83,8 @@ const Auth = props => {
 
     const imputChangedHandler = (event, controlName) => {
         let value = event.target.value;
-        if (controlName === 'termsOfUse') {
-            if (event.target.checked) 
+        if (authForm[controlName].elementType === 'checkbox') {
+            if (!event.target.checked) 
                 value = 'Tak';
             else
                 value = 'Nie';
@@ -94,7 +94,7 @@ const Auth = props => {
             [controlName]: {
                 ...authForm[controlName],
                 value: value,
-                valid: autoValidation(event.target.value,authForm[controlName].validation),
+                valid: autoValidation(value,authForm[controlName].validation),
                 touched: true
             }
         };
