@@ -29,11 +29,11 @@ const ContactData = props => {
             value: '',
             validation: {
                 required: true,
-                regexp: /^[A-ZŁ]{1}[a-złńćźżśąęó]{1,}\s{1,}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}(([A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,})|([-]{1}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}))*$/
+                regexp: /^[A-ZŁ]{1}[a-złńćźżśąęó]{1,}\s{1,}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}(([A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,})|([-\s]{1}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}))*$/
             },
             valid: false,
             touched: false,
-            validationHelp: 'Twoje imię i nazwisko powinno zaczynać się z wielkiej litery i składać się conajmniej z dwuch.'
+            validationHelp: 'Twoje imię i nazwisko powinno zaczynać się z wielkiej litery.'
         },
         street: {
             elementType: 'input',
