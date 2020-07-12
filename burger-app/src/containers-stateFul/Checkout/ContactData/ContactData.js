@@ -21,6 +21,7 @@ const ContactData = props => {
     const [orderForm, setOrderForm] = useState({
         name: {
             elementType: 'input',
+            autocomplete: 'off',
             elementConfig: {
                 type: 'text',
                 placeholder: 'imię i nazwisko'
@@ -37,6 +38,7 @@ const ContactData = props => {
         },
         street: {
             elementType: 'input',
+            autocomplete: 'off',
             elementConfig: {
                 type: 'text',
                 placeholder: 'adres'
@@ -53,6 +55,7 @@ const ContactData = props => {
         },
         postalCode: {
             elementType: 'input',
+            autocomplete: 'off',
             elementConfig: {
                 type: 'text',
                 placeholder: 'kod pocztowy'
@@ -69,6 +72,7 @@ const ContactData = props => {
         },
         city: {
             elementType: 'input',
+            autocomplete: 'off',
             elementConfig: {
                 type: 'text',
                 placeholder: 'miejscowość'
@@ -95,6 +99,7 @@ const ContactData = props => {
         },
         telephone: {
             elementType: 'input',
+            autocomplete: 'off',
             elementConfig: {
                 type: 'text',
                 placeholder: 'telefon'
@@ -143,7 +148,7 @@ const ContactData = props => {
             elementType: 'radio',
             elementConfig: {
                 type: 'radio',
-                name: 'yourType',
+                name: 'odwiedziny',
                 options: [
                     {value: '1', text: 'Pierwszy raz'},
                     {value: '<5', text: 'Niecałe 5'},
@@ -157,7 +162,7 @@ const ContactData = props => {
                 required: false
             },
             valid: true,
-            validationHelp: 'Wybierz którąkolwiek z opcji.'
+            validationHelp: ''
         }
     });
 
@@ -228,6 +233,7 @@ const ContactData = props => {
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
+                        autocomplete={formElement.config.autocomplete}
                         children={formElement.config.children}
                         validationHelp={formElement.config.validationHelp}
                         invalid={!formElement.config.valid}

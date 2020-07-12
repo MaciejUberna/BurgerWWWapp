@@ -21,6 +21,7 @@ const Auth = props => {
     const [authForm, setAuthForm] = useState({
             email: {
                 elementType: 'input',
+                autocomplete: 'off',
                 elementConfig: {
                     type: 'text',
                     placeholder: 'E-mail adres'
@@ -33,10 +34,11 @@ const Auth = props => {
                 },
                 valid: false,
                 touched: false,
-                validationHelp: 'Email powinien zawierać 1 znak "@" i tekst z cyframi z każdej jego strony.'
+                validationHelp: 'Wprowadź poprawny adres email.'
             },
             password: {
                 elementType: 'input',
+                autocomplete: 'current-password',
                 elementConfig: {
                     type: 'password',
                     placeholder: 'Hasło'
@@ -133,6 +135,7 @@ const Auth = props => {
             elementType={f.config.elementType}
             elementConfig={f.config.elementConfig}
             value={f.config.value}
+            autocomplete={f.config.autocomplete}
             children={f.config.children}
             validationHelp={f.config.validationHelp}
             invalid={!f.config.valid}

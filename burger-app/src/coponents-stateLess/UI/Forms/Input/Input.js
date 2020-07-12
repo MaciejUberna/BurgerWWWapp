@@ -23,7 +23,7 @@ const Input = ( props ) => {
         case ('input'):
             inputElement = ( <input 
                 className={inputClasses.join(' ')}
-                autoComplete="off"
+                autoComplete={props.autocomplete}
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed}
@@ -34,14 +34,14 @@ const Input = ( props ) => {
             inputElement = ( <textarea 
                 className={inputClasses.join(' ')} 
                 value={props.value}
-                autoComplete="off"
+                autoComplete={props.autocomplete}
                 onChange={props.changed}        
                 />
             );
         break;
         case ('password'):
             inputElement = ( <password
-                autoComplete="off"
+                autoComplete={props.autocomplete}
                 className={inputClasses.join(' ')}
                 value={props.value}
                 onChange={props.changed}        
@@ -153,7 +153,7 @@ const Input = ( props ) => {
                 inputElement = ( <input 
                     className={inputClasses.join(' ')} 
                     {...props.elementConfig}
-                    autoComplete="off"
+                    autoComplete={props.autocomplete}
                     value={props.value}
                     onChange={props.changed}
                     />
