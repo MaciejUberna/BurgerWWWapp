@@ -4,6 +4,7 @@ import Spinner from '../../../coponents-stateLess/UI/Spinner/Spinner';
 import classes from './ContactData.module.css';
 import axios from '../../../axios-orders';
 import { connect } from 'react-redux';
+import { countries, compare } from '../../../Locale/countries';
 
 import Input from '../../../coponents-stateLess/UI/Forms/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
@@ -83,20 +84,14 @@ const ContactData = props => {
             validationHelp: 'Nazwa miejscowości powinna zaczynać się z wielkiej litery.'
         },
         country: {
-            elementType: 'input',
+            elementType: 'select',
             elementConfig: {
-                type: 'text',
-                placeholder: 'kraj'
+                options: countries.sort(compare)
             },
             children: '',
-            value: '',
-            validation: {
-                required: true,
-                regexp: /^[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,}(\s{1,}[A-ZŁŚĆŹŻÓĘĄ]{1}[a-złńćźżśąęó]{1,})*$/
-            },
-            valid: false,
-            touched: false,
-            validationHelp: 'Nazwa kraju powinna zaczynać się z wielkiej litery.'
+            value: 'Poland',
+            validation: {},
+            valid: true
         },
         telephone: {
             elementType: 'input',
