@@ -29,7 +29,7 @@ const ContactData = props => {
             value: '',
             validation: {
                 required: true,
-                regexp: /^[A-ZŁ]{1}[a-złńćźżśąęó]{1,}\s{1,}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}$/
+                regexp: /^[A-ZŁ]{1}[a-złńćźżśąęó]{1,}\s{1,}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}(([A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,})|([-]{1}[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}))*$/
             },
             valid: false,
             touched: false,
@@ -45,7 +45,7 @@ const ContactData = props => {
             value: '',
             validation: {
                 required: true,
-                regexp: /^[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,}\s{1,}\d{1,}[a-z]*\/\d{1,}$/
+                regexp: /^([A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,})(\s[A-ZŁŚĆŹŻÓĘĄŃ]{1}[a-złńćźżśąęó]{1,})*\s{1,}\d{1,}[a-z]*\/\d{1,}$/
             },
             valid: false,
             touched: false,
@@ -55,7 +55,7 @@ const ContactData = props => {
             elementType: 'input',
             elementConfig: {
                 type: 'text',
-                placeholder: 'kod-pocztowy'
+                placeholder: 'kod pocztowy'
             },
             children: '',
             value: '',
