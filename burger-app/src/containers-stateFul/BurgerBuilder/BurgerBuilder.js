@@ -10,13 +10,23 @@ import Spinner from '../../coponents-stateLess/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
+import ModalDown from '../../coponents-stateLess/UI/Modal/ModalDown';
 import OrderSummary from '../../coponents-stateLess/Burger/OrderSummary/OrderSummary';
+import Button from '../../coponents-stateLess/UI/Button/Button';
+import { useHistory } from 'react-router-dom';
 
 import * as actions from '../../store/actions/index';
 
 const BurgerBuilder = props => {
 
+    const history = useHistory();
+
+    const goToGoogle = () => {
+        history.push("/google")
+    }
+
     const [purchaseButtonClicked,setPurchaseButtonClicked] = useState(false);
+    const [showRules, setShowRules] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -69,6 +79,10 @@ const BurgerBuilder = props => {
         };
     };
 
+    const hideRulesHandler = () => {
+        setShowRules(false);
+    }
+
     const purchaseButtonClickedCanceledHandler = () => {
         setPurchaseButtonClicked(false);
     };
@@ -116,13 +130,28 @@ const BurgerBuilder = props => {
             />
         );
     }
-
-    //console.log('-2- disableInfo: ',disabledInfo);
     return (
         <Auxiliary>
             <Modal show={purchaseButtonClicked} modalClosed={purchaseButtonClickedCanceledHandler}>
                 {orderSummary}
             </Modal>
+            <ModalDown show={showRules}>
+                <div>
+                    <p>Strona używa local storege i 
+                        i zapisuje informacje w bazie danych.
+                        Jeśli nie wyrażasz zgody na przetwarzanie twoich
+                        danych w ten sposób wybierz &nbsp;
+                        <Button btnType={"Danger"}  clicked={goToGoogle}>
+                            ANULUJ
+                        </Button>
+                        , w przeciwynym razie wybierz 
+                        <Button btnType={"Success"} clicked={hideRulesHandler}>
+                            OK
+                        </Button>
+                         .
+                    </p>
+                </div>
+            </ModalDown>
             {burger}
         </Auxiliary>
     );  
