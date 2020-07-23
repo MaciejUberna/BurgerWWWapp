@@ -22,8 +22,8 @@ const BurgerBuilder = props => {
     const history = useHistory();
 
     const goToGoogle = () => {
-        history.push("/google")
-    }
+        history.push("/google");
+    };
 
     const [purchaseButtonClicked,setPurchaseButtonClicked] = useState(false);
     const [showRules, setShowRules] = useState(true);
@@ -81,7 +81,7 @@ const BurgerBuilder = props => {
 
     const hideRulesHandler = () => {
         setShowRules(false);
-    }
+    };
 
     const purchaseButtonClickedCanceledHandler = () => {
         setPurchaseButtonClicked(false);
@@ -95,7 +95,7 @@ const BurgerBuilder = props => {
 
     const disabledInfo = {
         ...ings
-    }
+    };
     //console.log('-1- disableInfo: ',disabledInfo);
     for(let key in disabledInfo) {
         disabledInfo[key] = disabledInfo[key] <= 0;
