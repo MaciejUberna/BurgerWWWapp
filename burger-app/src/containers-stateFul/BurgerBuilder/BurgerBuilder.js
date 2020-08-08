@@ -26,9 +26,12 @@ const BurgerBuilder = props => {
     };
 
     const [purchaseButtonClicked,setPurchaseButtonClicked] = useState(false);
-    const [showRules, setShowRules] = useState(true);
 
     const dispatch = useDispatch();
+
+    const conditionsShown = useSelector(state => {
+        return state.onetimeJob.responseToDisclaimer;
+    });
 
     const ings = useSelector(state => {
         return state.burgerBuilder.ingredients;
@@ -54,6 +57,7 @@ const BurgerBuilder = props => {
         );
     const onInitPurchase = () => dispatch(actions.purchaseInit());
     const onSetAuthRedirectPath = path => dispatch(actions.setAuthRedirectPath(path));
+    const disclaimerFilled = () => dispatch(actions.getDisclaimer());
 
     useEffect ( () => {
         //console.log('ComponentDidMount props: ',this.props);
@@ -80,7 +84,7 @@ const BurgerBuilder = props => {
     };
 
     const hideRulesHandler = () => {
-        setShowRules(false);
+        disclaimerFilled();
     };
 
     const purchaseButtonClickedCanceledHandler = () => {
@@ -130,12 +134,18 @@ const BurgerBuilder = props => {
             />
         );
     }
+
+    // useEffect(() => {
+    //     console.log('conditionsNotShown: ',conditionsNotShown)
+    // },[conditionsNotShown]);
+    
+
     return (
         <Auxiliary>
             <Modal show={purchaseButtonClicked} modalClosed={purchaseButtonClickedCanceledHandler}>
                 {orderSummary}
             </Modal>
-            <ModalDown show={showRules}>
+            <ModalDown show={!conditionsShown}>
                 <div>
                     <p>Strona używa local storege i 
                         i zapisuje informacje w bazie danych.
