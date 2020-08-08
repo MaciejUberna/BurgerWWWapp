@@ -4,6 +4,7 @@ import * as actionTypes from '../actions/actionTypes';
 import { logoutSaga, checkAuthTimeoutSaga, authUserSaga, authCheckStateSaga } from './auth';
 import { initIngredintsSaga } from './burgerBuilder';
 import { purchaseBurgerSaga, fetchOrdersSaga, deleteOrderSaga } from './order'
+import { getDisclaimerSaga } from './onetimeJobs';
 
 //More on redux-saga on page: https://redux-saga.js.org
 //Advanced Concepts: https://redux-saga.js.org/docs/advanced/
@@ -33,4 +34,8 @@ export function* watchOrder() {
     yield takeLatest(actionTypes.PURCHASE_BURGER, purchaseBurgerSaga);
     yield takeEvery(actionTypes.DELETE_ORDER, deleteOrderSaga);
     yield takeEvery(actionTypes.FETCH_ORDERS, fetchOrdersSaga);
+};
+
+export function* watchOnetimeJob() {
+    yield takeLatest(actionTypes.ONETIME_JOBS_DISCLAIMER, getDisclaimerSaga)
 };
