@@ -7,7 +7,7 @@ import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 //This for redux-saga to bee seen by store:
 import createSagaMiddleware from 'redux-saga';
-import { watchAuth, watchBurgerBuilder, watchOrder } from './store/sagas';
+import { watchAuth, watchBurgerBuilder, watchOrder, watchOnetimeJob } from './store/sagas';
 
 import './index.css';
 import App from './App';
@@ -15,6 +15,7 @@ import * as serviceWorker from './serviceWorker';
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
+import onetimeJobsReducer from './store/reducers/onetimeJobs';
 
 //npm run build
 //To install project on firebase: 
@@ -31,7 +32,8 @@ const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
     order: orderReducer,
-    auth: authReducer
+    auth: authReducer,
+    onetimeJob: onetimeJobsReducer
 });
 
 const store = createStore(rootReducer,
@@ -41,6 +43,7 @@ const store = createStore(rootReducer,
 sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchBurgerBuilder);
 sagaMiddleware.run(watchOrder);
+sagaMiddleware.run(watchOnetimeJob);
 
 const app = (
     <Provider store={store}>
