@@ -45,6 +45,7 @@ export function* authUserSaga(action) {
 
 export function* authCheckStateSaga() {
     const token = yield localStorage.getItem('token');
+    //const token = yield call([localStorage,'getItem'],token)
     if(!token) {
         yield put(actions.logout());
     } else {
