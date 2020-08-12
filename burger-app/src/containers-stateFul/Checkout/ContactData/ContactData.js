@@ -168,6 +168,25 @@ const ContactData = props => {
 
     const [formIsValid, setFormIsValid] = useState(false);
 
+    const getDateString = (date) => {
+        let month = date.getMonth()+1;
+        if (month < 10) month = `0${month}`;
+        let dayOfMonth = date.getDate();
+        if(dayOfMonth < 10) dayOfMonth = `0${dayOfMonth}`;
+        let hours = date.getHours();
+        if (hours < 10) hours = `0${hours}`;
+        let minutes = date.getMinutes();
+        if (minutes < 10) minutes = `0${minutes}`;
+        let seconds = date.getSeconds();
+        if (seconds < 10) seconds = `0${seconds}`;
+        let milliseconds = date.getMilliseconds();
+        if (milliseconds < 10)
+            milliseconds = `00${milliseconds}`;
+        else if ( milliseconds < 100)
+            milliseconds = `0${milliseconds}`;
+        return `${date.getFullYear()}.${month}.${dayOfMonth} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+    }
+
     //I dont want to send request automatically because that would reload my page
     //That is why I preventDefault.
     const orderHandler = (event) => {
@@ -178,15 +197,18 @@ const ContactData = props => {
         formData['email'] = props.login;
         for(let formElementIndentifier in orderForm) {
             formData[formElementIndentifier] = orderForm[formElementIndentifier].value;
+            //console.log(formElementIndentifier+' : '+orderForm[formElementIndentifier].value);
         }
+        const date = new Date();
         const order = {
-            userId: props.userId,
+            // userId: props.userId,
+            dateOfOrder: getDateString(date),
             ingredients: props.ings,
             price: props.price.toFixed(2),
             orderData: formData
         };
 
-        props.onOrderBurger(order,props.token);
+        props.onOrderBurger(order,props.token,props.userId);
 
     }
 
@@ -273,7 +295,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
+        onOrderBurger: (orderData, token, userId) => dispatch(actions.purchaseBurger(orderData, token, userId))
     }
 };
 
