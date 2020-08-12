@@ -23,12 +23,13 @@ const Orders = props => {
 
     
     const performDeletionHandler = () => {
-        onDeleteOrder(token,orderId);
+        onDeleteOrder(token,orderId,userId);
         setShowModalOfDeletion(false);
     };
 
     useEffect( () => {
         onFetchOrders(token, userId);
+        //console.log('userId:',userId);
     },[onFetchOrders, onDeleteOrder , token, userId]);
 
     const toggleOrderDetailsModal = (detailsObject) => {
@@ -60,6 +61,7 @@ const Orders = props => {
             props.orders.map(o => {
                 return <Order 
                     key={o.id}
+                    dateOfOrder={o.dateOfOrder}
                     ingredients={o.ingredients}
                     price={o.price}
                     id={o.id}
@@ -108,7 +110,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchOrders: (token,userId) => dispatch(actions.fetchOrders(token,userId)),
-        onDeleteOrder: (token,orderId) => dispatch(actions.deleteOrder(token,orderId))
+        onDeleteOrder: (token,orderId,userId) => dispatch(actions.deleteOrder(token,orderId,userId))
     };
 };
 
