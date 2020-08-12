@@ -1,10 +1,11 @@
 import * as actionTypes from './actionTypes';
 
-export const deleteOrder = (authToken, id) => {
+export const deleteOrder = (authToken, id, userId) => {
     return {
         type: actionTypes.DELETE_ORDER,
         id: id,
-        authToken: authToken
+        authToken: authToken,
+        userId: userId
     };
 };
 
@@ -49,11 +50,12 @@ export const purchaseBurgerStart = () => {
     };
 };
 
-export const purchaseBurger = (orderData, authToken) => {
+export const purchaseBurger = (orderData, authToken, userId) => {
     return {
         type: actionTypes.PURCHASE_BURGER,
         orderData: orderData,
-        authToken: authToken
+        authToken: authToken,
+        userId: userId
     };
 };
 
