@@ -20,7 +20,7 @@ const order = (props) => {
     }
     ingredients.push(<span key={props.id+ctr}>Bułka(1)</span>)
     return (
-        <div className={classes.Order}>
+        <div className={classes.Order} id={props.id}>
             <p>Danie: Burger</p>
             <p>Data utworzenia: {props.dateOfOrder}</p>
             <p>Składniki: {ingredients}</p>
