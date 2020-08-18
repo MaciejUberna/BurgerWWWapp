@@ -24,7 +24,7 @@ const Orders = props => {
     const [ordersFirstId, setOrdersFirstId] = useState(null);
     const [ordersFirstHeight, setOrdersFirstHeight] = useState(1);
     const [currentCounter, setCurrentCounter] = useState(1);
-    const [allItemsLength, setAllItemsLength] = useState(0);
+    const [allItemsCounted, setAllItemsCounted] = useState(0);
     
     useEffect( () => {
         onFetchOrders(token, userId);
@@ -35,7 +35,7 @@ const Orders = props => {
         //console.log('props.loading=',props.loading,' props.orders[0]=',props.orders[0]);
         if(!props.loading && props.orders[0]){
             setOrdersFirstId(props.orders[0]['id']);
-            setAllItemsLength(props.orders.length)
+            setAllItemsCounted(props.orders.length)
         };
     },[props.loading,props.orders]);
 
@@ -56,11 +56,11 @@ const Orders = props => {
                 //console.log('ordersFirstHeight: '+ordersFirstHeight)
                 //console.log('intermediate calc: '+intermediateCalc);
                 //console.log('location: '+window.location.pathname);
-                if (intermediateCalc > allItemsLength)
-                    intermediateCalc = allItemsLength;
+                if (intermediateCalc > allItemsCounted)
+                    intermediateCalc = allItemsCounted;
                 setCurrentCounter(intermediateCalc);
             }
-    },[ordersFirstHeight,allItemsLength]);
+    },[ordersFirstHeight,allItemsCounted]);
 
     useEffect(() => {
 
@@ -137,7 +137,7 @@ const Orders = props => {
             <h3 className={classes.Login}>Zalogowano na: {props.login}</h3>
             <p><br/><br/></p>
             {orders}
-            <p className={classes.Counter}> {currentCounter}/{allItemsLength}</p>
+            <p className={classes.Counter}> {currentCounter}/{allItemsCounted}</p>
         </div>
     );
 }
