@@ -7,7 +7,9 @@ import Order from '../../coponents-stateLess/Order/Order';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../coponents-stateLess/UI/Spinner/Spinner';
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
+import ModalAppear from '../../coponents-stateLess/UI/Modal/ModalAppear';
 import Button from '../../coponents-stateLess/UI/Button/Button';
+import Burger from '../../coponents-stateLess/Burger/Burger';
 import { contactsToPolish } from '../../polish-translations';
 import Hoc from '../../hoc/Auxiliary/Auxiliary';
 
@@ -25,6 +27,9 @@ const Orders = props => {
     const [ordersFirstHeight, setOrdersFirstHeight] = useState(1);
     const [currentCounter, setCurrentCounter] = useState(1);
     const [allItemsCounted, setAllItemsCounted] = useState(0);
+
+    const [burgerModalShown, setBurgerModalShown] = useState(false);
+    const [ingredients,setIngredients] = useState(null);
     
     useEffect( () => {
         onFetchOrders(token, userId);
@@ -79,6 +84,11 @@ const Orders = props => {
         setShowModalOfDeletion(false);
     };
 
+    const showBurgerModalHandler = (ingredients) => {
+        setBurgerModalShown(true);
+        setIngredients(ingredients);
+    }
+
     const toggleOrderDetailsModal = (detailsObject) => {
         const details = [];
 
@@ -114,6 +124,7 @@ const Orders = props => {
                     id={o.id}
                     orderDetails={toggleOrderDetailsModal.bind(this,o.orderData)}
                     deleteOrder={toggleDeleteOrderModal.bind(this,o.id)}
+                    showBurger={showBurgerModalHandler.bind(this,o.ingredients)}
                 />;
             })
         );
@@ -134,6 +145,9 @@ const Orders = props => {
                     <Button btnType="Danger" clicked={performDeletionHandler}> Usuń </Button>
                 </center>
             </Modal>
+            <ModalAppear show={burgerModalShown} modalClosed={setBurgerModalShown.bind(this,false)}>
+                {ingredients ? <Burger ingredients={ingredients}/> : null}
+            </ModalAppear>
             <h3 className={classes.Login}>Zalogowano na: {props.login}</h3>
             <p><br/><br/></p>
             {orders}
