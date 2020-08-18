@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Order.module.css';
 import Button from '../UI/Button/Button';
 import { ingredientsToPolish } from '../../polish-translations';
+import burgerLogo from '../../assets/images/burger-logo.png'
 
 const order = (props) => {
     const ingredients = [];
@@ -23,7 +24,7 @@ const order = (props) => {
         <div className={classes.Order} id={props.id}>
             <p>Danie: Burger</p>
             <p>Data utworzenia: {props.dateOfOrder}</p>
-            <p>Składniki: {ingredients}</p>
+            <p>Składniki: {ingredients} &nbsp; <img onClick={props.showBurger} className={classes.BurgerLogo} src={burgerLogo} alt='burgerLogo'/></p>
             <p>Cena: <strong> {props.price} zł</strong></p>
             <p> 
                 <Button btnType="Success" clicked={props.orderDetails}>Dane dostawy</Button> 

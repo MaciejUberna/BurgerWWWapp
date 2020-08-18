@@ -14,3 +14,10 @@
     border: 1px solid #ccc;
     padding: 5px;
 }
+
+.BurgerLogo {
+    width: 25px;
+    height: 25px;
+    top: 25px;
+    cursor: pointer;
+}
