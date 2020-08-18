@@ -25,17 +25,19 @@ const Auth = React.lazy(() => {
 
 const App = props => {
 
+  const {onTryAutoSignup} = props;
+
   useEffect(() => {
-    props.onTryAutoSignup();
-  },[props]);
+    onTryAutoSignup();
+  },[onTryAutoSignup]);
 
   let routes = (
     <Switch>
       <Route path="/auth" render={(props) => <Auth {...props}/>} />
       <Route path='/google' component={
         () => { 
-        window.location.href = 'https://www.google.pl'; 
-        return null;
+          window.location.href = 'https://www.google.pl'; 
+          return null;
         }
       }/>
       <Route path="/" exact component={BurgerBuilder} />
