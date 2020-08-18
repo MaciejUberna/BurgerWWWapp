@@ -1,4 +1,4 @@
-import React , { useState, useEffect } from 'react';
+import React , { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -21,16 +21,63 @@ const Orders = props => {
     const [orderId, setOrderId] = useState(null);
     const [orderDetails, setOrderDetails] = useState(null);
 
+    const [ordersFirstId, setOrdersFirstId] = useState(null);
+    const [ordersFirstHeight, setOrdersFirstHeight] = useState(1);
+    const [currentCounter, setCurrentCounter] = useState(1);
+    const [allItemsLength, setAllItemsLength] = useState(0);
     
-    const performDeletionHandler = () => {
-        onDeleteOrder(token,orderId,userId);
-        setShowModalOfDeletion(false);
-    };
-
     useEffect( () => {
         onFetchOrders(token, userId);
         //console.log('userId:',userId);
     },[onFetchOrders, onDeleteOrder , token, userId]);
+    
+    useEffect( () => {
+        //console.log('props.loading=',props.loading,' props.orders[0]=',props.orders[0]);
+        if(!props.loading && props.orders[0]){
+            setOrdersFirstId(props.orders[0]['id']);
+            setAllItemsLength(props.orders.length)
+        };
+    },[props.loading,props.orders]);
+
+    useEffect( () => {
+        //console.log('ordersFirstId::',ordersFirstId,' document.getElementById(ordersFirstId): ',document.getElementById(ordersFirstId));
+        if(document.getElementById(ordersFirstId)) {
+            setOrdersFirstHeight(document.getElementById(ordersFirstId).clientHeight);
+            //console.log('ordersFirstHeight:: ',ordersFirstHeight)
+        };
+    },[ordersFirstId,props.orders]);
+
+    const fireOnScroll = useCallback( () => {
+            if (ordersFirstHeight !== 1) {
+                const st = window.pageYOffset || document.documentElement.scrollTop;
+                const displayCapacity = Math.floor(window.innerHeight/ordersFirstHeight);
+                let intermediateCalc = Math.round(st/ordersFirstHeight)+displayCapacity;
+                //console.log('st: '+st);
+                //console.log('ordersFirstHeight: '+ordersFirstHeight)
+                //console.log('intermediate calc: '+intermediateCalc);
+                //console.log('location: '+window.location.pathname);
+                if (intermediateCalc > allItemsLength)
+                    intermediateCalc = allItemsLength;
+                setCurrentCounter(intermediateCalc);
+            }
+    },[ordersFirstHeight,allItemsLength]);
+
+    useEffect(() => {
+
+        window.addEventListener('scroll',fireOnScroll,false);
+        //console.log('Added scroll listener.');
+
+        return () => {
+            window.removeEventListener('scroll', fireOnScroll);
+            //console.log('Removed scroll listener.')
+        }
+
+    },[fireOnScroll])
+
+    const performDeletionHandler = () => {
+        onDeleteOrder(token,orderId,userId);
+        setShowModalOfDeletion(false);
+    };
 
     const toggleOrderDetailsModal = (detailsObject) => {
         const details = [];
@@ -72,10 +119,8 @@ const Orders = props => {
         );
     };
 
-
-
     return (
-        <div>
+        <div id='X2XF4'>
             <Modal show={showModalOfOrderDetails} modalClosed={setShowModalOfOrderDetails.bind(this,false)}>
                 <div className={classes.Details}>
                     {orderDetails}
@@ -92,6 +137,7 @@ const Orders = props => {
             <h3 className={classes.Login}>Zalogowano na: {props.login}</h3>
             <p><br/><br/></p>
             {orders}
+            <p className={classes.Counter}> {currentCounter}/{allItemsLength}</p>
         </div>
     );
 }
