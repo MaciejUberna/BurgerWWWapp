@@ -13,7 +13,8 @@ const ModalAppear = props => {
             <div className={classes.ModalAppear}
             onClick={props.modalClosed}
             style={{
-                opacity: props.show ? '1' : '0'
+                opacity: props.show ? '1' : '0',
+                zIndex: props.show ? '100' : -2
             }}
             >
                 {props.children}
