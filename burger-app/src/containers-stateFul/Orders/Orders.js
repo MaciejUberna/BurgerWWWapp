@@ -146,7 +146,7 @@ const Orders = props => {
                 </center>
             </Modal>
             <ModalAppear show={burgerModalShown} modalClosed={setBurgerModalShown.bind(this,false)}>
-                {ingredients ? <Burger ingredients={ingredients}/> : null}
+                {ingredients ? <Burger burgerType="BurgerOrder" ingredients={ingredients}/> : null}
             </ModalAppear>
             <h3 className={classes.Login}>Zalogowano na: {props.login}</h3>
             <p><br/><br/></p>
