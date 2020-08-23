@@ -78,21 +78,20 @@ const Input = ( props ) => {
                                 onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}
                                 className={classes.Checkmark}
                             >
-                            </span> 
-                            <p> 
-                                <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
-                                    {workArray[0]} 
-                                </span>
-                                <span 
-                                    className={classes.CheckboxUseTerms} 
-                                    onClick={props.displayRules}
-                                > 
-                                    {workArray[1]} 
-                                </span>
-                                <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
-                                    {workArray[2]} 
-                                </span>
-                            </p>
+                            </span>
+                            &nbsp;&nbsp;
+                            <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
+                                {workArray[0]} 
+                            </span>
+                            <span 
+                                className={classes.CheckboxUseTerms} 
+                                onClick={props.displayRules}
+                            > 
+                                    &nbsp; {workArray[1]} &nbsp;
+                            </span>
+                            <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
+                                {workArray[2]} 
+                            </span>
                         </label>
                 );
             } else {
