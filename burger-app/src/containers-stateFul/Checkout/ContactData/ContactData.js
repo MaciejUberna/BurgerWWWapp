@@ -24,7 +24,7 @@ const ContactData = props => {
             autocomplete: 'off',
             elementConfig: {
                 type: 'text',
-                placeholder: 'imię i nazwisko'
+                placeholder: 'Imię i nazwisko'
             },
             children: '',
             value: '',
@@ -41,7 +41,7 @@ const ContactData = props => {
             autocomplete: 'off',
             elementConfig: {
                 type: 'text',
-                placeholder: 'adres'
+                placeholder: 'Adres'
             },
             children: '',
             value: '',
@@ -58,7 +58,7 @@ const ContactData = props => {
             autocomplete: 'off',
             elementConfig: {
                 type: 'text',
-                placeholder: 'kod pocztowy'
+                placeholder: 'Kod pocztowy'
             },
             children: '',
             value: '',
@@ -75,7 +75,7 @@ const ContactData = props => {
             autocomplete: 'off',
             elementConfig: {
                 type: 'text',
-                placeholder: 'miejscowość'
+                placeholder: 'Miejscowość'
             },
             children: '',
             value: '',
@@ -90,7 +90,8 @@ const ContactData = props => {
         country: {
             elementType: 'select',
             elementConfig: {
-                options: countries.sort(compare)
+                options: countries.sort(compare),
+                placeholder: 'Kraj dostawy'
             },
             children: '',
             value: 'Poland',
@@ -102,7 +103,7 @@ const ContactData = props => {
             autocomplete: 'off',
             elementConfig: {
                 type: 'text',
-                placeholder: 'telefon'
+                placeholder: 'Telefon'
             },
             children: '',
             value: '',
@@ -120,7 +121,8 @@ const ContactData = props => {
                 options: [
                     {value: 'fastests', displayValue: 'Najszybsza'},
                     {value: 'cheapest', displayValue: 'Najtańsza'}
-                ]
+                ],
+                placeholder: 'Metoda dostawy'
             },
             children: '',
             value: 'fastests',
@@ -252,6 +254,7 @@ const ContactData = props => {
                 return (
                     <Input
                         key={formElement.id}
+                        id={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
