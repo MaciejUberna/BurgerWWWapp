@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import classes from './Input.module.css';
+import Auxiliary from '../../../../hoc/Auxiliary/Auxiliary';
 
 const Input = ( props ) => {
 
@@ -21,46 +22,62 @@ const Input = ( props ) => {
 
     switch ( props.elementType ) {
         case ('input'):
-            inputElement = ( <input 
-                className={inputClasses.join(' ')}
-                autoComplete={props.autocomplete}
-                {...props.elementConfig}
-                value={props.value}
-                onChange={props.changed}
-                />
-            );
+            inputElement = (
+                <Auxiliary>
+                    <input 
+                        className={inputClasses.join(' ')}
+                        id={props.id}
+                        autoComplete={props.autocomplete}
+                        {...props.elementConfig}
+                        value={props.value}
+                        onChange={props.changed}
+                    />
+                    <label htmlFor={props.id} className={classes.InputLabel}>{props.elementConfig.placeholder}</label>
+                </Auxiliary>
+        );
         break;
         case ('textarea'):
-            inputElement = ( <textarea 
-                className={inputClasses.join(' ')} 
-                value={props.value}
-                autoComplete={props.autocomplete}
-                onChange={props.changed}        
-                />
+            inputElement = ( 
+                <Auxiliary>
+                    <textarea 
+                    className={inputClasses.join(' ')}
+                    value={props.value}
+                    autoComplete={props.autocomplete}
+                    onChange={props.changed}        
+                    />
+                    <label htmlFor={props.id} className={classes.InputLabel}>{props.elementConfig.placeholder}</label>
+                </Auxiliary>
             );
         break;
         case ('password'):
-            inputElement = ( <password
-                autoComplete={props.autocomplete}
-                className={inputClasses.join(' ')}
-                value={props.value}
-                onChange={props.changed}        
-                />
+            inputElement = ( 
+                <Auxiliary>
+                    <password
+                    autoComplete={props.autocomplete}
+                    className={inputClasses.join(' ')}
+                    value={props.value}
+                    onChange={props.changed}        
+                    />
+                    <label htmlFor={props.id} className={classes.InputLabel}>{props.elementConfig.placeholder}</label>
+                </Auxiliary>
             );
         break;
         case ('select'):
             inputElement = (
-                <select
-                    className={inputClasses.join(' ')}
-                    value={props.value}
-                    onChange={props.changed}
-                >
-                    {props.elementConfig.options.map(option => {
-                        return <option key={option.value} value={option.value}>
-                            {option.displayValue}
-                        </option>;
-                    })}
-                </select>
+                <Auxiliary>
+                    <select
+                        className={inputClasses.join(' ')}
+                        value={props.value}
+                        onChange={props.changed}
+                    >
+                        {props.elementConfig.options.map(option => {
+                            return <option key={option.value} value={option.value}>
+                                {option.displayValue}
+                            </option>;
+                        })}
+                    </select>
+                    <label htmlFor={props.id} className={classes.InputLabel}>{props.elementConfig.placeholder}</label>
+                </Auxiliary>
             );
         break;
         case ('checkbox'):
