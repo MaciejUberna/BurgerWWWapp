@@ -10,6 +10,20 @@
     margin-bottom: 8px;
 }
 
+.InputLabel {
+  display: block;
+  text-align: left;
+  font-size: .9rem;
+  margin-bottom: 8px;
+  transition: all .3s;
+}
+
+.InputElement:placeholder-shown + .InputLabel {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-2rem);
+}
+
 .CheckboxUseTerms {
   color: #8f5C2C;
   cursor: pointer;
@@ -98,6 +112,7 @@ input:checked ~ .Checkmark {
 .InputElement:focus {
     outline: none;
     background-color: #ccc;
+    border-bottom: 3px solid orangered;
 }
 
 .InputElement:disabled {
