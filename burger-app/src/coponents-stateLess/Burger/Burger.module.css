@@ -1,7 +1,6 @@
 .Burger {
-    /* position: relative; */
     margin: auto;
-    width: 20vw;
+    width: 35vw;
     height: 250px;
     overflow: scroll;
     text-align: center;
@@ -13,7 +12,7 @@
     align-items: center;
     justify-content: center;
     width: 40vw;
-    height: 75%;
+    height: 85%;
 }
 
 @media (min-width: 500px) and (min-height: 400px) {
