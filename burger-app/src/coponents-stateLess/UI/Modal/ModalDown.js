@@ -23,6 +23,10 @@ const ModalDown = props => {
 
     useEffect(() => {
         window.addEventListener('resize', updateWindowDimension);
+
+        return () => {
+            window.removeEventListener('resize',updateWindowDimension);
+        }
     },[]);
 
     const updateWindowDimension = () => {
