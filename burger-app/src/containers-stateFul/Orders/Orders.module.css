@@ -1,5 +1,6 @@
 .Login {
     position: fixed;
+    z-index: 20;
     text-align: center;
     background-color: white;
     width: 80%;
@@ -22,7 +23,7 @@
     /* width: 5%; */
     padding: 16px;
     left: 11%;
-    top: 90vh;
+    top: 90%;
     box-sizing: border-box;
     opacity: .65;
     transition: all 1s ease-out;
@@ -35,7 +36,7 @@
     height: 45vh;
     text-align: left;
     font-size: 1rem;
-    border: 1px solid black;
+    border: 2px solid black;
     overflow: -moz-scrollbars-vertical;
     overflow-y: scroll;
 }
