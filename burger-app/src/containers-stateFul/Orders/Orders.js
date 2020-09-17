@@ -8,22 +8,73 @@ import * as actions from '../../store/actions/index';
 import Spinner from '../../coponents-stateLess/UI/Spinner/Spinner';
 import Modal from '../../coponents-stateLess/UI/Modal/Modal';
 import ModalAppear from '../../coponents-stateLess/UI/Modal/ModalAppear';
+import CircularModal from '../../coponents-stateLess/UI/Modal/CircuralModal';
+import Input from '../../coponents-stateLess/UI/Forms/Input/Input';
 import Button from '../../coponents-stateLess/UI/Button/Button';
 import Burger from '../../coponents-stateLess/Burger/Burger';
 import { contactsToPolish } from '../../polish-translations';
 import Hoc from '../../hoc/Auxiliary/Auxiliary';
+import autoValidate from '../../shared/checkValidity';
 
 const Orders = props => {
+
+    const [filterForm, setFilterForm] = useState({
+        dateFrom: {
+            elementType: 'input',
+            autocomplete: 'off',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'Data od'
+            },
+            children: '',
+            value: '',
+            validation: {
+                required: true,
+                regexp: /^[0-9]{4}\.[0-9]{2}\.[0-9]{2}$/,
+                datechck: true,
+                emptyIsTrue: true
+            },
+            valid: false,
+            touched: false,
+            validationHelp: 'Podaj datę od której będą wyszukiwane zamówienia. Użyj formatu: RRRR.MM.DD'
+        },
+        dateTo: {
+            elementType: 'input',
+            autocomplete: 'off',
+            elementConfig: {
+                type: 'text',
+                placeholder: 'Data do'
+            },
+            children: '',
+            value: '',
+            validation: {
+                required: true,
+                regexp: /^[0-9]{4}\.[0-9]{2}\.[0-9]{2}$/,
+                datechck: true,
+                emptyIsTrue: true
+            },
+            valid: false,
+            touched: false,
+            validationHelp: 'Podaj datę do której będą wyszukiwane zamówienia. Użyj formatu: RRRR.MM.DD'
+        }
+    });
+
+    const [filtersFormIsValid, setFiltersFormIsValid] = useState(false);
+    const [filterDateFrom,setFilterDateFrom] = useState('');
+    const [filterDateTo, setFilterDateTo] = useState('');
 
     const {onFetchOrders, onDeleteOrder, token, userId} = props;
 
     const [showModalOfOrderDetails, setShowModalOfOrderDetails] = useState(false);
     const [showModalOfDeletion, setShowModalOfDeletion] = useState(false);
+    const [showModalOfFilters, setShowModalOfFilters] = useState(false);
+    const [filterButtonClass, setFilterButtonClass] = useState(classes.Filters);
 
     const [orderId, setOrderId] = useState(null);
     const [orderDetails, setOrderDetails] = useState(null);
 
     const [ordersFirstId, setOrdersFirstId] = useState(null);
+    const [headerHeight, setHeaderHeight] = useState(10);
     const [ordersFirstHeight, setOrdersFirstHeight] = useState(1);
     const [currentCounter, setCurrentCounter] = useState(1);
     const [allItemsCounted, setAllItemsCounted] = useState(0);
@@ -33,8 +84,12 @@ const Orders = props => {
     
     useEffect( () => {
         onFetchOrders(token, userId);
+        if(filterDateFrom !== '' || filterDateTo !== '')
+            setFilterButtonClass([classes.Filters, classes.EngagedFilters].join(' '));
+        else
+            setFilterButtonClass(classes.Filters);
         //console.log('userId:',userId);
-    },[onFetchOrders, onDeleteOrder , token, userId]);
+    },[onFetchOrders, onDeleteOrder , token, userId,filterDateFrom,filterDateTo]);
     
     useEffect( () => {
         //console.log('props.loading=',props.loading,' props.orders[0]=',props.orders[0]);
@@ -50,12 +105,15 @@ const Orders = props => {
             setOrdersFirstHeight(document.getElementById(ordersFirstId).clientHeight);
             //console.log('ordersFirstHeight:: ',ordersFirstHeight)
         };
+        if(document.getElementById('LoginHeader1')) {
+            setHeaderHeight(prev => prev+document.getElementById('LoginHeader1').clientHeight)
+        }
     },[ordersFirstId,props.orders]);
 
     const fireOnScroll = useCallback( () => {
-            if (ordersFirstHeight !== 1) {
+            if (ordersFirstHeight !== 1 && !showModalOfFilters) {
                 const st = window.pageYOffset || document.documentElement.scrollTop;
-                const displayCapacity = Math.floor(window.innerHeight/ordersFirstHeight);
+                const displayCapacity = Math.floor((window.innerHeight-headerHeight)/ordersFirstHeight);
                 let intermediateCalc = Math.round(st/ordersFirstHeight)+displayCapacity;
                 //console.log('st: '+st);
                 //console.log('ordersFirstHeight: '+ordersFirstHeight)
@@ -65,7 +123,7 @@ const Orders = props => {
                     intermediateCalc = allItemsCounted;
                 setCurrentCounter(intermediateCalc);
             }
-    },[ordersFirstHeight,allItemsCounted]);
+    },[ordersFirstHeight,allItemsCounted,showModalOfFilters,headerHeight]);
 
     useEffect(() => {
 
@@ -110,6 +168,96 @@ const Orders = props => {
         setShowModalOfDeletion(true);
     };
 
+    const filterModalHandler = () => {
+        const state = !showModalOfFilters
+        setShowModalOfFilters(s => !s);
+        loadFiltersHandler();
+        if(state) {
+            setFilterButtonClass([classes.Filters, classes.EditFilters].join(' '));
+        } else {
+            if(filterDateFrom !== '' || filterDateTo !== '')
+                setFilterButtonClass([classes.Filters, classes.EngagedFilters].join(' '));
+            else
+                setFilterButtonClass(classes.Filters);
+        }
+    }
+
+    const loadFiltersHandler = () => {
+        for(let formElementIndentifier in filterForm) {
+            switch(formElementIndentifier) {
+                case 'dateFrom':
+                    if(filterForm[formElementIndentifier].valid)
+                        setFilterDateFrom(filterForm[formElementIndentifier].value);
+                break;
+                case 'dateTo':
+                    if(filterForm[formElementIndentifier].valid)
+                        setFilterDateTo(filterForm[formElementIndentifier].value)
+                break;
+                default:
+                    console.log('Unknown Filter: '+formElementIndentifier+' : '+filterForm[formElementIndentifier].value); 
+            }
+        }
+    }
+
+    const filterHandler = (event) => {
+        event.preventDefault();
+        filterModalHandler();
+    }
+
+    const imputChangedHandler = (event, inputIdentifier) => {
+        const updatedFilterForm = {
+            ...filterForm
+        };
+        const updatedFormElement = {
+            ...updatedFilterForm[inputIdentifier]
+        };
+        updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = autoValidate(updatedFormElement.value,updatedFormElement.validation);
+        updatedFormElement.touched = true;
+        updatedFilterForm[inputIdentifier] = updatedFormElement;
+
+        let formValid = true;
+        for(let key in updatedFilterForm){
+            if(updatedFilterForm[key].touched === true && updatedFilterForm[key].value !== '')
+                formValid = updatedFilterForm[key].valid && formValid;
+        }
+        //console.log('FormIsValid? :: ',formIsValid);
+        setFilterForm(updatedFilterForm);
+        setFiltersFormIsValid(formValid);
+    }
+
+    const formElementsArray = [];
+    for(let key in filterForm) {
+    formElementsArray.push({
+            id: key,
+            config: filterForm[key]
+        })
+    }
+    let form = (
+        <form onSubmit={filterHandler}>
+            {formElementsArray.map(formElement => {
+                return (
+                    <Input
+                        key={formElement.id}
+                        id={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        autocomplete={formElement.config.autocomplete}
+                        children={formElement.config.children}
+                        validationHelp={formElement.config.validationHelp}
+                        invalid={!formElement.config.valid}
+                        shouldValidate={formElement.config.validation}
+                        touched={formElement.config.touched}
+                        changed={(event) => imputChangedHandler(event,formElement.id)}
+                        displayRules={props.showRules}
+                    />
+                );
+            })}
+            <Button btnType='Success' disabled={!filtersFormIsValid}>Użyj filtrów</Button>
+        </form>
+    );
+
     let orders = null;
     if(props.loading)
         orders = (<Spinner/>);
@@ -132,6 +280,9 @@ const Orders = props => {
 
     return (
         <div id='X2XF4'>
+            <CircularModal show={showModalOfFilters}>
+                {form}
+            </CircularModal>
             <Modal show={showModalOfOrderDetails} modalClosed={setShowModalOfOrderDetails.bind(this,false)}>
                 <div className={classes.Details}>
                     {orderDetails}
@@ -148,8 +299,14 @@ const Orders = props => {
             <ModalAppear show={burgerModalShown} modalClosed={setBurgerModalShown.bind(this,false)}>
                 {ingredients ? <Burger burgerType="BurgerOrder" ingredients={ingredients}/> : null}
             </ModalAppear>
-            <h3 className={classes.Login}>Zalogowano na: {props.login}</h3>
-            <p><br/><br/></p>
+            <h3 
+                className={classes.Login}
+                id="LoginHeader1"
+            >
+                Zalogowano na: {props.login}
+                <br/>
+                <p className={filterButtonClass} onClick={filterModalHandler}>Filtry</p>
+            </h3>
             {orders}
             <p className={classes.Counter}> {currentCounter}/{allItemsCounted}</p>
         </div>
