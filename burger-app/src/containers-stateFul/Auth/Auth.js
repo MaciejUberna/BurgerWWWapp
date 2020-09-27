@@ -68,7 +68,7 @@ const Auth = props => {
                     regexp: /^(Tak)$/
                 },
                 valid: false,
-                validationHelp: 'Zgoda jest wymagana jeśli chcesz korzystać z dema servisu.'
+                validationHelp: 'Zgoda jest wymagana jeśli chcesz korzystać z dema serwisu.'
             }
         });
 
