@@ -96,17 +96,20 @@ const Input = ( props ) => {
                                 className={classes.Checkmark}
                             >
                             </span>
-                            &nbsp;&nbsp;
-                            <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
-                                {workArray[0]} 
+                            <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}
+                                className={classes.CheckboxText}
+                            > 
+                                {workArray[0]}
                             </span>
                             <span 
-                                className={classes.CheckboxUseTerms} 
+                                className={[classes.CheckboxUseTerms, classes.CheckboxText].join(' ')}
                                 onClick={props.displayRules}
                             > 
-                                    &nbsp; {workArray[1]} &nbsp;
+                                    {workArray[1]}
                             </span>
-                            <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
+                            <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}
+                                className={classes.CheckboxText}
+                            > 
                                 {workArray[2]} 
                             </span>
                         </label>
@@ -126,7 +129,9 @@ const Input = ( props ) => {
                         >
                         </span> 
                         <p> 
-                            <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}> 
+                            <span onClick={setRadioSelectedValue.bind(this,!radioSelectedValue)}
+                                className={classes.CheckboxText}
+                            > 
                                 {workArray[0]} 
                             </span>
                         </p>
