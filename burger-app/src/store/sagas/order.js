@@ -27,7 +27,11 @@ export function* deleteOrderSaga(action){
 
 export function* fetchOrdersSaga(action) {
     yield put(actions.fetchOrdersStart());
-    const queryParams = yield '?auth=' + action.authToken + '&orderBy="dateOfOrder"';
+    let queryParams = yield '?auth=' + action.authToken + '&orderBy="dateOfOrder"';
+    if(action.startAt !== '')
+        queryParams += ('&startAt="' + action.startAt + '"');
+    if(action.endAt !== '')
+        queryParams += ('&endAt="' + action.endAt + '"')
     try {
         const response = yield axios.get('/orders/'+ action.userId +'.json' + queryParams);
         const orders = yield [];
