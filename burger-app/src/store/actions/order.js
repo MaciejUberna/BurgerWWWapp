@@ -85,10 +85,12 @@ export const fetchOrdersStart = () => {
     };
 };
 
-export const fetchOrders = (authToken, userId) => {
+export const fetchOrders = (authToken, userId, startAt, endAt) => {
     return {
         type: actionTypes.FETCH_ORDERS,
         authToken: authToken,
-        userId: userId
+        userId: userId,
+        startAt: startAt,
+        endAt: endAt
     };
 };
