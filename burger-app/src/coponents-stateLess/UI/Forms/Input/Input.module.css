@@ -58,6 +58,11 @@
     width: 25px;
     background-color: #eee;
   }
+
+  .CheckboxText {
+    position: relative;
+    left: 8px;
+  } 
   
   /* On mouse-over, add a grey background color
   /*.CheckboxLabel:hover input ~ .Checkmark */
