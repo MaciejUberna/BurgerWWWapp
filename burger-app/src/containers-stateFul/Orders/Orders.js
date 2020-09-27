@@ -74,7 +74,8 @@ const Orders = props => {
     const [orderDetails, setOrderDetails] = useState(null);
 
     const [ordersFirstId, setOrdersFirstId] = useState(null);
-    const [headerHeight, setHeaderHeight] = useState(10);
+    const [headerHeight, setHeaderHeight] = useState(1);
+    const [loginHeaderHeight, setLoginHeaderHeight] = useState(1);
     const [ordersFirstHeight, setOrdersFirstHeight] = useState(1);
     const [currentCounter, setCurrentCounter] = useState(1);
     const [allItemsCounted, setAllItemsCounted] = useState(0);
@@ -83,13 +84,9 @@ const Orders = props => {
     const [ingredients,setIngredients] = useState(null);
     
     useEffect( () => {
-        onFetchOrders(token, userId);
-        if(filterDateFrom !== '' || filterDateTo !== '')
-            setFilterButtonClass([classes.Filters, classes.EngagedFilters].join(' '));
-        else
-            setFilterButtonClass(classes.Filters);
+        onFetchOrders(token, userId, filterDateFrom, filterDateTo);
         //console.log('userId:',userId);
-    },[onFetchOrders, onDeleteOrder , token, userId,filterDateFrom,filterDateTo]);
+    },[onFetchOrders, onDeleteOrder , token, userId, filterDateFrom, filterDateTo]);
     
     useEffect( () => {
         //console.log('props.loading=',props.loading,' props.orders[0]=',props.orders[0]);
@@ -103,19 +100,23 @@ const Orders = props => {
         //console.log('ordersFirstId::',ordersFirstId,' document.getElementById(ordersFirstId): ',document.getElementById(ordersFirstId));
         if(document.getElementById(ordersFirstId)) {
             setOrdersFirstHeight(document.getElementById(ordersFirstId).clientHeight);
-            //console.log('ordersFirstHeight:: ',ordersFirstHeight)
+            //console.log('ordersFirstHeight:: ',document.getElementById(ordersFirstId).clientHeight)
+        };
+        if(document.getElementById("WE358EK_header")) {
+            setHeaderHeight(document.getElementById("WE358EK_header").clientHeight);
         };
         if(document.getElementById('LoginHeader1')) {
-            setHeaderHeight(prev => prev+document.getElementById('LoginHeader1').clientHeight)
-        }
-    },[ordersFirstId,props.orders]);
+            setLoginHeaderHeight(document.getElementById('LoginHeader1').clientHeight);
+        };
+    },[ordersFirstId,props.orders,filterDateFrom,filterDateTo]);
 
     const fireOnScroll = useCallback( () => {
             if (ordersFirstHeight !== 1 && !showModalOfFilters) {
                 const st = window.pageYOffset || document.documentElement.scrollTop;
-                const displayCapacity = Math.floor((window.innerHeight-headerHeight)/ordersFirstHeight);
+                const displayCapacity = Math.floor((window.innerHeight-headerHeight-loginHeaderHeight)/ordersFirstHeight);
                 let intermediateCalc = Math.round(st/ordersFirstHeight)+displayCapacity;
                 //console.log('st: '+st);
+                //console.log('displayCapacity: ',displayCapacity)
                 //console.log('ordersFirstHeight: '+ordersFirstHeight)
                 //console.log('intermediate calc: '+intermediateCalc);
                 //console.log('location: '+window.location.pathname);
@@ -123,7 +124,7 @@ const Orders = props => {
                     intermediateCalc = allItemsCounted;
                 setCurrentCounter(intermediateCalc);
             }
-    },[ordersFirstHeight,allItemsCounted,showModalOfFilters,headerHeight]);
+    },[ordersFirstHeight, allItemsCounted, headerHeight,loginHeaderHeight, showModalOfFilters]);
 
     useEffect(() => {
 
@@ -171,33 +172,56 @@ const Orders = props => {
     const filterModalHandler = () => {
         const state = !showModalOfFilters
         setShowModalOfFilters(s => !s);
-        loadFiltersHandler();
-        if(state) {
-            setFilterButtonClass([classes.Filters, classes.EditFilters].join(' '));
-        } else {
-            if(filterDateFrom !== '' || filterDateTo !== '')
-                setFilterButtonClass([classes.Filters, classes.EngagedFilters].join(' '));
-            else
-                setFilterButtonClass(classes.Filters);
-        }
-    }
-
-    const loadFiltersHandler = () => {
+        let startAt = (filterDateFrom === '' ? false : true);
+        let endAt = (filterDateTo === '' ? false : true);
+        
         for(let formElementIndentifier in filterForm) {
             switch(formElementIndentifier) {
                 case 'dateFrom':
-                    if(filterForm[formElementIndentifier].valid)
-                        setFilterDateFrom(filterForm[formElementIndentifier].value);
+                    if(filterForm[formElementIndentifier].valid) {
+                        if(filterForm[formElementIndentifier].value !== '') {
+                            setFilterDateFrom(filterForm[formElementIndentifier].value+' 00:00:00.000');
+                            startAt = true;
+                        } else {
+                            setFilterDateFrom('');
+                            startAt = false;
+                        };
+                    } else {
+                        //startAt = false;
+                    };
                 break;
                 case 'dateTo':
-                    if(filterForm[formElementIndentifier].valid)
-                        setFilterDateTo(filterForm[formElementIndentifier].value)
+                    if(filterForm[formElementIndentifier].valid) {
+                        if(filterForm[formElementIndentifier].value !== '') {
+                            setFilterDateTo(filterForm[formElementIndentifier].value+' 00:00:00.000');
+                            endAt = true;
+                        } else {
+                            setFilterDateTo('');
+                            endAt = false;
+                        };
+                    } else {
+                        //endAt = false;
+                    };
                 break;
                 default:
                     console.log('Unknown Filter: '+formElementIndentifier+' : '+filterForm[formElementIndentifier].value); 
-            }
-        }
-    }
+            };
+        };
+
+        if(state) {
+            setFilterButtonClass([classes.Filters, classes.EditFilters].join(' '));
+        } else {
+            // console.log('satrtAt: ',startAt);
+            // console.log('endAt: ',endAt);
+            // console.log('filterDateFrom: ',filterDateFrom);
+            // console.log('filterDateTo: ',filterDateTo);
+            if( startAt || endAt ) {
+                // console.log('Engaged!');
+                setFilterButtonClass([classes.Filters, classes.EngagedFilters].join(' '));
+            } else
+                setFilterButtonClass(classes.Filters);
+        };
+    };
 
     const filterHandler = (event) => {
         event.preventDefault();
@@ -308,7 +332,7 @@ const Orders = props => {
                 <p className={filterButtonClass} onClick={filterModalHandler}>Filtry</p>
             </h3>
             {orders}
-            <p className={classes.Counter}> {currentCounter}/{allItemsCounted}</p>
+            <p className={classes.Counter}>{currentCounter}/{allItemsCounted}</p>
         </div>
     );
 }
@@ -326,7 +350,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: (token,userId) => dispatch(actions.fetchOrders(token,userId)),
+        onFetchOrders: (token,userId,startAt,endAt) => dispatch(actions.fetchOrders(token,userId,startAt,endAt)),
         onDeleteOrder: (token,orderId,userId) => dispatch(actions.deleteOrder(token,orderId,userId))
     };
 };
