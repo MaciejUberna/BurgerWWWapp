@@ -128,7 +128,12 @@ const Orders = props => {
 
     useEffect(() => {
 
-        window.addEventListener('scroll',fireOnScroll,false);
+        const root = document.compatMode === 'BackCompat' ? document.body : document.documentElement;
+        if(root.scrollHeight > root.clientHeight) {
+            window.addEventListener('scroll',fireOnScroll,false);
+        } else {
+            setCurrentCounter(allItemsCounted);
+        }
         //console.log('Added scroll listener.');
 
         return () => {
@@ -136,7 +141,7 @@ const Orders = props => {
             //console.log('Removed scroll listener.')
         }
 
-    },[fireOnScroll])
+    },[fireOnScroll, allItemsCounted])
 
     const performDeletionHandler = () => {
         onDeleteOrder(token,orderId,userId);
