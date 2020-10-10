@@ -130,6 +130,8 @@ const Orders = props => {
 
         const root = document.compatMode === 'BackCompat' ? document.body : document.documentElement;
         if(root.scrollHeight > root.clientHeight) {
+            const displayCapacity = Math.floor((window.innerHeight-headerHeight-loginHeaderHeight)/ordersFirstHeight);
+            setCurrentCounter(displayCapacity);
             window.addEventListener('scroll',fireOnScroll,false);
         } else {
             setCurrentCounter(allItemsCounted);
@@ -141,7 +143,7 @@ const Orders = props => {
             //console.log('Removed scroll listener.')
         }
 
-    },[fireOnScroll, allItemsCounted])
+    },[fireOnScroll, allItemsCounted, headerHeight, loginHeaderHeight, ordersFirstHeight])
 
     const performDeletionHandler = () => {
         onDeleteOrder(token,orderId,userId);
