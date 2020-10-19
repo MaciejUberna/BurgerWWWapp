@@ -23,7 +23,7 @@ const CircuralModal = props => {
         <Auxiliary>
             <CSSTransition
                 in={circularAnimation} 
-                timeout={800}
+                timeout={1000}
                 classNames={{
                     enter: 'CircuralModal-enter',
                     enterActive: 'CircuralModal-enter-active',
@@ -51,11 +51,11 @@ const CircuralModal = props => {
                             }
                         }
                 onExit={
-                        () => {
-                            //console.log('onExit');
-                            //setFormAnimation(true)
-                            
-                        }}
+                    () => {
+                        //console.log('onExit');
+                        //setFormAnimation(true)
+                        
+                    }}
                 onExiting={() => {
                             //console.log('onExiting');
                         }}
