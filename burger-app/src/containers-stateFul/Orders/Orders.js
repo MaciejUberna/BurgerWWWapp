@@ -36,7 +36,7 @@ const Orders = props => {
             },
             valid: false,
             touched: false,
-            validationHelp: 'Podaj datę od której będą wyszukiwane zamówienia. Użyj formatu: RRRR.MM.DD'
+            validationHelp: 'Podaj datę od której będą wyszukiwane zamówienia. Użyj formatu: RRRR.MM.DD, Data od < Data do.'
         },
         dateTo: {
             elementType: 'input',
@@ -55,7 +55,7 @@ const Orders = props => {
             },
             valid: false,
             touched: false,
-            validationHelp: 'Podaj datę do której będą wyszukiwane zamówienia. Użyj formatu: RRRR.MM.DD'
+            validationHelp: 'Podaj datę do której będą wyszukiwane zamówienia. Użyj formatu: RRRR.MM.DD,  Data od < Data do.'
         }
     });
 
@@ -245,12 +245,28 @@ const Orders = props => {
         updatedFormElement.value = event.target.value;
         updatedFormElement.valid = autoValidate(updatedFormElement.value,updatedFormElement.validation);
         updatedFormElement.touched = true;
+
+        if(inputIdentifier === 'dateFrom' && updatedFilterForm['dateTo'].value !== '' 
+            && updatedFilterForm['dateTo'].value !== updatedFormElement.value) {
+            const to = {
+                ...updatedFilterForm['dateTo']
+            }
+            updatedFormElement.valid = updatedFormElement.valid && updatedFormElement.value < to.value
+        } else if (inputIdentifier === 'dateTo' && updatedFilterForm['dateFrom'].value !== ''
+            && updatedFilterForm['dateFrom'].value !== updatedFormElement.value) {
+            const from = {
+                ...updatedFilterForm['dateFrom']
+            }
+            updatedFormElement.valid = updatedFormElement.valid && updatedFormElement.value > from.value        
+        }
+
         updatedFilterForm[inputIdentifier] = updatedFormElement;
 
         let formValid = true;
         for(let key in updatedFilterForm){
-            if(updatedFilterForm[key].touched === true && updatedFilterForm[key].value !== '')
+            if(updatedFilterForm[key].touched === true && updatedFilterForm[key].value !== '') {
                 formValid = updatedFilterForm[key].valid && formValid;
+            }
         }
         //console.log('FormIsValid? :: ',formIsValid);
         setFilterForm(updatedFilterForm);
