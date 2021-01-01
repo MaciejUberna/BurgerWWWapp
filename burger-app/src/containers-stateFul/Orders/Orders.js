@@ -93,6 +93,9 @@ const Orders = props => {
         if(!props.loading && props.orders[0]){
             setOrdersFirstId(props.orders[0]['id']);
             setAllItemsCounted(props.orders.length)
+        } else {
+            setAllItemsCounted(0);
+            setCurrentCounter(0);
         };
     },[props.loading,props.orders]);
 
@@ -177,7 +180,7 @@ const Orders = props => {
     };
 
     const filterModalHandler = () => {
-        const state = !showModalOfFilters
+        const state = !showModalOfFilters;
         setShowModalOfFilters(s => !s);
         let startAt = (filterDateFrom === '' ? false : true);
         let endAt = (filterDateTo === '' ? false : true);
@@ -257,7 +260,12 @@ const Orders = props => {
             const from = {
                 ...updatedFilterForm['dateFrom']
             }
-            updatedFormElement.valid = updatedFormElement.valid && updatedFormElement.value > from.value        
+            if (updatedFormElement.value !== '') {
+                updatedFormElement.valid = updatedFormElement.valid && updatedFormElement.value > from.value;
+            } else {
+                updatedFormElement.valid = true;
+            };
+            //console.log('inputIndentifier: ',inputIdentifier,' updatedFormElement.valid: ',updatedFormElement.valid,' ', updatedFormElement.value, ' > ',from.value);
         }
 
         updatedFilterForm[inputIdentifier] = updatedFormElement;
