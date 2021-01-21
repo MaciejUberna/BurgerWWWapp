@@ -1,4 +1,6 @@
-import React , { useState, useEffect, useCallback } from 'react';
+import React , { useState, useEffect } from 'react';
+// import { FixedSizeList as List } from "react-window";
+import {useDisplayedElements} from '../../hooks/isOnScreen';
 import { connect } from 'react-redux';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -59,6 +61,8 @@ const Orders = props => {
         }
     });
 
+
+
     const [filtersFormIsValid, setFiltersFormIsValid] = useState(false);
     const [filterDateFrom,setFilterDateFrom] = useState('');
     const [filterDateTo, setFilterDateTo] = useState('');
@@ -73,80 +77,32 @@ const Orders = props => {
     const [orderId, setOrderId] = useState(null);
     const [orderDetails, setOrderDetails] = useState(null);
 
-    const [ordersFirstId, setOrdersFirstId] = useState(null);
-    const [headerHeight, setHeaderHeight] = useState(1);
-    const [loginHeaderHeight, setLoginHeaderHeight] = useState(1);
-    const [ordersFirstHeight, setOrdersFirstHeight] = useState(1);
-    const [currentCounter, setCurrentCounter] = useState(1);
+    // const [ordersFirstId, setOrdersFirstId] = useState(null);
+    // const [headerHeight, setHeaderHeight] = useState(1);
+    // const [loginHeaderHeight, setLoginHeaderHeight] = useState(1);
+    const [pageLoaded,setPageLoaded] = useState(false);
+    const [currentCounter, setCurrentCounter] = useState(0);
     const [allItemsCounted, setAllItemsCounted] = useState(0);
-
+ 
     const [burgerModalShown, setBurgerModalShown] = useState(false);
     const [ingredients,setIngredients] = useState(null);
     
     useEffect( () => {
-        onFetchOrders(token, userId, filterDateFrom, filterDateTo);
-        //console.log('userId:',userId);
-    },[onFetchOrders, onDeleteOrder , token, userId, filterDateFrom, filterDateTo]);
+        if(filtersFormIsValid || (filterDateFrom === '' && filterDateTo === '') ) {
+            onFetchOrders(token, userId, filterDateFrom, filterDateTo);
+            setPageLoaded(true);
+        }
+    },[onFetchOrders, token, userId, filterDateFrom, filterDateTo, filtersFormIsValid]);
+    
     
     useEffect( () => {
-        //console.log('props.loading=',props.loading,' props.orders[0]=',props.orders[0]);
         if(!props.loading && props.orders[0]){
-            setOrdersFirstId(props.orders[0]['id']);
             setAllItemsCounted(props.orders.length)
         } else {
             setAllItemsCounted(0);
             setCurrentCounter(0);
         };
     },[props.loading,props.orders]);
-
-    useEffect( () => {
-        //console.log('ordersFirstId::',ordersFirstId,' document.getElementById(ordersFirstId): ',document.getElementById(ordersFirstId));
-        if(document.getElementById(ordersFirstId)) {
-            setOrdersFirstHeight(document.getElementById(ordersFirstId).clientHeight);
-            //console.log('ordersFirstHeight:: ',document.getElementById(ordersFirstId).clientHeight)
-        };
-        if(document.getElementById("WE358EK_header")) {
-            setHeaderHeight(document.getElementById("WE358EK_header").clientHeight);
-        };
-        if(document.getElementById('LoginHeader1')) {
-            setLoginHeaderHeight(document.getElementById('LoginHeader1').clientHeight);
-        };
-    },[ordersFirstId,props.orders,filterDateFrom,filterDateTo]);
-
-    const fireOnScroll = useCallback( () => {
-            if (ordersFirstHeight !== 1 && !showModalOfFilters) {
-                const st = window.pageYOffset || document.documentElement.scrollTop;
-                const displayCapacity = Math.floor((window.innerHeight-headerHeight-loginHeaderHeight)/ordersFirstHeight);
-                let intermediateCalc = Math.round(st/ordersFirstHeight)+displayCapacity;
-                //console.log('st: '+st);
-                //console.log('displayCapacity: ',displayCapacity)
-                //console.log('ordersFirstHeight: '+ordersFirstHeight)
-                //console.log('intermediate calc: '+intermediateCalc);
-                //console.log('location: '+window.location.pathname);
-                if (intermediateCalc > allItemsCounted)
-                    intermediateCalc = allItemsCounted;
-                setCurrentCounter(intermediateCalc);
-            }
-    },[ordersFirstHeight, allItemsCounted, headerHeight,loginHeaderHeight, showModalOfFilters]);
-
-    useEffect(() => {
-
-        const root = document.compatMode === 'BackCompat' ? document.body : document.documentElement;
-        if(root.scrollHeight > root.clientHeight) {
-            const displayCapacity = Math.floor((window.innerHeight-headerHeight-loginHeaderHeight)/ordersFirstHeight);
-            setCurrentCounter(displayCapacity);
-            window.addEventListener('scroll',fireOnScroll,false);
-        } else {
-            setCurrentCounter(allItemsCounted);
-        }
-        //console.log('Added scroll listener.');
-
-        return () => {
-            window.removeEventListener('scroll', fireOnScroll);
-            //console.log('Removed scroll listener.')
-        }
-
-    },[fireOnScroll, allItemsCounted, headerHeight, loginHeaderHeight, ordersFirstHeight])
 
     const performDeletionHandler = () => {
         onDeleteOrder(token,orderId,userId);
@@ -197,7 +153,7 @@ const Orders = props => {
                             startAt = false;
                         };
                     } else {
-                        //startAt = false;
+                        startAt = false;
                     };
                 break;
                 case 'dateTo':
@@ -210,7 +166,7 @@ const Orders = props => {
                             endAt = false;
                         };
                     } else {
-                        //endAt = false;
+                        endAt = false;
                     };
                 break;
                 default:
@@ -228,6 +184,7 @@ const Orders = props => {
             if( startAt || endAt ) {
                 // console.log('Engaged!');
                 setFilterButtonClass([classes.Filters, classes.EngagedFilters].join(' '));
+                setPageLoaded(true);
             } else
                 setFilterButtonClass(classes.Filters);
         };
@@ -269,7 +226,7 @@ const Orders = props => {
         }
 
         updatedFilterForm[inputIdentifier] = updatedFormElement;
-
+        
         let formValid = true;
         for(let key in updatedFilterForm){
             if(updatedFilterForm[key].touched === true && updatedFilterForm[key].value !== '') {
@@ -288,6 +245,7 @@ const Orders = props => {
             config: filterForm[key]
         })
     }
+
     let form = (
         <form onSubmit={filterHandler}>
             {formElementsArray.map(formElement => {
@@ -319,8 +277,9 @@ const Orders = props => {
     else {
         orders = (
             props.orders.map(o => {
-                return <Order 
+                return <Order
                     key={o.id}
+                    ref={React.createRef()}
                     dateOfOrder={o.dateOfOrder}
                     ingredients={o.ingredients}
                     price={o.price}
@@ -331,7 +290,53 @@ const Orders = props => {
                 />;
             })
         );
+
+        // const Row = ({index, style}) => (
+        //     <Order
+        //         style={style}
+        //         dateOfOrder={props.orders[index].dateOfOrder}
+        //         ingredients={props.orders[index].ingredients}
+        //         price={props.orders[index].price}
+        //         id={props.orders[index].id}
+        //         orderDetails={toggleOrderDetailsModal.bind(this,props.orders[index].orderData)}
+        //         deleteOrder={toggleDeleteOrderModal.bind(this,props.orders[index].id)}
+        //         showBurger={showBurgerModalHandler.bind(this,props.orders[index].ingredients)}
+        //     />
+        // );
+
+        // orders = (<List
+        //     width={1400}
+        //     height={800}
+        //     itemCount={props.orders.length}
+        //     itemSize={250}>
+        //         {Row}
+        // </List>);
     };
+
+    useEffect(() => {
+        if(orders.length > 0) {
+            setPageLoaded(true);
+            console.log('orders.length = ',orders.length)
+        } else {
+            setPageLoaded(false);
+        };
+    },[orders,filterDateFrom,filterDateTo])
+
+    useDisplayedElements(
+        ({currDisplay}) => {
+            let max = 0;
+            for(let i=0;i<currDisplay.length;i++) {
+                if(+currDisplay[i].num > max)
+                    max = +currDisplay[i].num;
+            };
+            setCurrentCounter(max);
+        },
+        [orders,currentCounter,pageLoaded,filterDateFrom,filterDateTo],
+        orders,
+        300,
+        -100,
+        pageLoaded
+    );
 
     return (
         <div id='X2XF4'>

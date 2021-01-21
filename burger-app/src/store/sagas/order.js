@@ -40,7 +40,7 @@ export function* fetchOrdersSaga(action) {
                 ...response.data[key],
                 id: key
             });
-        }
+        };
         yield put(actions.fetchOrdersSuccess(orders))
     } catch(error) {
         yield put(actions.fetchOrdersFail(error));
