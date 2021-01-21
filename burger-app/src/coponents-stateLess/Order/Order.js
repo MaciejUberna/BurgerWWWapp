@@ -4,7 +4,7 @@ import Button from '../UI/Button/Button';
 import { ingredientsToPolish } from '../../polish-translations';
 import burgerLogo from '../../assets/images/burger-logo.png'
 
-const order = (props) => {
+const order = React.forwardRef((props, ref) => {
     const ingredients = [];
     let ctr = 0;
     for(let key in props.ingredients){
@@ -21,7 +21,7 @@ const order = (props) => {
     }
     ingredients.push(<span key={props.id+ctr}>Bułka(1)</span>)
     return (
-        <div className={classes.Order} id={props.id}>
+        <div ref={ref} className={classes.Order} id={props.id}>
             <p>Danie: Burger</p>
             <p>Data utworzenia: {props.dateOfOrder}</p>
             <p>Składniki: {ingredients} &nbsp; <img onClick={props.showBurger} className={classes.BurgerLogo} src={burgerLogo} alt='burgerLogo'/></p>
@@ -33,5 +33,5 @@ const order = (props) => {
             </p>
         </div>
     )
-};
+});
 export default order;
