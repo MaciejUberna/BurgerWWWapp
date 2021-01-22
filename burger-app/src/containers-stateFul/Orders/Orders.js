@@ -1,4 +1,5 @@
 import React , { useState, useEffect } from 'react';
+import Filler from '../../coponents-stateLess/UI/Helpers/Filler';
 // import { FixedSizeList as List } from "react-window";
 import {useDisplayedElements} from '../../hooks/isOnScreen';
 import { connect } from 'react-redux';
@@ -86,6 +87,8 @@ const Orders = props => {
  
     const [burgerModalShown, setBurgerModalShown] = useState(false);
     const [ingredients,setIngredients] = useState(null);
+
+    const [fillerHeight, setFillerHeight] = useState(0);
     
     useEffect( () => {
         if(filtersFormIsValid || (filterDateFrom === '' && filterDateTo === '') ) {
@@ -98,6 +101,10 @@ const Orders = props => {
     useEffect( () => {
         if(!props.loading && props.orders[0]){
             setAllItemsCounted(props.orders.length)
+            if(document.getElementById('LoginHeader1')){
+                const element = document.getElementById('LoginHeader1');
+                setFillerHeight(element.offsetHeight);
+            };
         } else {
             setAllItemsCounted(0);
             setCurrentCounter(0);
@@ -196,6 +203,7 @@ const Orders = props => {
     }
 
     const imputChangedHandler = (event, inputIdentifier) => {
+        console.log('inputIdentifier: ',inputIdentifier);
         const updatedFilterForm = {
             ...filterForm
         };
@@ -334,7 +342,7 @@ const Orders = props => {
         [orders,currentCounter,pageLoaded,filterDateFrom,filterDateTo],
         orders,
         300,
-        -100,
+        -50,
         pageLoaded
     );
 
@@ -365,8 +373,9 @@ const Orders = props => {
             >
                 Zalogowano na: {props.login}
                 <br/>
-                <p className={filterButtonClass} onClick={filterModalHandler}>Filtry</p>
+                <p className={filterButtonClass} onClick={filterHandler}>Filtry</p>
             </h3>
+            <Filler className={classes.FFF} height={fillerHeight}></Filler>
             {orders}
             <p className={classes.Counter}>{currentCounter}/{allItemsCounted}</p>
         </div>

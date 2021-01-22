@@ -13,6 +13,14 @@
     transition: all 1s ease-out;
 }
 
+.FFF {
+    position: relative;
+    text-align: center;
+    background-color: orangered;
+    width: 70%;
+    left: 15%;
+}
+
 .Counter {
     position: fixed;
     z-index: 18;
