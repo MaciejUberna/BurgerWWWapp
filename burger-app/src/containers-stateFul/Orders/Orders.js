@@ -77,7 +77,6 @@ const Orders = props => {
     const [orderId, setOrderId] = useState(null);
     const [orderDetails, setOrderDetails] = useState(null);
 
-    const [pageLoaded,setPageLoaded] = useState(false);
     const [currentCounter, setCurrentCounter] = useState(0);
     const [allItemsCounted, setAllItemsCounted] = useState(0);
  
@@ -91,8 +90,7 @@ const Orders = props => {
         //console.log('filterDateTo: ',filterDateTo);
         //console.log('filtersFormIsValid: ',filtersFormIsValid);
         if(filtersFormIsValid || (filterDateFrom === '' && filterDateTo === '') ) {
-            onFetchOrders(token, userId, filterDateFrom, filterDateTo);
-            setPageLoaded(true);
+            onFetchOrders(token, userId, filterDateFrom, filterDateTo);;
         }
     },[onFetchOrders, token, userId, filterDateFrom, filterDateTo, filtersFormIsValid]);
     
@@ -190,7 +188,6 @@ const Orders = props => {
             if( startAt || endAt ) {
                 // console.log('Engaged!');
                 setFilterButtonClass([classes.Filters, classes.EngagedFilters].join(' '));
-                setPageLoaded(true);
             } else
                 setFilterButtonClass(classes.Filters);
         };
@@ -299,14 +296,6 @@ const Orders = props => {
         );
     };
 
-    useEffect(() => {
-        if(orders.length > 0) {
-            setPageLoaded(true);
-        } else {
-            setPageLoaded(false);
-        };
-    },[orders.length])
-
     useDisplayedElements(
         ({currDisplay}) => {
             let max = 0;
@@ -316,11 +305,10 @@ const Orders = props => {
             };
             setCurrentCounter(max);
         },
-        [orders,pageLoaded],
+        [],
         orders,
         300,
         -50,
-        pageLoaded
     );
 
     return (

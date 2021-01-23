@@ -27,8 +27,9 @@ function isDisplayed({ elements, offset }) {
   return visibleElementsArr;
 };
 
-export function useDisplayedElements(effect, deps, elements, wait, offset, loaded) {
+export function useDisplayedElements(effect, deps, elements, wait, offset) {
   const throttleTimeout = useRef(null);
+  const newDeps = [];
 
   const callBack = useCallback( () => {
     const currDisplay = isDisplayed({ elements, offset });
@@ -46,6 +47,10 @@ export function useDisplayedElements(effect, deps, elements, wait, offset, loade
     };
   },[wait, callBack]);
 
+  for(let i=0;i<deps.length;i++)
+    newDeps.push(deps[i]);
+  newDeps.push(elements);
+
   deps.push(handleRenderedElements)
 
   useLayoutEffect(() => {
@@ -61,11 +66,13 @@ export function useDisplayedElements(effect, deps, elements, wait, offset, loade
   }, deps);
 
   useEffect(() => {
-      if(loaded && elements[0]) {
+      //console.log('elements: ',elements)
+      if(elements.length > 0 && elements[0]) {
         callBack();
+        //console.log('newDeps: ',newDeps)
         //console.log('pageLoaded!');
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  },deps);
+      //eslint-disable-next-line react-hooks/exhaustive-deps
+  },newDeps);
 
 };
