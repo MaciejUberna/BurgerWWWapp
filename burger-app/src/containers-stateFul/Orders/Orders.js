@@ -1,6 +1,5 @@
 import React , { useState, useEffect } from 'react';
 import Filler from '../../coponents-stateLess/UI/Helpers/Filler';
-// import { FixedSizeList as List } from "react-window";
 import {useDisplayedElements} from '../../hooks/isOnScreen';
 import { connect } from 'react-redux';
 import axios from '../../axios-orders';
@@ -78,9 +77,6 @@ const Orders = props => {
     const [orderId, setOrderId] = useState(null);
     const [orderDetails, setOrderDetails] = useState(null);
 
-    // const [ordersFirstId, setOrdersFirstId] = useState(null);
-    // const [headerHeight, setHeaderHeight] = useState(1);
-    // const [loginHeaderHeight, setLoginHeaderHeight] = useState(1);
     const [pageLoaded,setPageLoaded] = useState(false);
     const [currentCounter, setCurrentCounter] = useState(0);
     const [allItemsCounted, setAllItemsCounted] = useState(0);
@@ -91,6 +87,9 @@ const Orders = props => {
     const [fillerHeight, setFillerHeight] = useState(0);
     
     useEffect( () => {
+        //console.log('filterDateFrom: ',filterDateFrom);
+        //console.log('filterDateTo: ',filterDateTo);
+        //console.log('filtersFormIsValid: ',filtersFormIsValid);
         if(filtersFormIsValid || (filterDateFrom === '' && filterDateTo === '') ) {
             onFetchOrders(token, userId, filterDateFrom, filterDateTo);
             setPageLoaded(true);
@@ -203,7 +202,7 @@ const Orders = props => {
     }
 
     const imputChangedHandler = (event, inputIdentifier) => {
-        console.log('inputIdentifier: ',inputIdentifier);
+        //console.log('inputIdentifier: ',inputIdentifier);
         const updatedFilterForm = {
             ...filterForm
         };
@@ -298,37 +297,15 @@ const Orders = props => {
                 />;
             })
         );
-
-        // const Row = ({index, style}) => (
-        //     <Order
-        //         style={style}
-        //         dateOfOrder={props.orders[index].dateOfOrder}
-        //         ingredients={props.orders[index].ingredients}
-        //         price={props.orders[index].price}
-        //         id={props.orders[index].id}
-        //         orderDetails={toggleOrderDetailsModal.bind(this,props.orders[index].orderData)}
-        //         deleteOrder={toggleDeleteOrderModal.bind(this,props.orders[index].id)}
-        //         showBurger={showBurgerModalHandler.bind(this,props.orders[index].ingredients)}
-        //     />
-        // );
-
-        // orders = (<List
-        //     width={1400}
-        //     height={800}
-        //     itemCount={props.orders.length}
-        //     itemSize={250}>
-        //         {Row}
-        // </List>);
     };
 
     useEffect(() => {
         if(orders.length > 0) {
             setPageLoaded(true);
-            console.log('orders.length = ',orders.length)
         } else {
             setPageLoaded(false);
         };
-    },[orders,filterDateFrom,filterDateTo])
+    },[orders.length])
 
     useDisplayedElements(
         ({currDisplay}) => {
@@ -339,7 +316,7 @@ const Orders = props => {
             };
             setCurrentCounter(max);
         },
-        [orders,currentCounter,pageLoaded,filterDateFrom,filterDateTo],
+        [orders,pageLoaded],
         orders,
         300,
         -50,
